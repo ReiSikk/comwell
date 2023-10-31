@@ -12,3 +12,11 @@
     pointer-events: none;
     position: relative;
 }
+.booking_widget_layout {
+    display: grid;
+    position: absolute;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    margin: 0 0 0 auto;
+    column-gap: 16px;
+
+}

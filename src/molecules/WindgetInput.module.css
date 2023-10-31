@@ -1,0 +1,27 @@
+.input_button {
+    inset: 0px;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    padding: 0.75rem 0.25rem;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    text-align: left;
+    cursor: pointer;
+    background: transparent;
+    border: rgba(0, 0, 0, 0.2) 1px solid;
+    border-radius: 4px;
+    font-weight: 600;
+}
+.input_label {
+    color: rgba(0, 0, 0, 1);
+    transform: rotate(180deg);
+
+}
+.input_label > svg {
+    margin-right: 0.5rem;
+    width: 16px;
+    height: auto;
+}

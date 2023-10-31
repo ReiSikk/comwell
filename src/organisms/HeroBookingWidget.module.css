@@ -1,15 +1,61 @@
 .booking_widget {
-    display: flex;
-    flex-direction: column;
     grid-column: span 6 / span 6;
     margin: 5rem 2rem;
-    align-items: center;
-    justify-content: center;
     background: rgb(255, 255, 255);
     width: 400px;
     height: 400px;
     padding: 2rem 1rem;
-    border-bottom: 1px solid #e5e5e5;
+    border-radius: 15px;
     z-index: 2;
 
+}
+.widget_flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.h1 {
+    font-weight: 600;
+    font-size: 2rem;
+    width: 100%;
+    hyphens: auto;
+}
+.inputs_container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+
+/* search button */
+.button_wrapper {
+    width: 100%;
+}
+.button_container {
+    width: 100%;
+    padding: 1rem 2.5rem;
+    border-radius: 9999px;
+    margin-top: 1rem;
+    background: rgba(150, 150, 161, 0.9);
+    cursor: pointer;
+}
+.button_container > button > span > svg {
+    max-width: 100%;
+    width: 16px;
+    height: auto;
+}
+.button_container > button > span {
+    display: flex;
+    justify-content: center;
+    column-gap: 7px;
+    width: 100%;
+    font-weight: 600;
+    font-size: 1rem;
+}
+.button_container > button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #f1f1f1;
 }

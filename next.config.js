@@ -4,6 +4,8 @@ const nextConfig = {
   images: {
     domains: ['cdn.dwarf.dk'],
   },
+  
 }
+
 
 module.exports = nextConfig

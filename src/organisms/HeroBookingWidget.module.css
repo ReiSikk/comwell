@@ -2,8 +2,8 @@
     grid-column: span 6 / span 6;
     margin: 5rem 2rem;
     background: rgb(255, 255, 255);
-    width: 400px;
-    height: 400px;
+    width: 80%;
+    height: auto;
     padding: 2rem 1rem;
     border-radius: 15px;
     z-index: 2;

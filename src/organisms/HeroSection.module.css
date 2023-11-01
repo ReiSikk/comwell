@@ -16,7 +16,7 @@
     display: grid;
     position: absolute;
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    margin: 0 0 0 auto;
+    margin: 0 0 2rem auto;
     column-gap: 16px;
 
 }

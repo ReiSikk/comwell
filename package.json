@@ -10,9 +10,10 @@
   },
   "dependencies": {
     "geist": "^1.0.0",
-    "next": "14.0.0",
+    "next": "^14.0.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "webpack": "^5.89.0"
   },
   "devDependencies": {
     "eslint": "^8",

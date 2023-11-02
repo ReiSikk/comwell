@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './HeroBookingWidget.module.css'
 import WidgetInput from '../molecules/WidgetInput'
+import Overlay from './Overlay'
 import { useState } from 'react'
 
 function HeroBookingWidget() {
@@ -14,6 +15,7 @@ function HeroBookingWidget() {
   };
 
   return (
+    <>
     <div className={styles.booking_widget} >
        <div className={styles.widget_flex}>
          <h1 className={styles.h1}>Check in at Comwell and discover Denmark</h1>
@@ -41,6 +43,8 @@ function HeroBookingWidget() {
          </div>
          </div>
        </div>
+       <Overlay overlayState={overlayState} />
+    </>
   )
 }
 

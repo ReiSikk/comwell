@@ -4,16 +4,7 @@ import WidgetInput from '../molecules/WidgetInput'
 import Overlay from './Overlay'
 import { useState } from 'react'
 
-function HeroBookingWidget() {
-  const [overlayState, setOverlayState] = React.useState({
-    overlayToShow: "",
-    showOverlay: false,
-
-  })
-  const updateOverlayState = (newState) => {
-    setOverlayState(newState);
-  };
-
+function HeroBookingWidget({ overlayState, updateOverlayState }) {
 
   return (
     <>

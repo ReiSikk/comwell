@@ -6,6 +6,10 @@ import Overlay from './Overlay'
 
 function HeroSection() {
 
+  const [overlayData, setOverlayData] = React.useState({
+    currentOverlayData: "overlayData",
+  })
+
   const [overlayState, setOverlayState] = React.useState({
     overlayToShow: "",
     showOverlay: false,
@@ -24,6 +28,7 @@ function HeroSection() {
         <div>
             <Image src="https://cdn.dwarf.dk/comwell-cms-production/img/containers/main/kampagner/b2b_efter%C3%A5r2023/b2b_topheader.jpg/a1dbaeb00be6d3ed79294c38ccb1d729.webp" className={styles.image} alt="Hero image" width={1920} height={1080} />
         </div>
+       <Overlay overlayState={overlayState} updateOverlayState={updateOverlayState} overlayData={overlayData}/>
     </div>
     </>
   )

@@ -35,7 +35,6 @@ function HeroBookingWidget({ overlayState, updateOverlayState }) {
          </div>
          </div>
        </div>
-       <Overlay overlayState={overlayState} updateOverlayState={updateOverlayState} />
        <div 
        className={`${overlayState.showOverlay ? styles.overlay_background : ''}`} 
        onClick={updateOverlayState}

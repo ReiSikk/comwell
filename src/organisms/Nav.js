@@ -5,7 +5,7 @@ import hotelIcon from "../assets/icons/nav_hotel_icon.svg";
 import hamburgerIcon from "../assets/icons/hamburger.svg";
 import locationsIcon from "../assets/icons/locations_icon.svg";
 import NavLink_Icon from "@/molecules/NavLink_Icon";
-import styles from "./Nav.module.css";
+import styles from "./Nav.module.scss";
 import Login_Popup from "./Login_Popup";
 
 function Nav() {

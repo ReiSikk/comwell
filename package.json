@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-
     "react": "^18",
     "react-dom": "^18",
     "sass": "^1.69.5",

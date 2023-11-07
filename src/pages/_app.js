@@ -2,7 +2,6 @@ import '@/styles/globals.css'
 
 import '../styles/global.scss'
 import MainLayout from '@/layouts/MainLayout'
-import { Inter } from 'next/font/google';
 import localFont from 'next/font/local'
 // Font files can be colocated inside of `pages`
 const fontRegular = localFont({ src: '/fonts/Fellix-Bold-fe0f33a2.ttf' })

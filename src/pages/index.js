@@ -3,7 +3,6 @@ import HeroSection from '@/organisms/HeroSection'
 import Head from 'next/head'
 import Image from 'next/image'
 
-
 export default function Home() {
   return (
     <>

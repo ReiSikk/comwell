@@ -1,9 +1,13 @@
 .form_login {
-    padding: 1.5rem;
+    position:absolute;
+    top: 100px;
+    right: 200px;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     gap: 10px;
     border: 1px black solid;
+    max-width: 400px;
 }
 
 .form_login input {
@@ -11,9 +15,12 @@
     padding-top: 20px;
     padding-bottom: 20px;
     border-radius: 4px;
-    width: 90%;
 }
 
+.form_login label {
+  position: absolute;
+  top: 10px;
+}
 .form_login p, .form_login a {
     font-size: 13px;
     font-weight: 500;

@@ -1,6 +1,5 @@
 import '@/styles/globals.css'
-
-import '../styles/global.scss'
+import '../styles/variables.scss'
 import MainLayout from '@/layouts/MainLayout'
 import localFont from 'next/font/local'
 // Font files can be colocated inside of `pages`

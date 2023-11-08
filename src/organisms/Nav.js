@@ -18,7 +18,7 @@ const [isPopupVisible, setPopupVisible] = useState(false);
   return (
     <>
     <header className={styles.nav_container}>
-      <a href="#">
+      <a href="">
         <Image src={hotelIcon} width={120} height={34.55} alt="Comwell Hotel Icon" />
       </a>
       <div className={styles.links_container}>

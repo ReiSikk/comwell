@@ -1,4 +1,7 @@
+@import "../styles/variables.scss";
+
 .nav_container {
+  position: sticky;
   height: 100px;
   z-index: 55;
   width: 100vw;
@@ -11,7 +14,6 @@
 .links_container {
   display: flex;
   gap: 20px;
- 
 }
 
 .form {
@@ -28,4 +30,3 @@
     height: 52px;
     margin: 1.25rem 2rem;
   }
-

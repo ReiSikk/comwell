@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { submitLogindata } from "@/services/login_data";
-import styles from "./Login_Popup.module.scss";
+import styles from "./Nav_Popup.module.scss";
 
-function Login_Popup({ isVisible, onClose }) {
+function Nav_Popup({ isVisible, onClose }) {
   const popupRef = useRef(null);
 
   useEffect(() => {
@@ -65,4 +65,4 @@ function Login_Popup({ isVisible, onClose }) {
   ) : null;
 }
 
-export default Login_Popup;
+export default Nav_Popup;

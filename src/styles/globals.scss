@@ -1,0 +1,24 @@
+@import './variables.scss';
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input {
+  border: $form-input-border-color 1px solid;
+  border-radius: 4px;
+}

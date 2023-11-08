@@ -1,4 +1,4 @@
-import '@/styles/globals.css'
+import '@/styles/globals.scss'
 import '../styles/variables.scss'
 import MainLayout from '@/layouts/MainLayout'
 import localFont from 'next/font/local'

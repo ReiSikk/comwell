@@ -2,9 +2,9 @@ import React from 'react'
 import styles from './HotelCard.module.scss'
 
 
-function HotelCard({ hotel }) {
+function HotelCard({ hotel, updateSelectedHotel, selectedHotel }) {
   return (
-    <div className={styles.hotel_card}>
+    <div className={styles.hotel_card}  onClick={() => updateSelectedHotel(hotel)}>
         <div className={styles.hotel_img}>
 
         </div>

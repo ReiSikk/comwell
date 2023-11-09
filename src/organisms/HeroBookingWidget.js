@@ -4,7 +4,7 @@ import WidgetInput from '../molecules/WidgetInput'
 import Overlay from './Overlay'
 import { useState } from 'react'
 
-function HeroBookingWidget({ overlayState, updateOverlayState, hotelsData }) {
+function HeroBookingWidget({ overlayState, updateOverlayState, hotelsData, selectedHotel }) {
 
   return (
     <>
@@ -17,7 +17,7 @@ function HeroBookingWidget({ overlayState, updateOverlayState, hotelsData }) {
           </div>
           <div className={styles.inner_lower}>
             <div className={styles.inputs_container}>
-             <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Hotels"} inputText={"Choose hotel"} hotelsData={hotelsData} />
+             <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Hotels"} inputText={ selectedHotel.name ? selectedHotel.name : "Choose hotel"} hotelsData={hotelsData} selectedHotel={selectedHotel._id} />
              <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Guests and Rooms"} inputText={"Choose room"} />
              <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Dates"} inputText={"Check in / Check out"} />
             </div>

@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './Overlay.module.scss'
 import HotelCard from '../molecules/HotelCard'
 
-function Overlay({ overlayState, updateOverlayState, hotelsData, overlayToShow }) {
+function Overlay({ overlayState, updateOverlayState, hotelsData, updateSelectedHotel, selectedHotel  }) {
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
         <div className={styles.overlay_content}>
@@ -14,7 +14,7 @@ function Overlay({ overlayState, updateOverlayState, hotelsData, overlayToShow }
             </div>
             <div className={styles.overlay_data}>
             {overlayState.overlayToShow === 'Choose hotel' && hotelsData && hotelsData.map((hotel) => (
-         <HotelCard hotel={hotel} key={hotel._id} />
+         <HotelCard hotel={hotel} key={hotel._id} selectedHotel={selectedHotel} updateSelectedHotel={updateSelectedHotel} />
         ))}
             </div>
             <div className={styles.drawer_bottom}>

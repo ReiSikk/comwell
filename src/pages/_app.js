@@ -39,18 +39,6 @@ export default function App({ Component, pageProps }) {
     setOverlayState(newState);
   }; 
 
-
-  useEffect(() => {
-    const appRoot = document.body;
-    if (appRoot) {
-      if (overlayState.showOverlay) {
-        document.body.classList.add("overflow-y-hidden")
-      } else {
-        document.body.classList.remove("overflow-y-hidden")
-      }
-    }
-  }, [overlayState.showOverlay]);
-
   return (
   <MainLayout className={fontRegular.className}>
    <Component {...pageProps} hotelsData={hotelsData} overlayState={overlayState} updateOverlayState={updateOverlayState} />

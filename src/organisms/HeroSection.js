@@ -7,24 +7,24 @@ import Overlay from './Overlay'
 
 function HeroSection({ hotelsData, overlayState, updateOverlayState }) {
 
-  const [drawerData, setDrawerData] = React.useState({
-    drawerData: null,
+  const [selectedHotel, setSelectedHotel] = React.useState({
+    selectedHotel: "",
   })
 
-  const updateDrawerData = (newData) => {
-    setDrawerData(newData);
+  const updateSelectedHotel = (newData) => {
+    setSelectedHotel(newData);
   }
 
   return (
     <>
       <div className={styles.wrapper}>
         <div className={styles.booking_widget_layout}>
-           <HeroBookingWidget overlayState={overlayState} updateOverlayState={updateOverlayState} hotelsData={hotelsData} drawerData={drawerData}/>
+           <HeroBookingWidget overlayState={overlayState} updateOverlayState={updateOverlayState} hotelsData={hotelsData} selectedHotel={selectedHotel}/>
         </div>
         <div>
             <Image src="https://cdn.dwarf.dk/comwell-cms-production/img/containers/main/kampagner/b2b_efter%C3%A5r2023/b2b_topheader.jpg/a1dbaeb00be6d3ed79294c38ccb1d729.webp" className={styles.image} alt="Hero image" width={1920} height={1080} />
         </div>
-       <Overlay overlayState={overlayState} updateOverlayState={updateOverlayState} hotelsData={hotelsData}/>
+       <Overlay overlayState={overlayState} updateOverlayState={updateOverlayState} hotelsData={hotelsData} selectedHotel={selectedHotel} updateSelectedHotel={updateSelectedHotel} />
     </div>
     </>
   )

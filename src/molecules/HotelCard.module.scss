@@ -1,0 +1,20 @@
+.hotel_card {
+    width: 100%;
+    border-radius: 4px;
+    height: fit-content;
+    padding: 1rem 0.5rem;
+    border: 1px solid #0000001A;
+    
+    div {
+        p {
+            font-weight: 700;
+        }
+        span {
+            color: #000000A6;
+            font-size: 0.85rem;
+        }
+    }
+}
+.hotel_card:hover {
+    cursor: pointer;
+}

@@ -1,37 +1,34 @@
 import React from 'react'
+import { useEffect } from 'react'
 import HeroBookingWidget from './HeroBookingWidget'
 import styles from './HeroSection.module.css'
 import Image from 'next/image'
 import Overlay from './Overlay'
 
-function HeroSection() {
+function HeroSection({ hotelsData, overlayState, updateOverlayState }) {
 
-  const [overlayData, setOverlayData] = React.useState({
-    currentOverlayData: "overlayData",
+  const [drawerData, setDrawerData] = React.useState({
+    drawerData: null,
   })
 
-  const [overlayState, setOverlayState] = React.useState({
-    overlayToShow: "",
-    showOverlay: false,
-
-  })
-  const updateOverlayState = (newState) => {
-    setOverlayState(newState);
-  };
+  const updateDrawerData = (newData) => {
+    setDrawerData(newData);
+  }
 
   return (
     <>
       <div className={styles.wrapper}>
         <div className={styles.booking_widget_layout}>
-           <HeroBookingWidget overlayState={overlayState} updateOverlayState={updateOverlayState} />
+           <HeroBookingWidget overlayState={overlayState} updateOverlayState={updateOverlayState} hotelsData={hotelsData} drawerData={drawerData}/>
         </div>
         <div>
             <Image src="https://cdn.dwarf.dk/comwell-cms-production/img/containers/main/kampagner/b2b_efter%C3%A5r2023/b2b_topheader.jpg/a1dbaeb00be6d3ed79294c38ccb1d729.webp" className={styles.image} alt="Hero image" width={1920} height={1080} />
         </div>
-       <Overlay overlayState={overlayState} updateOverlayState={updateOverlayState} overlayData={overlayData}/>
+       <Overlay overlayState={overlayState} updateOverlayState={updateOverlayState} hotelsData={hotelsData}/>
     </div>
     </>
   )
+
 }
 
 export default HeroSection

@@ -1,7 +1,8 @@
 import React from 'react'
-import styles from './Overlay.module.css'
+import styles from './Overlay.module.scss'
+import HotelCard from '../molecules/HotelCard'
 
-function Overlay({ overlayState, updateOverlayState, overlayData }) {
+function Overlay({ overlayState, updateOverlayState, hotelsData, overlayToShow }) {
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
         <div className={styles.overlay_content}>
@@ -12,8 +13,10 @@ function Overlay({ overlayState, updateOverlayState, overlayData }) {
                 </button>
             </div>
             <div className={styles.overlay_data}>
-              {overlayData.currentOverlayData}
-              </div>
+            {overlayState.overlayToShow === 'Choose hotel' && hotelsData && hotelsData.map((hotel) => (
+         <HotelCard hotel={hotel} key={hotel._id} />
+        ))}
+            </div>
             <div className={styles.drawer_bottom}>
               <button className={styles.drawer_lower_btn}>Select</button>
             </div>

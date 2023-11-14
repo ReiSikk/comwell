@@ -3,7 +3,8 @@ import React from 'react'
 function fourohfour() {
   return (
     <div>
-        <p>it could work but it doesnt</p>
+      <h1>404 baby</h1>
+        <p>feature under construction</p>
     </div>
   )
 }

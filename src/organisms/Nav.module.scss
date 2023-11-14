@@ -1,4 +1,9 @@
+@import "../styles/variables.scss";
+
 .nav_container {
+  position: sticky;
+  height: 100px;
+  z-index: 55;
   width: 100vw;
   display: flex;
   justify-content: space-between;
@@ -17,17 +22,11 @@
   min-height: 300px;
   width: 340px;
   border: 1px black solid;
-
-  input.nav {
-    border-radius: 4px;
-  }
-
-  button.nav {
+}
+  .form button.nav {
     background-color: rgb(24, 43, 57);
     border-radius: 9999px;
     color: rgb(229, 231, 235);
     height: 52px;
-
     margin: 1.25rem 2rem;
   }
-}

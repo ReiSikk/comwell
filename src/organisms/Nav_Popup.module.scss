@@ -1,0 +1,48 @@
+@import "../styles/variables.scss";
+
+.form_login {
+  background-color: white;
+  position: absolute;
+  top: 100px;
+  right: 200px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px black solid;
+  max-width: 400px;
+
+  input {
+    border-width: 1px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 4px;
+  }
+
+  label {
+    position: absolute;
+    top: 10px;
+  }
+
+  a {
+    text-decoration: underline;
+    color: $form-font-light-grey;
+  }
+
+  button {
+    color: rgb(255, 255, 255, 1);
+    background-color: rgb(24, 43, 57, 1);
+    padding: 20px;
+    width: 80%;
+    align-self: center;
+    font-weight: 600;
+    border-radius: 9999px;
+  }
+
+  p,
+  a {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 16.25px;
+  }
+}

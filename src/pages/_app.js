@@ -53,11 +53,6 @@ export default function App({ Component, pageProps }) {
     "Check in / Check out": "Dates"
   };
 
- const [selectedRegion, setSelectedRegion] = React.useState("All")
-  const handleLabelClick = (e) => {
-    setSelectedRegion(e.target.id);
-    //add class .selected to the clicked button and remove it from the others
-  }
 
 
 //makes it possible to use the timerRef.current in the useEffect hook
@@ -71,7 +66,7 @@ useEffect(() => {
 
   return () => 
     clearTimeout(timerRef.current); // Clean up the timeout on unmount
-}, [overlayState.overlayToShow, hotelsData, selectedRegion]);
+}, [overlayState.overlayToShow, hotelsData]);
 
 /* const updateOverlayState = (newState) => {
   setOverlayState(prevState => ({ ...prevState, ...newState }));
@@ -82,12 +77,21 @@ useEffect(() => {
   }
 }; */
 const updateOverlayState = (newState) => {
-  setOverlayState(prevState => ({ ...prevState, ...newState }));
+  console.log('updateOverlayState called with:', newState);
+
   clearTimeout(timerRef.current); 
 
-  if (newState.showOverlay !== undefined) {
-    setOverlayState(prevState => ({ ...prevState, isVisible: newState.showOverlay }));
-  }
+  setOverlayState(prevState => {
+    const updatedState = {
+      ...prevState,
+      ...newState,
+      isVisible: newState.showOverlay !== undefined ? newState.showOverlay : prevState.isVisible,
+    };
+
+    console.log('updatedState:', updatedState);
+
+    return updatedState;
+  });
 };
 
 
@@ -103,8 +107,6 @@ const updateOverlayState = (newState) => {
     selectedHotel,
     updateSelectedHotel,
     overlayHeaders,
-    selectedRegion,
-    handleLabelClick,
   };
 
 

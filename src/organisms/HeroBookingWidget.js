@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import styles from './HeroBookingWidget.module.css'
+import styles from './HeroBookingWidget.module.scss'
 import WidgetInput from '../molecules/WidgetInput'
 import { HotelsContext } from '../providers/hotels-context.js'
 
@@ -36,14 +36,7 @@ function HeroBookingWidget() {
          </div>
          </div>
        </div>
-   {/*     <div 
-       className={`${overlayState.showOverlay ? styles.overlay_background : ''}`} 
-       onClick={updateOverlayState}
-       ></div> */}
-       <div 
-         className={`${overlayState.showOverlay && overlayState.isVisible ? styles.overlay_background : ''}`} 
-         onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}
-       ></div>
+
 
     </>
   )

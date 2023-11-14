@@ -7,6 +7,7 @@ function WidgetInput({ inputText }) {
 
   const { updateOverlayState, overlayState }= useContext(HotelsContext);
 
+
   return (
  <div className={styles.input_wrapper} onClick={() => updateOverlayState({ ...overlayState,  overlayToShow: inputText, showOverlay: !overlayState.showOverlay })} >
        <button className={styles.input_button}>

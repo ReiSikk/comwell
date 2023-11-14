@@ -7,8 +7,14 @@ import { useState, useEffect, useContext } from 'react'
 
 function Overlay() {
 
-  const { overlayState, updateOverlayState, selectedHotel, hotelsData, updateSelectedHotel, overlayHeaders, isVisible, selectedRegion, handleLabelClick }= useContext(HotelsContext);
-
+  const [selectedRegion, setSelectedRegion] = React.useState("All")
+  const handleLabelClick = (e) => {
+    setSelectedRegion(e.target.id);
+    //add class .selected to the clicked button and remove it from the others
+  }
+  
+  const { overlayState, updateOverlayState, selectedHotel, hotelsData, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion }= useContext(HotelsContext);
+  
 
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
@@ -30,7 +36,7 @@ function Overlay() {
                   )
                    }
                 </div>
-            <div className={`${styles.overlay_data} ${isVisible ? styles.visible : ''}`}>
+            <div className={`${styles.overlay_data} ${overlayState.isVisible ? styles.visible : ''}`}>
             {overlayState.overlayToShow === 'Choose hotel' && hotelsData && hotelsData
               .filter(hotel => selectedRegion === 'All' || hotel.region === selectedRegion)
               .map(hotel => ( <HotelCard 

@@ -1,33 +1,14 @@
 import React from 'react'
 import styles from './Overlay.module.scss'
 import HotelCard from '../molecules/HotelCard'
-import { useState, useEffect } from 'react'
-
-function Overlay({ overlayState, updateOverlayState, hotelsData, updateSelectedHotel, selectedHotel  }) {
-
-  const overlayHeaders = {
-    "Choose hotel": "Hotels",
-    "Choose room": "Guests & Rooms",
-    "Check in / Check out": "Dates"
-  };
-
- const [selectedRegion, setSelectedRegion] = React.useState("All")
-  const handleLabelClick = (e) => {
-    setSelectedRegion(e.target.id);
-    //add class .selected to the clicked button and remove it from the others
-  }
+import { HotelsContext } from '../providers/hotels-context.js'
+import { useState, useEffect, useContext } from 'react'
 
 
-  const [isVisible, setIsVisible] = useState(false);
-  useEffect(() => {
-    setIsVisible(false);
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 250); // Delay showing the overlay to give the animation time to finish
-    
-    return () => 
-      clearTimeout(timer); // Clean up the timeout on unmount
-  }, [overlayState.overlayToShow, hotelsData, selectedRegion]);
+function Overlay() {
+
+  const { overlayState, updateOverlayState, selectedHotel, hotelsData, updateSelectedHotel, overlayHeaders, isVisible, selectedRegion, handleLabelClick }= useContext(HotelsContext);
+
 
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>

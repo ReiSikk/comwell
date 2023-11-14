@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styles from './HeroBookingWidget.module.css'
 import WidgetInput from '../molecules/WidgetInput'
-import Overlay from './Overlay'
-import { useState } from 'react'
+import { HotelsContext } from '../providers/hotels-context.js'
 
-function HeroBookingWidget({ overlayState, updateOverlayState, hotelsData, selectedHotel }) {
+
+function HeroBookingWidget() {
+  const { overlayState, updateOverlayState, selectedHotel, hotelsData }= useContext(HotelsContext);
 
   return (
     <>
@@ -17,9 +18,9 @@ function HeroBookingWidget({ overlayState, updateOverlayState, hotelsData, selec
           </div>
           <div className={styles.inner_lower}>
             <div className={styles.inputs_container}>
-             <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Hotels"} inputText={ selectedHotel.name ? selectedHotel.name : "Choose hotel"} hotelsData={hotelsData} selectedHotel={selectedHotel._id} />
-             <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Guests and Rooms"} inputText={"Choose room"} />
-             <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Dates"} inputText={"Check in / Check out"} />
+             <WidgetInput inputText={ selectedHotel && selectedHotel.name ? selectedHotel.name : "Choose hotel"}  />
+             <WidgetInput inputText={"Choose room"} />
+             <WidgetInput inputText={"Check in / Check out"} />
             </div>
             <div className={styles.button_wrapper}>
              <div className={styles.button_container}>
@@ -35,9 +36,13 @@ function HeroBookingWidget({ overlayState, updateOverlayState, hotelsData, selec
          </div>
          </div>
        </div>
-       <div 
+   {/*     <div 
        className={`${overlayState.showOverlay ? styles.overlay_background : ''}`} 
        onClick={updateOverlayState}
+       ></div> */}
+       <div 
+         className={`${overlayState.showOverlay && overlayState.isVisible ? styles.overlay_background : ''}`} 
+         onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}
        ></div>
 
     </>

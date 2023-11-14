@@ -1,9 +1,13 @@
 import React from 'react'
 import styles from './WindgetInput.module.css'
+import { HotelsContext } from '../providers/hotels-context.js'
+import { useContext } from 'react'
 
-function WidgetInput({ inputText, updateOverlayState, overlayState, selectedHotel }) {
+function WidgetInput({ inputText }) {
+
+  const { updateOverlayState, overlayState }= useContext(HotelsContext);
+
   return (
- 
  <div className={styles.input_wrapper} onClick={() => updateOverlayState({ ...overlayState,  overlayToShow: inputText, showOverlay: !overlayState.showOverlay })} >
        <button className={styles.input_button}>
          {inputText}<span className={styles.input_label}>

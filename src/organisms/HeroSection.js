@@ -1,19 +1,16 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useContext } from 'react'
+import { HotelsContext } from '../providers/hotels-context.js'
 import HeroBookingWidget from './HeroBookingWidget'
 import styles from './HeroSection.module.css'
 import Image from 'next/image'
 import Overlay from './Overlay'
 
-function HeroSection({ hotelsData, overlayState, updateOverlayState }) {
+function HeroSection() {
 
-  const [selectedHotel, setSelectedHotel] = React.useState({
-    selectedHotel: "",
-  })
 
-  const updateSelectedHotel = (newData) => {
-    setSelectedHotel(newData);
-  }
+  const { overlayState, updateOverlayState, selectedHotel, hotelsData, updateSelectedHote, overlayHeaders, selectedRegion, updateSelectedHotel }= useContext(HotelsContext);
+
 
   return (
     <>

@@ -4,16 +4,7 @@ import WidgetInput from '../molecules/WidgetInput'
 import Overlay from './Overlay'
 import { useState } from 'react'
 
-function HeroBookingWidget() {
-  const [overlayState, setOverlayState] = React.useState({
-    overlayToShow: "",
-    showOverlay: false,
-
-  })
-  const updateOverlayState = (newState) => {
-    setOverlayState(newState);
-  };
-
+function HeroBookingWidget({ overlayState, updateOverlayState, hotelsData, selectedHotel }) {
 
   return (
     <>
@@ -26,7 +17,7 @@ function HeroBookingWidget() {
           </div>
           <div className={styles.inner_lower}>
             <div className={styles.inputs_container}>
-             <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Hotels"} inputText={"Choose hotel"} />
+             <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Hotels"} inputText={ selectedHotel.name ? selectedHotel.name : "Choose hotel"} hotelsData={hotelsData} selectedHotel={selectedHotel._id} />
              <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Guests and Rooms"} inputText={"Choose room"} />
              <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Dates"} inputText={"Check in / Check out"} />
             </div>
@@ -44,7 +35,6 @@ function HeroBookingWidget() {
          </div>
          </div>
        </div>
-       <Overlay overlayState={overlayState} updateOverlayState={updateOverlayState} />
        <div 
        className={`${overlayState.showOverlay ? styles.overlay_background : ''}`} 
        onClick={updateOverlayState}

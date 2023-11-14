@@ -1,11 +1,12 @@
 
-import MainLayout from '@/layouts/MainLayout'
 import HeroSection from '@/organisms/HeroSection'
-import { Main } from 'next/document'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useState, useEffect } from 'react'
+import React from 'react'
 
-export default function Home() {
+export default function Home({ hotelsData, overlayState, updateOverlayState }) {
+  
   return (
     <>
       <Head>
@@ -14,7 +15,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main>
-        <HeroSection />
+        <HeroSection hotelsData={hotelsData} overlayState={overlayState} updateOverlayState={updateOverlayState} />
       </main>
     </>
   )

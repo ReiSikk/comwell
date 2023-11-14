@@ -1,9 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
-import styles from './NavLink_Icon.module.css'
+import styles from './NavLink.module.scss'
 
 
-function NavLink_Icon({link_name, onClick, link_href, image_src, weight, height, image_alt}) {
+function NavLink({link_name, onClick, link_href, image_src, weight, height, image_alt}) {
   return (
       <a onClick={onClick} className={styles.nav_link} href={link_href}><p>{link_name}</p>
     <Image src={image_src}
@@ -14,4 +14,4 @@ function NavLink_Icon({link_name, onClick, link_href, image_src, weight, height,
   )
 }
 
-export default NavLink_Icon
+export default NavLink

@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './WindgetInput.module.css'
 
-function WidgetInput({ inputText, updateOverlayState, overlayState }) {
+function WidgetInput({ inputText, updateOverlayState, overlayState, selectedHotel }) {
   return (
  
  <div className={styles.input_wrapper} onClick={() => updateOverlayState({ ...overlayState,  overlayToShow: inputText, showOverlay: !overlayState.showOverlay })} >

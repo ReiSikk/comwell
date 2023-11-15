@@ -62,22 +62,14 @@ useEffect(() => {
   setOverlayState(prevState => ({ ...prevState, isVisible: false }));
   timerRef.current = setTimeout(() => {
     setOverlayState(prevState => ({ ...prevState, isVisible: true }));
-  }, 250); // Delay showing the overlay to give the animation time to finish
+  }, 250);
 
   return () => 
     clearTimeout(timerRef.current); // Clean up the timeout on unmount
 }, [overlayState.overlayToShow, hotelsData]);
 
-/* const updateOverlayState = (newState) => {
-  setOverlayState(prevState => ({ ...prevState, ...newState }));
-  
-  if (newState.showOverlay === false) {
-    setOverlayState(prevState => ({ ...prevState, isVisible: false }));
-    clearTimeout(timerRef.current); // Clear the timer on unmount
-  }
-}; */
+
 const updateOverlayState = (newState) => {
-  console.log('updateOverlayState called with:', newState);
 
   clearTimeout(timerRef.current); 
 
@@ -87,8 +79,6 @@ const updateOverlayState = (newState) => {
       ...newState,
       isVisible: newState.showOverlay !== undefined ? newState.showOverlay : prevState.isVisible,
     };
-
-    console.log('updatedState:', updatedState);
 
     return updatedState;
   });

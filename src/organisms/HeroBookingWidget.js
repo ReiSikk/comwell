@@ -18,9 +18,9 @@ function HeroBookingWidget() {
           </div>
           <div className={styles.inner_lower}>
             <div className={styles.inputs_container}>
-             <WidgetInput inputText={ selectedHotel && selectedHotel.name ? selectedHotel.name : "Choose hotel"}  />
-             <WidgetInput inputText={"Choose room"} />
-             <WidgetInput inputText={"Check in / Check out"} />
+             <WidgetInput inputText={ selectedHotel && selectedHotel.name ? selectedHotel.name : "Choose hotel"} overlayID={"Choose hotel"}  />
+             <WidgetInput inputText={"Choose room"} overlayID={"Choose room"} />
+             <WidgetInput inputText={"Check in / Check out"} overlayID={"Check in / Check out"} />
             </div>
             <div className={styles.button_wrapper}>
              <div className={styles.button_container}>

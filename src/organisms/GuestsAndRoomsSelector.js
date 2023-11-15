@@ -1,6 +1,20 @@
 import React from 'react'
+import styles from './GuestsAndRoomsSelector.module.scss'
+import IncrementInput from '../molecules/IncrementInput'
+import { useState } from 'react'
 
 function GuestsAndRoomsSelector() {
+ const [guestsAndRooms, setGuestsAndRooms] = useState({
+    rooms: 1,
+    adults: 1,
+    kids: 0,
+    infants: 0
+ });
+
+ const handleInputChange = (id, value) => {
+    console.log("called", id, value);
+    setGuestsAndRooms(prevState => ({ ...prevState, [id]: value }));
+  };
   return (
     <div>
         <div className={styles.gr_selector}>
@@ -10,14 +24,15 @@ function GuestsAndRoomsSelector() {
           <div className={styles.gr_lower}>
             <div className={styles.gr_input_cell}>
                 <span>Adults</span>
-                <div>
-                    <button aria-label="Decrease amount"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="2" fill="none"><path fill="currentColor" fillRule="evenodd" d="M15.556 1.667H.445V.333h15.11v1.334Z" clipRule="evenodd"></path></svg>
-                    </button>
-                    <div ><input min="1" max="10" type="number" name="1"></input>
-                    </div>
-                    <button aria-label="Increase amount"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokWidth="1.5" d="M12 3.5v17M3.5 12h17"></path></svg>
-                    </button>
-                </div>
+                <IncrementInput inputData={"Adults"} id={"adults"} onInputChange={handleInputChange}  guestsAndRooms={guestsAndRooms} />
+            </div>
+            <div className={styles.gr_input_cell}>
+                <span>Kids</span>
+                <IncrementInput inputData={"Kids"} id={"kids"} onInputChange={handleInputChange} guestsAndRooms={guestsAndRooms} />
+            </div>
+            <div className={styles.gr_input_cell}>
+                <span>Infants</span>
+                <IncrementInput inputData={"Infats"} id={"infants"} onInputChange={handleInputChange} guestsAndRooms={guestsAndRooms} />
             </div>
           </div>
         </div>

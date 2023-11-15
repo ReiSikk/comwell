@@ -4,6 +4,7 @@ import HotelCard from '../molecules/HotelCard.js'
 import { HotelsContext } from '../providers/hotels-context.js'
 import { useState, useEffect, useContext } from 'react'
 import LoadingSpinner from '../atoms/LoadingSpinner'
+import GuestsAndRoomsSelector from './GuestsAndRoomsSelector'
 
 
 
@@ -67,6 +68,9 @@ function Overlay() {
                 updateSelectedHotel={updateSelectedHotel} 
                 /> 
            ))}
+              {overlayState.overlayToShow === 'Choose room' && (
+                    <GuestsAndRoomsSelector />
+                   )}
             </div>
             <div className={styles.drawer_bottom}>
               <button className={styles.drawer_lower_btn}>Select</button>

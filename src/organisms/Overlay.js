@@ -1,20 +1,41 @@
 import React from 'react'
 import styles from './Overlay.module.scss'
-import HotelCard from '../molecules/HotelCard'
+import HotelCard from '../molecules/HotelCard.js'
 import { HotelsContext } from '../providers/hotels-context.js'
 import { useState, useEffect, useContext } from 'react'
+import LoadingSpinner from '../atoms/LoadingSpinner'
+
 
 
 function Overlay() {
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await fetch('http://127.0.0.1:3005/hotels');
+        if (!res.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await res.json();
+        setHotelsData(data);
+        console.log("fetching data");
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    getData();
+  }, []); 
+
+
+  const [hotelsData, setHotelsData] = useState(null);
   const [selectedRegion, setSelectedRegion] = React.useState("All")
   const handleLabelClick = (e) => {
     setSelectedRegion(e.target.id);
     //add class .selected to the clicked button and remove it from the others
   }
   
-  const { overlayState, updateOverlayState, selectedHotel, hotelsData, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion }= useContext(HotelsContext);
-  
+  const { overlayState, updateOverlayState, selectedHotel, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion }= useContext(HotelsContext);
 
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
@@ -37,6 +58,7 @@ function Overlay() {
                    }
                 </div>
             <div className={`${styles.overlay_data} ${overlayState.isVisible ? styles.visible : ''}`}>
+              {!hotelsData && <LoadingSpinner />}
             {overlayState.overlayToShow === 'Choose hotel' && hotelsData && hotelsData
               .filter(hotel => selectedRegion === 'All' || hotel.region === selectedRegion)
               .map(hotel => ( <HotelCard 

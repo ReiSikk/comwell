@@ -59,7 +59,6 @@ function Overlay() {
                    }
                 </div>
             <div className={`${styles.overlay_data} ${overlayState.isVisible ? styles.visible : ''}`}>
-              {!hotelsData && <LoadingSpinner />}
             {overlayState.overlayToShow === 'Choose hotel' && hotelsData && hotelsData
               .filter(hotel => selectedRegion === 'All' || hotel.region === selectedRegion)
               .map(hotel => ( <HotelCard 
@@ -73,7 +72,7 @@ function Overlay() {
                    )}
             </div>
             <div className={styles.drawer_bottom}>
-              <button className={styles.drawer_lower_btn}>Select</button>
+              <button className={styles.drawer_lower_btn} onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}>Select</button>
             </div>
         </div>
     </div>

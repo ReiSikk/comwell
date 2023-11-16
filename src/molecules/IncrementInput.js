@@ -31,7 +31,11 @@ function IncrementInput({inputData, id, onInputChange, guestsAndRooms}) {
     <div className={styles.increment_input}>
     <button aria-label="Decrease amount" onClick={decreaseValue}><svg xmlns="http://www.w3.org/2000/svg" width="16" height="2" fill="none"><path fill="currentColor" fillRule="evenodd" d="M15.556 1.667H.445V.333h15.11v1.334Z" clipRule="evenodd"></path></svg>
     </button>
-    <div ><input id={id} min="1" max="10" type="number" name="1"  value={inputValue} onChange={handleInputChange}></input>
+    <div ><input id={id} min="1" max="10" type="number" name="1"  value={
+      guestsAndRooms.adults === 1 && guestsAndRooms.kids === 0 && guestsAndRooms.infants === 0 
+        ? initialValue 
+        : guestsAndRooms[id]
+    }  onChange={handleInputChange}></input>
     </div>
     <button aria-label="Increase amount" onClick={increaseValue}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="currentColor" stroke="currentColor" strokeWidth="1.5" d="M12 3.5v17M3.5 12h17"></path></svg>
     </button>

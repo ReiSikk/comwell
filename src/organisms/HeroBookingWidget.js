@@ -5,7 +5,7 @@ import { HotelsContext } from '../providers/hotels-context.js'
 
 
 function HeroBookingWidget() {
-  const { overlayState, updateOverlayState, selectedHotel, hotelsData }= useContext(HotelsContext);
+  const { overlayState, updateOverlayState, selectedHotel, hotelsData, guestsAndRooms }= useContext(HotelsContext);
 
   return (
     <>
@@ -19,7 +19,7 @@ function HeroBookingWidget() {
           <div className={styles.inner_lower}>
             <div className={styles.inputs_container}>
              <WidgetInput inputText={ selectedHotel && selectedHotel.name ? selectedHotel.name : "Choose hotel"} overlayID={"Choose hotel"}  />
-             <WidgetInput inputText={"Choose room"} overlayID={"Choose room"} />
+             <WidgetInput inputText={guestsAndRooms.adults + guestsAndRooms.kids + guestsAndRooms.infants + " " + "Persons"} overlayID={"Choose room"} />
              <WidgetInput inputText={"Check in / Check out"} overlayID={"Check in / Check out"} />
             </div>
             <div className={styles.button_wrapper}>

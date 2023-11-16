@@ -69,12 +69,28 @@ const updateOverlayState = (newState) => {
     setSelectedHotel(newData);
   }
 
+
+  //Guests and rooms 
+  const [guestsAndRooms, setGuestsAndRooms] = useState({
+    rooms: 1,
+    adults: 1,
+    kids: 0,
+    infants: 0
+ });
+
+ const handleInputChange = (id, value) => {
+    console.log("called", id, value);
+    setGuestsAndRooms(prevState => ({ ...prevState, [id]: value }));
+  };
+
   const hotelsContextValue = {
     overlayState,
     updateOverlayState,
     selectedHotel,
     updateSelectedHotel,
     overlayHeaders,
+    guestsAndRooms,
+    handleInputChange
   };
 
 

@@ -6,6 +6,7 @@ import MainLayout from '@/layouts/MainLayout'
 import localFont from 'next/font/local'
 import { useEffect, useState } from 'react'
 import React from 'react'
+import { AuthProvider } from '@/atoms/AuthProvider'
 // Font files can be colocated inside of `pages`
 const fontRegular = localFont({ src: '/fonts/Fellix-Bold-fe0f33a2.ttf' })
 /* const inter = Inter({ subsets: ['latin'] }); */
@@ -42,8 +43,10 @@ export default function App({ Component, pageProps }) {
   }; 
 
   return (
+<AuthProvider>
   <MainLayout className={fontRegular.className}>
    <Component {...pageProps} hotelsData={hotelsData} overlayState={overlayState} updateOverlayState={updateOverlayState} />
   </MainLayout>
+  </AuthProvider>
   )
 }

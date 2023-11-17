@@ -7,6 +7,9 @@ import MainLayout from '@/layouts/MainLayout'
 import localFont from 'next/font/local'
 import { useEffect, useState, useRef } from 'react'
 import React from 'react'
+//date picker imports
+import dayjs from 'dayjs'
+// Use the plugin
 // Font files can be colocated inside of `pages`
 const fontRegular = localFont({ src: '/fonts/Fellix-Bold-fe0f33a2.ttf' })
 
@@ -79,9 +82,23 @@ const updateOverlayState = (newState) => {
  });
 
  const handleInputChange = (id, value) => {
-    console.log("called", id, value);
     setGuestsAndRooms(prevState => ({ ...prevState, [id]: value }));
   };
+
+  //Check in/out dates
+const [checkInOutDates, setCheckInOutDates] = useState({
+  checkInDate: dayjs(), // set checkInDate as today
+  checkOutDate: dayjs().add(1, 'day')
+})
+
+
+const handleCheckInOutChange = (id, value) => {
+  let formattedValue = dayjs(value).format('YYYY-MM-DD');
+  console.log(formattedValue, formattedValue, id)
+
+  // Update the state with the new check-in or check-out date
+  setCheckInOutDates(prevState => ({ ...prevState, [id]: formattedValue }));
+}
 
   const hotelsContextValue = {
     overlayState,
@@ -90,7 +107,9 @@ const updateOverlayState = (newState) => {
     updateSelectedHotel,
     overlayHeaders,
     guestsAndRooms,
-    handleInputChange
+    handleInputChange,
+    checkInOutDates,
+    handleCheckInOutChange
   };
 
 

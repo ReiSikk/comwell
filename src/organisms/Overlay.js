@@ -4,6 +4,7 @@ import HotelCard from '../molecules/HotelCard.js'
 import { HotelsContext } from '../providers/hotels-context.js'
 import { useState, useEffect, useContext } from 'react'
 import GuestsAndRoomsSelector from '../organisms/GuestsAndRoomsSelector.js'
+import CheckInOut from './CheckInOut'
 
 
 
@@ -68,6 +69,12 @@ function Overlay() {
            ))}
               {overlayState.overlayToShow === 'Choose room' && (
                     <GuestsAndRoomsSelector />
+                   )}
+              {overlayState.overlayToShow === 'Check in / Check out' && (
+                  <div>
+                      <CheckInOut id="checkInDate"/>
+                     {/*  <CheckInOut id="checkOutDate" /> */}
+                  </div>
                    )}
             
             </div>

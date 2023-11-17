@@ -2,25 +2,33 @@ import React, { useState, useRef, useEffect } from "react";
 import { submitLogindata } from "@/services/login_data";
 import styles from "./Nav_Popup.module.scss";
 import { AuthProvider, useAuth } from "@/atoms/AuthProvider";
+import SignUpOverlay from "./SignUpOverlay";
+import InputField from "@/atoms/InputField";
 
 function Nav_Popup({ isVisible, onClose }) {
   const popupRef = useRef(null);
-  const [focusedInput, setFocusedInput] = useState(null);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const overlayRef = useRef(null);
   const { isLoggedIn, login, logout } = useAuth();
+  const [showSignUpOverlay, setShowSignUpOverlay] = useState(false);
 
-  const handleFocus = (inputId) => {
-    setFocusedInput(inputId);
+
+  //OVERLAY
+  const handleSignUpClick = () => {
+    setShowSignUpOverlay(true);
+  };
+
+  const closeSignUpOverlay = () => {
+    console.log("closing overlay")
+    setShowSignUpOverlay(false);
   };
 
   useEffect(() => {
-    const handleOutsideClick = (e) => {
+    const handleOutsideClick = (e) => { 
+      if (!showSignUpOverlay) {
       if (popupRef.current && !popupRef.current.contains(e.target)) {
         onClose();
       }
+    }
     };
 
     if (isVisible) {
@@ -30,17 +38,7 @@ function Nav_Popup({ isVisible, onClose }) {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [isVisible, onClose]);
-
-  function handleFormChange(event) {
-    const { value, name } = event.target;
-
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  }
-
+  }, [isVisible, onClose, showSignUpOverlay]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -65,7 +63,8 @@ login();
         logout();
     // Handle logout logic
   };
-  
+
+
 
   return isVisible ? (
 <>
@@ -73,29 +72,20 @@ login();
           <>
     <form className={styles.form_login} ref={popupRef}>
       <div className={styles.container}>
-        <div className={styles.input_container}>
-          <label className={focusedInput === "email" || formData.email != "" ? styles.focused : ""} htmlFor="email">
-            Email
-          </label>
-          <input className={focusedInput === "email" ? styles.focused : ""} id="email" type="email" name="email" value={formData.email} onChange={handleFormChange} onFocus={() => handleFocus("email")} required />
-        </div>
-        <div className={styles.input_container}>
-          <label className={focusedInput === "password" || formData.password != "" ? styles.focused : ""} htmlFor="password">
-            Password
-          </label>
-          <input className={focusedInput === "password" ? styles.focused : ""} type="text" id="password" name="password" value={formData.password} onChange={handleFormChange} onFocus={() => handleFocus("password")} required />
-        </div>
+      <InputField label="Email" inputId="email" type="text" />
+      <InputField label="Password" inputId="password" type="text" />
         <p>Forgot your password?</p>
         <a href="/fourohfour">Reset password</a>
         <p>Dont have an account?</p>
-        <a href="">Sign up for Comwell Club</a>
+        <a href="#" onClick={handleSignUpClick}>Sign up for Comwell Club</a>
       </div>
       <div className={styles.container_button}>
-        <button type="submit" onClick={handleSubmit}>
+        <button type="submit"  onClick={handleSubmit}>
           Log in
         </button>
       </div>
     </form>
+    {showSignUpOverlay && <SignUpOverlay onClose={onClose} closeSignUpOverlay={closeSignUpOverlay}/>}
           </>
         ) : (
           <>

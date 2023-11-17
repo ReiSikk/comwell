@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   // Add your login logic here
   const login = () => {
+    
     setIsLoggedIn(true);
   };
 

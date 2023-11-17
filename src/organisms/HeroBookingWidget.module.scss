@@ -41,16 +41,7 @@
     flex-direction: column;
     gap: 0.75rem;
 }
-.overlay_background {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100vw;
-    height: 100dvh;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 2;
-    transition: all 0.3s ease-in-out;
-  }
+
 
 
 /* search button */

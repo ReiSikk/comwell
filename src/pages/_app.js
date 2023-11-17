@@ -87,8 +87,8 @@ const updateOverlayState = (newState) => {
 
   //Check in/out dates
 const [checkInOutDates, setCheckInOutDates] = useState({
-  checkInDate: dayjs(), // set checkInDate as today
-  checkOutDate: dayjs().add(1, 'day')
+  checkInDate: dayjs().format('YYYY-MM-DD'), // set checkInDate as today
+  checkOutDate: dayjs().add(1, 'day').format('YYYY-MM-DD')
 })
 
 

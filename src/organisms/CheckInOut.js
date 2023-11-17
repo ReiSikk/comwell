@@ -17,6 +17,7 @@ export default function CheckInOut({ id }) {
       };
 
   return (
+    
       <Calendar
         value={[dayjs(checkInOutDates.checkInDate).toDate(), dayjs(checkInOutDates.checkOutDate).toDate()]}
         onChange={handleChange}

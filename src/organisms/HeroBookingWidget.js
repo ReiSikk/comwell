@@ -2,10 +2,11 @@ import React, { useContext } from 'react'
 import styles from './HeroBookingWidget.module.scss'
 import WidgetInput from '../molecules/WidgetInput'
 import { HotelsContext } from '../providers/hotels-context.js'
+import dayjs from 'dayjs'
 
 
 function HeroBookingWidget() {
-  const { overlayState, updateOverlayState, selectedHotel, hotelsData, guestsAndRooms }= useContext(HotelsContext);
+  const { overlayState, updateOverlayState, selectedHotel, hotelsData, guestsAndRooms, checkInOutDates }= useContext(HotelsContext);
 
   return (
     <>
@@ -20,7 +21,9 @@ function HeroBookingWidget() {
             <div className={styles.inputs_container}>
              <WidgetInput inputText={ selectedHotel && selectedHotel.name ? selectedHotel.name : "Choose hotel"} overlayID={"Choose hotel"}  />
              <WidgetInput inputText={guestsAndRooms.adults + guestsAndRooms.kids + guestsAndRooms.infants + " " + "Persons"} overlayID={"Choose room"} />
-             <WidgetInput inputText={"Check in / Check out"} overlayID={"Check in / Check out"} />
+             <WidgetInput 
+             inputText={checkInOutDates.checkInDate && checkInOutDates.checkOutDate ? `${dayjs(checkInOutDates.checkInDate).format('DD MMM')} / ${dayjs(checkInOutDates.checkOutDate).format('DD MMM')}` : "Check in / Check out"}  
+             overlayID={"Check in / Check out"} />
             </div>
             <div className={styles.button_wrapper}>
              <div className={styles.button_container}>

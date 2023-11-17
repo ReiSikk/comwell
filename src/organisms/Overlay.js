@@ -71,7 +71,7 @@ function Overlay() {
                     <GuestsAndRoomsSelector />
                    )}
               {overlayState.overlayToShow === 'Check in / Check out' && (
-                  <div>
+                  <div className={styles.check_in_out_wrapper}>
                       <CheckInOut id="checkInDate"/>
                      {/*  <CheckInOut id="checkOutDate" /> */}
                   </div>

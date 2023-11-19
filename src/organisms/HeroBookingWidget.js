@@ -8,6 +8,11 @@ import dayjs from 'dayjs'
 function HeroBookingWidget() {
   const { overlayState, updateOverlayState, selectedHotel, hotelsData, guestsAndRooms, checkInOutDates, fetchRoomsForSelectedHotel }= useContext(HotelsContext);
 
+  const handleSearchClick = () => {
+    fetchRoomsForSelectedHotel();
+    updateOverlayState({ ...overlayState,  overlayToShow: "Available Rooms", showOverlay: !overlayState.showOverlay })
+  };
+
   return (
     <>
     <div className={styles.booking_widget} >
@@ -27,7 +32,7 @@ function HeroBookingWidget() {
             </div>
             <div className={styles.button_wrapper}>
              <div className={styles.button_container}>
-               <button className={styles.button_search} onClick={fetchRoomsForSelectedHotel}><span>
+               <button className={styles.button_search} onClick={handleSearchClick}><span>
                  <span className={styles.button_search_text}>Search Rooms</span>
                  <svg data-v-f36cb2b1="" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path fill="currentColor" stroke="currentColor" strokeWidth=".5" d="M10.724 10A5.428 5.428 0 0 0 12 6.5 5.5 5.5 0 1 0 6.5 12c1.28 0 2.52-.451 3.5-1.276l3.793 3.776.707-.707L10.724 10ZM6.5 11a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z"></path></svg>
                </span>

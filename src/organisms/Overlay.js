@@ -11,6 +11,14 @@ function Overlay() {
 
   const { overlayState, updateOverlayState, selectedHotel, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion, shouldFetchRooms, fetchRoomsForSelectedHotel, setShouldFetchRooms }= useContext(HotelsContext);
 
+  //init state variables
+  const [roomsData, setRoomsData] = useState(null);
+  const [hotelsData, setHotelsData] = useState(null);
+  const [hotelRoomsData, setHotelRoomsData] = useState(null);
+
+
+
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -31,7 +39,6 @@ function Overlay() {
 
   //fetch rooms
   let hotelID = selectedHotel._id
-  console.log(hotelID, "hotelID")
   useEffect(() => {
     if (shouldFetchRooms) {
       // Fetch rooms for selectedHotel
@@ -42,7 +49,7 @@ function Overlay() {
             throw new Error('Failed to fetch data');
           }
           const data = await res.json();
-          setRoomsData(data);
+          setRoomsData(data.rooms);
         } catch (error) {
           console.error(error);
         }
@@ -55,13 +62,36 @@ function Overlay() {
   }, [shouldFetchRooms]);
 
 
-  const [hotelsData, setHotelsData] = useState(null);
-  const [roomsData, setRoomsData] = useState(null);
+  useEffect(() => {
+    const fetchHotelRoomsData = async () => {
+      try {
+        const roomDataPromises = roomsData.map(roomId =>
+          fetch(`http://127.0.0.1:3005/rooms/${roomId}`)
+        );
+        const roomDataResponses = await Promise.all(roomDataPromises);
+        const HotelRoomsData = await Promise.all(
+          roomDataResponses.map(response => response.json())
+        );
+        setHotelRoomsData(HotelRoomsData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+
+      fetchHotelRoomsData();
+    
+  }, [roomsData]);
+
+
+
   const [selectedRegion, setSelectedRegion] = React.useState("All")
   const handleLabelClick = (e) => {
     setSelectedRegion(e.target.id);
     //add class .selected to the clicked button and remove it from the others
   }
+
+  console.log(hotelRoomsData);
   
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
@@ -98,9 +128,21 @@ function Overlay() {
               {overlayState.overlayToShow === 'Check in / Check out' && (
                   <div className={styles.check_in_out_wrapper}>
                       <CheckInOut id="checkInDate"/>
-                     {/*  <CheckInOut id="checkOutDate" /> */}
                   </div>
                    )}
+           
+           {overlayState.overlayToShow === 'Available Rooms' && hotelRoomsData && (
+               <div>
+                 {hotelRoomsData.map(room => (
+                   <div key={room._id}>
+                     <h2>{room.roomType}</h2>
+                      <p>{room.available ? "Available" : "Not available"}</p>
+                     <p>{room.roomSize}</p>
+                     {/* Render other room properties as needed */}
+                   </div>
+                 ))}
+               </div>
+             )}
             
             </div>
             <div className={styles.drawer_bottom}>

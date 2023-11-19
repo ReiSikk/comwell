@@ -28,6 +28,14 @@ export default function App({ Component, pageProps }) {
     selectedHotel: "",
   })
 
+  const [shouldFetchRooms, setShouldFetchRooms] = useState(false);
+
+  const fetchRoomsForSelectedHotel = () => {
+  setShouldFetchRooms(true);
+};
+
+
+
 
   //update handle overlay state and displayed headers in it 
   const overlayHeaders = {
@@ -109,7 +117,10 @@ const handleCheckInOutChange = (id, value) => {
     guestsAndRooms,
     handleInputChange,
     checkInOutDates,
-    handleCheckInOutChange
+    handleCheckInOutChange,
+    shouldFetchRooms,
+    setShouldFetchRooms,
+    fetchRoomsForSelectedHotel
   };
 
 

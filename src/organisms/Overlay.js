@@ -7,8 +7,9 @@ import GuestsAndRoomsSelector from '../organisms/GuestsAndRoomsSelector.js'
 import CheckInOut from './CheckInOut'
 
 
-
 function Overlay() {
+
+  const { overlayState, updateOverlayState, selectedHotel, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion, shouldFetchRooms, fetchRoomsForSelectedHotel, setShouldFetchRooms }= useContext(HotelsContext);
 
   useEffect(() => {
     const getData = async () => {
@@ -28,16 +29,40 @@ function Overlay() {
     getData();
   }, []); 
 
+  //fetch rooms
+  let hotelID = selectedHotel._id
+  console.log(hotelID, "hotelID")
+  useEffect(() => {
+    if (shouldFetchRooms) {
+      // Fetch rooms for selectedHotel
+      const fetchRooms = async () => {
+        try {
+          const res = await fetch(`http://127.0.0.1:3005/hotels/${hotelID}/rooms`);
+          if (!res.ok) {
+            throw new Error('Failed to fetch data');
+          }
+          const data = await res.json();
+          setRoomsData(data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    
+      fetchRooms();
+      // After fetching, set shouldFetchRooms back to false
+      setShouldFetchRooms(false);
+    }
+  }, [shouldFetchRooms]);
+
 
   const [hotelsData, setHotelsData] = useState(null);
+  const [roomsData, setRoomsData] = useState(null);
   const [selectedRegion, setSelectedRegion] = React.useState("All")
   const handleLabelClick = (e) => {
     setSelectedRegion(e.target.id);
     //add class .selected to the clicked button and remove it from the others
   }
   
-  const { overlayState, updateOverlayState, selectedHotel, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion }= useContext(HotelsContext);
-
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
         <div className={styles.overlay_content}>

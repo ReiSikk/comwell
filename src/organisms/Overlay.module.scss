@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     right: -100%;
-    width: 50%;
+    width: 66%;
     height: 100dvh;
     background: #f1f1f1;
     z-index: 5;
@@ -113,3 +113,8 @@
       align-items: center;
     }
 
+    .rooms_flex {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }

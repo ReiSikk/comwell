@@ -5,6 +5,7 @@ import { HotelsContext } from '../providers/hotels-context.js'
 import { useState, useEffect, useContext } from 'react'
 import GuestsAndRoomsSelector from '../organisms/GuestsAndRoomsSelector.js'
 import CheckInOut from './CheckInOut'
+import RoomCard from '../molecules/RoomCard.js'
 
 
 function Overlay() {
@@ -70,7 +71,7 @@ function Overlay() {
         );
         const roomDataResponses = await Promise.all(roomDataPromises);
         const HotelRoomsData = await Promise.all(
-          roomDataResponses.map(response => response.json())
+          roomDataResponses.map(async response => response.json())
         );
         setHotelRoomsData(HotelRoomsData);
       } catch (error) {
@@ -132,17 +133,20 @@ function Overlay() {
                    )}
            
            {overlayState.overlayToShow === 'Available Rooms' && hotelRoomsData && (
-               <div>
-                 {hotelRoomsData.map(room => (
-                   <div key={room._id}>
-                     <h2>{room.roomType}</h2>
-                      <p>{room.available ? "Available" : "Not available"}</p>
-                     <p>{room.roomSize}</p>
-                     {/* Render other room properties as needed */}
-                   </div>
-                 ))}
+               <div className={styles.rooms_flex}>
+                 {hotelRoomsData
+                   .filter(room => room.available)
+                   .map(room => (
+                    <RoomCard 
+                    key={room._id}
+                    roomType={room.roomType} 
+                    roomSize={room.roomSize} 
+                    bedTypes={Array.isArray(room.bedTypes) ? room.bedTypes.join(', ') : room.bedTypes}
+                    roomFacilities={room.facilities}
+                    />
+                   ))}
                </div>
-             )}
+              )}
             
             </div>
             <div className={styles.drawer_bottom}>

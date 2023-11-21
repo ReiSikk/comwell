@@ -25,10 +25,16 @@ export default function App({ Component, pageProps }) {
     isVisible: false
 
   })
+  //selected hotel
   const [selectedHotel, setSelectedHotel] = React.useState({
     selectedHotel: "",
   })
 
+  const updateSelectedHotel = (newData) => {
+    setSelectedHotel(newData);
+  }
+
+  //handle if overlay opening is triggered by search button
   const [shouldFetchRooms, setShouldFetchRooms] = useState(false);
 
   const fetchRoomsForSelectedHotel = () => {
@@ -36,14 +42,12 @@ export default function App({ Component, pageProps }) {
 };
 
 
-
-
   //update handle overlay state and displayed headers in it 
   const overlayHeaders = {
     "Choose hotel": "Hotels",
-    "Choose room": "Guests & Rooms",
+    "Guests & Rooms": "Guests & Rooms",
     "Check in / Check out": "Dates",
-    "Rooms": "Rooms"
+    "Choose room": "Choose room"
   };
 
 
@@ -62,6 +66,7 @@ useEffect(() => {
 }, [overlayState.overlayToShow]);
 
 
+//update overlay state
 const updateOverlayState = (newState) => {
 
   clearTimeout(timerRef.current); 
@@ -78,11 +83,6 @@ const updateOverlayState = (newState) => {
 };
 
 
-  const updateSelectedHotel = (newData) => {
-    setSelectedHotel(newData);
-  }
-
-
   //Guests and rooms 
   const [guestsAndRooms, setGuestsAndRooms] = useState({
     rooms: 1,
@@ -91,6 +91,7 @@ const updateOverlayState = (newState) => {
     infants: 0
  });
 
+ //update guests and rooms
  const handleInputChange = (id, value) => {
     setGuestsAndRooms(prevState => ({ ...prevState, [id]: value }));
   };
@@ -110,6 +111,14 @@ const handleCheckInOutChange = (id, value) => {
   setCheckInOutDates(prevState => ({ ...prevState, [id]: formattedValue }));
 }
 
+const [selectedRoom, setSelectedRoom] = useState({
+  selectedRoom: "",
+})
+
+const updateSelectedRoom = (newData) => {
+  setSelectedRoom(newData);
+}
+
   const hotelsContextValue = {
     overlayState,
     updateOverlayState,
@@ -122,7 +131,9 @@ const handleCheckInOutChange = (id, value) => {
     handleCheckInOutChange,
     shouldFetchRooms,
     setShouldFetchRooms,
-    fetchRoomsForSelectedHotel
+    fetchRoomsForSelectedHotel,
+    selectedRoom,
+    updateSelectedRoom
   };
 
 

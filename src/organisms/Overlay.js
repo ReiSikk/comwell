@@ -6,11 +6,12 @@ import { useState, useEffect, useContext } from 'react'
 import GuestsAndRoomsSelector from '../organisms/GuestsAndRoomsSelector.js'
 import CheckInOut from './CheckInOut'
 import RoomCard from '../molecules/RoomCard.js'
+import dayjs from 'dayjs'
 
 
 function Overlay() {
 
-  const { overlayState, updateOverlayState, selectedHotel, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion, shouldFetchRooms, fetchRoomsForSelectedHotel, setShouldFetchRooms }= useContext(HotelsContext);
+  const { overlayState, updateOverlayState, selectedHotel, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion, shouldFetchRooms, fetchRoomsForSelectedHotel, setShouldFetchRooms, checkInOutDates, guestsAndRooms, selectedRoom, updateSelectedRoom }= useContext(HotelsContext);
 
   //init state variables
   const [roomsData, setRoomsData] = useState(null);
@@ -99,6 +100,22 @@ function Overlay() {
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
         <div className={styles.overlay_content}>
+        {overlayState.overlayToShow === 'Choose room' && (
+                <div className={styles.overlay_top_info}>
+                  <div>
+                       <span>{checkInOutDates.checkInDate && checkInOutDates.checkOutDate ? `${dayjs(checkInOutDates.checkInDate).format('DD MMM')} - ${dayjs(checkInOutDates.checkOutDate).format('DD MMM')}` : ""}</span>
+                    </div>
+                    <div>
+                      <span>
+                     {guestsAndRooms.rooms === 1 ? `${guestsAndRooms.rooms} room, ` : `${guestsAndRooms.rooms} rooms, `}
+                     {guestsAndRooms.adults + guestsAndRooms.kids + guestsAndRooms.infants === 1 ? "1 person" : `${guestsAndRooms.adults + guestsAndRooms.kids + guestsAndRooms.infants} persons`}
+                      </span>
+                    </div>
+                    <div>
+                      <span>{selectedHotel.name}</span>
+                    </div>
+                 </div>
+        )}
             <div className={styles.overlay_top}>
                 <h2 className={styles.overlay_header}>{overlayHeaders[overlayState.overlayToShow] || ""}</h2>
                 <button className={styles.close_button}  onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}>
@@ -125,7 +142,7 @@ function Overlay() {
                 updateSelectedHotel={updateSelectedHotel} 
                 /> 
            ))}
-              {overlayState.overlayToShow === 'Choose room' && (
+              {overlayState.overlayToShow === 'Guests & Rooms' && (
                     <GuestsAndRoomsSelector />
                    )}
               {overlayState.overlayToShow === 'Check in / Check out' && (
@@ -134,12 +151,15 @@ function Overlay() {
                   </div>
                    )}
            
-           {overlayState.overlayToShow === 'Rooms' && hotelRoomsData && (
+           {overlayState.overlayToShow === 'Choose room' && hotelRoomsData && (
                <div className={styles.rooms_flex}>
                  {hotelRoomsData
                    .filter(room => room.available)
                    .map(room => (
                     <RoomCard 
+                    selectedRoom={selectedRoom}
+                    updateSelectedRoom={updateSelectedRoom}
+                    room={room}
                     key={room._id}
                     roomType={room.roomType} 
                     roomSize={room.roomSize} 

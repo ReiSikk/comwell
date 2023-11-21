@@ -1,10 +1,16 @@
 import React from 'react'
 import styles from './RoomCard.module.scss'
 import Image from 'next/image'
+import { HotelsContext } from '../providers/hotels-context.js'
+import { useContext } from 'react'
 
-function RoomCard({ roomType, roomSize, bedTypes, roomFacilities }) {
+function RoomCard({ roomType, roomSize, bedTypes, roomFacilities, room, selectedRoom, updateSelectedRoom }) {
+
+    const isSelected = selectedRoom && room._id === selectedRoom._id;
+    const cardClass = isSelected ? `${styles.room_card} ${styles.selected}` : styles.room_card;
+
   return (
-    <div className={styles.room_card}>
+    <div className={cardClass} onClick={() => updateSelectedRoom(room)}>
       {  
       <>
       <div>

@@ -18,7 +18,7 @@ function HotelCard({ hotel, updateSelectedHotel, selectedHotel }) {
           </div>
           <div className={styles.icon}>
               <div>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><rect></rect><path fill="currentColor" fill-rule="evenodd" d="M6.668 10.6 3.134 7.067l-.733.666 3.533 3.534.734.733 7.067-7.067L13 4.2l-6.333 6.4Z" clip-rule="evenodd"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><rect></rect><path fill="currentColor" fillRule="evenodd" d="M6.668 10.6 3.134 7.067l-.733.666 3.533 3.534.734.733 7.067-7.067L13 4.2l-6.333 6.4Z" clipRule="evenodd"></path></svg>
               </div>
           </div>
         </div>

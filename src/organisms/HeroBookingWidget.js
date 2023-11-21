@@ -1,10 +1,12 @@
-import React from 'react'
-import styles from './HeroBookingWidget.module.css'
+import React, { useContext } from 'react'
+import styles from './HeroBookingWidget.module.scss'
 import WidgetInput from '../molecules/WidgetInput'
-import Overlay from './Overlay'
-import { useState } from 'react'
+import { HotelsContext } from '../providers/hotels-context.js'
+import dayjs from 'dayjs'
 
-function HeroBookingWidget({ overlayState, updateOverlayState, hotelsData, selectedHotel }) {
+
+function HeroBookingWidget() {
+  const { overlayState, updateOverlayState, selectedHotel, hotelsData, guestsAndRooms, checkInOutDates }= useContext(HotelsContext);
 
   return (
     <>
@@ -17,9 +19,11 @@ function HeroBookingWidget({ overlayState, updateOverlayState, hotelsData, selec
           </div>
           <div className={styles.inner_lower}>
             <div className={styles.inputs_container}>
-             <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Hotels"} inputText={ selectedHotel.name ? selectedHotel.name : "Choose hotel"} hotelsData={hotelsData} selectedHotel={selectedHotel._id} />
-             <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Guests and Rooms"} inputText={"Choose room"} />
-             <WidgetInput updateOverlayState={updateOverlayState} overlayState={overlayState} overlayToShow={"Dates"} inputText={"Check in / Check out"} />
+             <WidgetInput inputText={ selectedHotel && selectedHotel.name ? selectedHotel.name : "Choose hotel"} overlayID={"Choose hotel"}  />
+             <WidgetInput inputText={guestsAndRooms.adults + guestsAndRooms.kids + guestsAndRooms.infants + " " + "Persons"} overlayID={"Choose room"} />
+             <WidgetInput 
+             inputText={checkInOutDates.checkInDate && checkInOutDates.checkOutDate ? `${dayjs(checkInOutDates.checkInDate).format('DD MMM')} / ${dayjs(checkInOutDates.checkOutDate).format('DD MMM')}` : "Check in / Check out"}  
+             overlayID={"Check in / Check out"} />
             </div>
             <div className={styles.button_wrapper}>
              <div className={styles.button_container}>
@@ -35,10 +39,7 @@ function HeroBookingWidget({ overlayState, updateOverlayState, hotelsData, selec
          </div>
          </div>
        </div>
-       <div 
-       className={`${overlayState.showOverlay ? styles.overlay_background : ''}`} 
-       onClick={updateOverlayState}
-       ></div>
+
 
     </>
   )

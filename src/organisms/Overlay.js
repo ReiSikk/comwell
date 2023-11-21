@@ -63,25 +63,27 @@ function Overlay() {
   }, [shouldFetchRooms]);
 
 
+//fetch rooms data from rooms collection
   useEffect(() => {
     const fetchHotelRoomsData = async () => {
       try {
-        const roomDataPromises = roomsData.map(roomId =>
-          fetch(`http://127.0.0.1:3005/rooms/${roomId}`)
-        );
-        const roomDataResponses = await Promise.all(roomDataPromises);
-        const HotelRoomsData = await Promise.all(
-          roomDataResponses.map(async response => response.json())
-        );
+        const HotelRoomsData = [];
+        for (const roomId of roomsData) {
+          const response = await fetch(`http://127.0.0.1:3005/rooms/${roomId}`);
+          if (!response.ok) {
+            console.error(`Error fetching room ${response.url}: ${response.statusText}`);
+            continue;
+          }
+          const roomData = await response.json();
+          HotelRoomsData.push(roomData);
+        }
         setHotelRoomsData(HotelRoomsData);
       } catch (error) {
         console.error(error);
       }
     };
   
-
-      fetchHotelRoomsData();
-    
+    fetchHotelRoomsData();
   }, [roomsData]);
 
 
@@ -132,7 +134,7 @@ function Overlay() {
                   </div>
                    )}
            
-           {overlayState.overlayToShow === 'Available Rooms' && hotelRoomsData && (
+           {overlayState.overlayToShow === 'Rooms' && hotelRoomsData && (
                <div className={styles.rooms_flex}>
                  {hotelRoomsData
                    .filter(room => room.available)

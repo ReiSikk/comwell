@@ -42,7 +42,8 @@ export default function App({ Component, pageProps }) {
   const overlayHeaders = {
     "Choose hotel": "Hotels",
     "Choose room": "Guests & Rooms",
-    "Check in / Check out": "Dates"
+    "Check in / Check out": "Dates",
+    "Rooms": "Rooms"
   };
 
 

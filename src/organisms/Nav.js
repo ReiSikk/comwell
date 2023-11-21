@@ -7,9 +7,11 @@ import locationsIcon from "../assets/icons/locations_icon.svg";
 import NavLink from "@/molecules/NavLink";
 import styles from "./Nav.module.scss";
 import Nav_Popup from "./Nav_Popup";
+import { useAuth } from "@/atoms/AuthProvider";
 
 function Nav() {
   const [isPopupVisible, setPopupVisible] = useState(false);
+  const { isLoggedIn, login, logout } = useAuth();
 
   return (
     <>
@@ -19,7 +21,7 @@ function Nav() {
         </a>
         <div className={styles.links_container}>
           <NavLink link_name="Locations" link_href="/fourohfour" image_src={locationsIcon} image_alt="Arrow" />
-          <NavLink link_name="Profile" image_src={profileIcon} image_alt="Profile Icon" onClick={() => setPopupVisible(true)} onClose={() => setPopupVisible(false)} />
+          <NavLink link_name={isLoggedIn ? "username" : "Profile"} image_src={profileIcon} image_alt="Profile Icon" onClick={() => setPopupVisible(true)} />
           <NavLink link_name="Menu" link_href="/fourohfour" image_src={hamburgerIcon} image_alt="Comwell Hotel Icon" />
         </div>
       </header>

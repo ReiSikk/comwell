@@ -7,6 +7,7 @@ import MainLayout from '@/layouts/MainLayout'
 import localFont from 'next/font/local'
 import { useEffect, useState, useRef } from 'react'
 import React from 'react'
+import { AuthProvider } from '@/atoms/AuthProvider'
 //date picker imports
 import dayjs from 'dayjs'
 // Use the plugin
@@ -114,10 +115,12 @@ const handleCheckInOutChange = (id, value) => {
 
 
   return (
+<AuthProvider>
   <MainLayout className={fontRegular.className}>
     <HotelsContext.Provider value={hotelsContextValue}>
    <Component {...pageProps} />
    </HotelsContext.Provider>
   </MainLayout>
+  </AuthProvider>
   )
 }

@@ -1,12 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 function fourohfour() {
+
   return (
     <div>
       <h1>404 baby</h1>
         <p>feature under construction</p>
-    </div>
+    
+        </div>
+        
   )
+  
 }
 
 export default fourohfour

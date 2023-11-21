@@ -5,10 +5,20 @@ import { HotelsContext } from '../providers/hotels-context.js'
 import { useState, useEffect, useContext } from 'react'
 import GuestsAndRoomsSelector from '../organisms/GuestsAndRoomsSelector.js'
 import CheckInOut from './CheckInOut'
-
+import RoomCard from '../molecules/RoomCard.js'
 
 
 function Overlay() {
+
+  const { overlayState, updateOverlayState, selectedHotel, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion, shouldFetchRooms, fetchRoomsForSelectedHotel, setShouldFetchRooms }= useContext(HotelsContext);
+
+  //init state variables
+  const [roomsData, setRoomsData] = useState(null);
+  const [hotelsData, setHotelsData] = useState(null);
+  const [hotelRoomsData, setHotelRoomsData] = useState(null);
+
+
+
 
   useEffect(() => {
     const getData = async () => {
@@ -28,16 +38,62 @@ function Overlay() {
     getData();
   }, []); 
 
+  //fetch rooms
+  let hotelID = selectedHotel._id
+  useEffect(() => {
+    if (shouldFetchRooms) {
+      // Fetch rooms for selectedHotel
+      const fetchRooms = async () => {
+        try {
+          const res = await fetch(`http://127.0.0.1:3005/hotels/${hotelID}/rooms`);
+          if (!res.ok) {
+            throw new Error('Failed to fetch data');
+          }
+          const data = await res.json();
+          setRoomsData(data.rooms);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    
+      fetchRooms();
+      // After fetching, set shouldFetchRooms back to false
+      setShouldFetchRooms(false);
+    }
+  }, [shouldFetchRooms]);
 
-  const [hotelsData, setHotelsData] = useState(null);
+
+  useEffect(() => {
+    const fetchHotelRoomsData = async () => {
+      try {
+        const roomDataPromises = roomsData.map(roomId =>
+          fetch(`http://127.0.0.1:3005/rooms/${roomId}`)
+        );
+        const roomDataResponses = await Promise.all(roomDataPromises);
+        const HotelRoomsData = await Promise.all(
+          roomDataResponses.map(async response => response.json())
+        );
+        setHotelRoomsData(HotelRoomsData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+
+      fetchHotelRoomsData();
+    
+  }, [roomsData]);
+
+
+
   const [selectedRegion, setSelectedRegion] = React.useState("All")
   const handleLabelClick = (e) => {
     setSelectedRegion(e.target.id);
     //add class .selected to the clicked button and remove it from the others
   }
-  
-  const { overlayState, updateOverlayState, selectedHotel, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion }= useContext(HotelsContext);
 
+  console.log(hotelRoomsData);
+  
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
         <div className={styles.overlay_content}>
@@ -73,9 +129,24 @@ function Overlay() {
               {overlayState.overlayToShow === 'Check in / Check out' && (
                   <div className={styles.check_in_out_wrapper}>
                       <CheckInOut id="checkInDate"/>
-                     {/*  <CheckInOut id="checkOutDate" /> */}
                   </div>
                    )}
+           
+           {overlayState.overlayToShow === 'Available Rooms' && hotelRoomsData && (
+               <div className={styles.rooms_flex}>
+                 {hotelRoomsData
+                   .filter(room => room.available)
+                   .map(room => (
+                    <RoomCard 
+                    key={room._id}
+                    roomType={room.roomType} 
+                    roomSize={room.roomSize} 
+                    bedTypes={Array.isArray(room.bedTypes) ? room.bedTypes.join(', ') : room.bedTypes}
+                    roomFacilities={room.facilities}
+                    />
+                   ))}
+               </div>
+              )}
             
             </div>
             <div className={styles.drawer_bottom}>

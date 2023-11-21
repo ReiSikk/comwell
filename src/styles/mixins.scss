@@ -1,0 +1,19 @@
+@import './variables.scss';
+
+
+  @mixin container($borderPosition: none) {
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 1rem;
+  
+      @if $borderPosition == top {
+        border-top: 1px solid $form-input-border-color;
+      } @else if $borderPosition == bottom {
+        border-bottom: 1px solid $form-input-border-color;
+      }
+    }
+  }
+  
+  

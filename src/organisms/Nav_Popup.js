@@ -71,7 +71,7 @@ login();
         {!isLoggedIn ? (
           <>
     <form className={styles.form_login} ref={popupRef}>
-      <div className={styles.container}>
+      <div className="container">
       <InputField label="Email" inputId="email" type="text" />
       <InputField label="Password" inputId="password" type="text" />
         <p>Forgot your password?</p>
@@ -79,7 +79,7 @@ login();
         <p>Dont have an account?</p>
         <a href="#" onClick={handleSignUpClick}>Sign up for Comwell Club</a>
       </div>
-      <div className={styles.container_button}>
+      <div className="container_top_border">
         <button type="submit"  onClick={handleSubmit}>
           Log in
         </button>
@@ -99,7 +99,7 @@ login();
               <a href="#">Notifications</a>
               <a href="#">Profile Settings</a>
               </div>
-              <div className={styles.container_button}>
+              <div className="container">
               <button onClick={handleLogout}>Sign out</button>
               </div>
             </form>

@@ -89,6 +89,7 @@
     }
     .visible {
       opacity: 1 !important;
+      transition:all 0.2s ease;
     }
     .label_flex {
       display: flex;
@@ -127,4 +128,33 @@
       flex-direction: column;
       gap: 1.5rem;
       padding: 0rem 2.5rem
+    }
+
+    .drawer_bottom_select_room {
+      position: absolute;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      bottom: 0;
+      z-index: 100;
+      width: 100%;
+      padding: 1rem 2.5rem;
+      text-align: right;
+      span {
+        font-size: 1.2rem;
+        font-weight: 600 ;
+        line-height: 1.625rem;
+        width: 100%;
+      }
+      button {
+        margin-left: 2rem;
+        width: 100%;
+        max-width: 200px;
+        padding: 1rem 2.5rem;
+        border-radius: 9999px;
+        cursor: pointer;
+        color: rgb(255, 255, 255);
+        background: rgb(39, 58, 72);
+        border: transparent;
+      }
     }

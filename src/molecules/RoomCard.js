@@ -23,19 +23,16 @@ function RoomCard({ roomType, roomSize, bedTypes, roomFacilities, roomPrice, roo
         }
       }
 
-      const [imageSrc, setImageSrc] = useState('');
 
-      useEffect(() => {
-        let src;
-        if (roomType === 'Single room') {
-          src = 'https://cdn.dwarf.dk/comwell-cms-production/img/containers/main/hoteller/ckl/vaerelser/comwell-klarskovgaard-sskl.jpg/c33e8c9597990158e72cede3c7a3fe87.webp';
-        } else if (roomType === 'Double room') {
-          src = 'https://cdn.dwarf.dk/comwell-cms-production/img/containers/main/hoteller/ccp/vaerelser/comwell-portside-sdcp-01.jpg/2649c268a1692f8c78a8d8d60bd33147.webp';
-        } else {
-          src = 'https://cdn.dwarf.dk/comwell-cms-production/img/containers/main/hoteller/ccp/vaerelser/comwell-portside-spcp-01.jpg/2bad9358ed8aaae051e19245559e3b8e.jpg';
-        }
-        setImageSrc(src);
-      }, [roomType]);
+        //generate a room image based on room type
+      let imageSrc;
+      if (roomType === 'Single room') {
+          imageSrc = 'https://cdn.dwarf.dk/comwell-cms-production/img/containers/main/hoteller/ckl/vaerelser/comwell-klarskovgaard-sskl.jpg/c33e8c9597990158e72cede3c7a3fe87.webp';
+      } else if (roomType === 'Double room') {
+          imageSrc = 'https://cdn.dwarf.dk/comwell-cms-production/img/containers/main/hoteller/ccp/vaerelser/comwell-portside-sdcp-01.jpg/2649c268a1692f8c78a8d8d60bd33147.webp';
+      } else {
+          imageSrc = 'https://cdn.dwarf.dk/comwell-cms-production/img/containers/main/hoteller/ccp/vaerelser/comwell-portside-spcp-01.jpg/2bad9358ed8aaae051e19245559e3b8e.jpg';
+      }
 
 
   return (
@@ -46,8 +43,9 @@ function RoomCard({ roomType, roomSize, bedTypes, roomFacilities, roomPrice, roo
       <div>
         <Image 
         src={imageSrc} 
-        layout='fill'
-        objectFit='cover' 
+        alt='Hotel room image'
+        fill
+        style={{objectFit:"cover"}}
         sizes='100vw, 640w, 750w, 828w, 1080w, 1200w, 1920w, 2048w, 3840w'
     />
       </div>

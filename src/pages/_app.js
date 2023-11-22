@@ -32,6 +32,8 @@ export default function App({ Component, pageProps }) {
 
   const updateSelectedHotel = (newData) => {
     setSelectedHotel(newData);
+    //reset selected room
+    setSelectedRoom("");
   }
 
   //handle if overlay opening is triggered by search button
@@ -111,9 +113,7 @@ const handleCheckInOutChange = (id, value) => {
   setCheckInOutDates(prevState => ({ ...prevState, [id]: formattedValue }));
 }
 
-const [selectedRoom, setSelectedRoom] = useState({
-  selectedRoom: "",
-})
+const [selectedRoom, setSelectedRoom] = useState("")
 
 const updateSelectedRoom = (newData) => {
   setSelectedRoom(newData);

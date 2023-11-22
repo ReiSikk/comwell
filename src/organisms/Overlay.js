@@ -6,6 +6,7 @@ import { useState, useEffect, useContext } from 'react'
 import GuestsAndRoomsSelector from '../organisms/GuestsAndRoomsSelector.js'
 import CheckInOut from './CheckInOut'
 import RoomCard from '../molecules/RoomCard.js'
+import RoomDetails from '../organisms/RoomDetails.js'
 import dayjs from 'dayjs'
 
 
@@ -67,12 +68,21 @@ function Overlay() {
 //fetch rooms data from rooms collection
   useEffect(() => {
     const fetchHotelRoomsData = async () => {
+
+      if (!Array.isArray(roomsData)) {
+        return;
+      }
+
       try {
         const HotelRoomsData = [];
         for (const roomId of roomsData) {
           const response = await fetch(`http://127.0.0.1:3005/rooms/${roomId}`);
           if (!response.ok) {
             console.error(`Error fetching room ${response.url}: ${response.statusText}`);
+            continue;
+          }
+          if (response.headers.get('Content-Length') === '0') {
+            console.error(`No content in response for room ${response.url}`);
             continue;
           }
           const roomData = await response.json();
@@ -95,7 +105,7 @@ function Overlay() {
     //add class .selected to the clicked button and remove it from the others
   }
 
-  console.log(hotelRoomsData);
+
   
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
@@ -152,30 +162,43 @@ function Overlay() {
                    )}
            
            {overlayState.overlayToShow === 'Choose room' && hotelRoomsData && (
-               <div className={styles.rooms_flex}>
-                 {hotelRoomsData
-                   .filter(room => room.available)
-                   .map(room => (
-                    <RoomCard 
-                    selectedRoom={selectedRoom}
-                    updateSelectedRoom={updateSelectedRoom}
-                    room={room}
-                    key={room._id}
-                    roomType={room.roomType} 
-                    roomSize={room.roomSize} 
-                    roomPrice={room.price}
-                    bedTypes={Array.isArray(room.bedTypes) ? room.bedTypes.join(', ') : room.bedTypes}
-                    roomFacilities={room.facilities}
-                    />
-                   ))}
+           selectedRoom === "" ? (
+             <div className={styles.rooms_flex}>
+               {hotelRoomsData
+                 .filter(room => room.available)
+                 .map(room => (
+                   <RoomCard 
+                     updateSelectedRoom={updateSelectedRoom}
+                     room={room}
+                     key={room._id}
+                     roomType={room.roomType} 
+                     roomSize={room.roomSize} 
+                     roomPrice={room.price}
+                     bedTypes={Array.isArray(room.bedTypes) ? room.bedTypes.join(', ') : room.bedTypes}
+                     roomFacilities={room.facilities}
+                   />
+                 ))
+               }
+             </div>
+            ) : (
+               <RoomDetails room={selectedRoom} />
+           )
+         )}
+            </div>
+              {selectedRoom === "" ? (
+                 <div className={styles.drawer_bottom}>
+                 <button className={styles.drawer_lower_btn} onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}>Select</button>
                </div>
+              ) : (
+               null
               )}
-            
-            </div>
-            <div className={styles.drawer_bottom}>
-              <button className={styles.drawer_lower_btn} onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}>Select</button>
-            </div>
         </div>
+        {selectedRoom !== "" && (
+                 <div className={styles.drawer_bottom_select_room}>
+                  <span>{`${selectedRoom.price} kr.`}</span>
+                  <button className={styles.drawer_lower_btn}>Select Room</button>
+                 </div>
+              )}
     </div>
   )
 }

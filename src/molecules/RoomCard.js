@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { HotelsContext } from '../providers/hotels-context.js'
 import { useContext,useState, useEffect } from 'react'
 
-function RoomCard({ roomType, roomSize, bedTypes, roomFacilities, room, selectedRoom, updateSelectedRoom }) {
+function RoomCard({ roomType, roomSize, bedTypes, roomFacilities, roomPrice, room, selectedRoom, updateSelectedRoom }) {
 
     const isSelected = selectedRoom && room._id === selectedRoom._id;
     const cardClass = isSelected ? `${styles.room_card} ${styles.selected}` : styles.room_card;
@@ -54,6 +54,7 @@ function RoomCard({ roomType, roomSize, bedTypes, roomFacilities, room, selected
       <div>
         <h3 className={styles.room_type}>{roomType}</h3>
         <div className={styles.size}>{roomSize + " " + "m2"}</div> 
+        <div className={styles.card_info}>
         <span>{bedTypes}</span>
         <div className={styles.facilities}>
         {roomFacilities.map((facility, index) => (
@@ -63,6 +64,11 @@ function RoomCard({ roomType, roomSize, bedTypes, roomFacilities, room, selected
         <div>
             <p>{getRoomDescription(roomType)}</p>
         </div>
+        <div className={styles.price}>
+            <span>{roomPrice} kr.</span>
+            <span>per night</span>
+        </div> 
+        </div>   
 
         </div>
        </>

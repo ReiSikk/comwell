@@ -163,6 +163,7 @@ function Overlay() {
                     key={room._id}
                     roomType={room.roomType} 
                     roomSize={room.roomSize} 
+                    roomPrice={room.price}
                     bedTypes={Array.isArray(room.bedTypes) ? room.bedTypes.join(', ') : room.bedTypes}
                     roomFacilities={room.facilities}
                     />

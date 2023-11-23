@@ -111,20 +111,28 @@ function Overlay() {
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
         <div className={styles.overlay_content}>
         {overlayState.overlayToShow === 'Choose room' && (
-                <div className={styles.overlay_top_info}>
+            <div className={styles.overlay_top_info}>
+              <button aria-label="Gå tilbage" 
+              className={styles.back_icon}
+              onClick={() => {
+                updateSelectedRoom(""); // Remove the selected room
+              }}
+              ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" ><path fill="currentColor" fillRule="evenodd" d="m7.524 9.61 5.835-5.835-.884-.884L5.81 9.557l6.638 7.523.937-.827L7.524 9.61Z" clipRule="evenodd"></path></svg></button>
+                <div className={styles.guest_info}>
                   <div>
                        <span>{checkInOutDates.checkInDate && checkInOutDates.checkOutDate ? `${dayjs(checkInOutDates.checkInDate).format('DD MMM')} - ${dayjs(checkInOutDates.checkOutDate).format('DD MMM')}` : ""}</span>
-                    </div>
-                    <div>
+                  </div>
+                  <div>
                       <span>
                      {guestsAndRooms.rooms === 1 ? `${guestsAndRooms.rooms} room, ` : `${guestsAndRooms.rooms} rooms, `}
                      {guestsAndRooms.adults + guestsAndRooms.kids + guestsAndRooms.infants === 1 ? "1 person" : `${guestsAndRooms.adults + guestsAndRooms.kids + guestsAndRooms.infants} persons`}
                       </span>
-                    </div>
-                    <div>
+                  </div>
+                  <div>
                       <span>{selectedHotel.name}</span>
-                    </div>
-                 </div>
+                  </div>
+                </div>
+              </div>
         )}
             <div className={styles.overlay_top}>
                 <h2 className={styles.overlay_header}>{overlayHeaders[overlayState.overlayToShow] || ""}</h2>

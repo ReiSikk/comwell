@@ -28,7 +28,7 @@ function RoomDetails({room}) {
   return (
     <>
         <div className={styles.room_img}>
-            <Image src={imageSrc} alt='Hotel room image' fill={true} style={{objectFit:"contain"}} sizes='100vw, 640w, 750w, 828w, 1080w, 1200w, 1920w, 2048w, 3840w' />
+            <Image src={imageSrc} alt='Hotel room image' fill={true} style={{objectFit:"cover"}} sizes='100vw, 640w, 750w, 828w, 1080w, 1200w, 1920w, 2048w, 3840w' />
         </div>
       <div className={styles.room_info_wrapper}>
       <div style={{opacity}} className={styles.room_details}>
@@ -40,6 +40,7 @@ function RoomDetails({room}) {
         </div>
       </div>
       <div>
+        <span>Facilities:</span>
         <div className={styles.facilities}>
                  {room.facilities.map((facility, index) => (
                  <span key={index}>{facility}</span>
@@ -47,6 +48,46 @@ function RoomDetails({room}) {
         </div>
       </div>
     </div>
+    <section className={styles.packages_wrapper}>
+        <h2>Packages</h2>
+        <div className={styles.packages}>
+  {[
+    {
+      title: "Overnight stay with breakfast - Save 12%",
+      description: "Enjoy a comfortable overnight stay with a delicious breakfast. Save 12% with this package.",
+      price: Math.floor(Math.random() * 2000) + 2100
+    },
+    {
+      title: "Overnight stay with breakfast buffet",
+      description: "Experience a luxurious overnight stay complemented by a rich breakfast buffet.",
+      price: Math.floor(Math.random() * 2000) + 2100
+    },
+    {
+      title: "Spadelight at two Comwell-hotels",
+      description: "Relax and rejuvenate with our Spadelight package at two Comwell hotels.",
+      price: Math.floor(Math.random() * 2000) + 2100
+    },
+    {
+      title: "Blissful Break",
+      description: "Take a break from your routine and enjoy a blissful stay at our hotel.",
+      price: Math.floor(Math.random() * 2000) + 2100
+    },
+    {
+      title: "SpaRetreat at two Comwell-hotels",
+      description: "Indulge in a soothing SpaRetreat at two of our Comwell hotels.",
+      price: Math.floor(Math.random() * 2000) + 2100
+    },
+  ].map((bundle, index) => (
+    <div key={index} className={styles.package_card}>
+      <h3>{bundle.title}</h3>
+      <p>{bundle.description}</p>
+      <span>Read more about this package</span>
+      <p className={styles.price}>{`${bundle.price} kr.`}</p>
+      <div className={styles.icon}></div>
+    </div>
+  ))}
+</div>
+    </section>
     </>
   )
 }

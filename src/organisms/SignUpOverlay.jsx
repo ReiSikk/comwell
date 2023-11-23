@@ -11,6 +11,19 @@ import { useSignUpData } from "@/providers/SignUpDataContext";
 const SignUpOverlay = ({ closeSignUpOverlay }) => {
   const overlayRef = useRef(null);
   const {signUpData, setSignUpData} = useSignUpData();
+  const [passwordData, setPasswordData] = useState();
+  const [acceptTerms, setAcceptTerms] = useState(false);
+  const [receiveNewsletter, setReceiveNewsletter] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+
+  const handleAcceptTermsChange = (newState) => {
+    setAcceptTerms(newState);
+  };
+
+  const handleReceiveNewsletterChange = (newState) => {
+    setReceiveNewsletter(newState);
+  };
 
   useEffect(() => {
     // After the component has mounted, add the active class with a slight delay
@@ -33,8 +46,26 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
     console.log(signUpData);
   };
 
+  const handlePassword = (inputId, value) => {
+    setPasswordData((prevInputValues) => ({
+      ...prevInputValues,
+      [inputId]: value,
+    }));
+    console.log(passwordData)
+  };
+
+
+
   function handleSubmit(event) {
-event.preventDefeualt();
+event.preventDefault();
+setSubmitted(true);
+
+if (acceptTerms) {
+  console.log("goes through")
+  //sending the request
+} else {
+
+}
 
 //CALLING FUNCTION THAT CALLS BACKEND
 
@@ -58,15 +89,15 @@ event.preventDefeualt();
         <InputField label="Email" inputId="signup-email" type="email" onInputChange={handleInputChange} />
         <InputField label="Zip code" inputId="zip-code" type="text" onInputChange={handleInputChange} pattern="^[0-9+]+$" minLength={2}/>
         <InputField label="Phone" inputId="phone" type="text" onInputChange={handleInputChange} pattern="^\+?[0-9]+$" minLength={5} title="You can only use digits and a plus for a country code"/>
-        <InputField label="Password" inputId="signup-password" type="password"onInputChange={handleInputChange} minLength={8} />
-        <InputField label="Confirm password" inputId="confirm-password" type="password" onInputChange={handleInputChange} />
+        <InputField label="Password" inputId="signup-password" type="password"onInputChange={handlePassword} minLength={8} />
+        <InputField label="Confirm password" inputId="confirm-password" type="password" onInputChange={handlePassword} />
         <InputFieldDropdown label="Gender" selectId="gender" options={genderOptions}  />
         <InputFieldBirthdate label="Birthdate"/>
         </div>
         <div className={styles.condtitions_container}>
         <div className="container">
-        <CheckboxWithText label="Accept terms and conditions for Comwell Club" id="conditions-checkbox" />
-        <CheckboxWithText label="I would like to be updated on current member offers, Comwell Club surprises and other recommendations personalized to me. I can unsubscribe again at any time. " id="newsletter-checkbox" />
+        <CheckboxWithText label="Accept terms and conditions for Comwell Club *" id="conditions-checkbox" onCheckboxChange={handleAcceptTermsChange} errorMessage={submitted && !acceptTerms ? "Please accept the terms and conditions." : null} />
+        <CheckboxWithText label="I would like to be updated on current member offers, Comwell Club surprises and other recommendations personalized to me. I can unsubscribe again at any time. " id="newsletter-checkbox"   onCheckboxChange={handleReceiveNewsletterChange} />
         </div>
         </div>
         <div className="container_top_border">

@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import styles from "./CheckboxWithText.module.scss"
 
 
-const CheckboxWithText = ({ label, id }) => {
+const CheckboxWithText = ({ label, id, onCheckboxChange, errorMessage }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
+    // Call the callback function with the updated checkbox state
+    onCheckboxChange(!isChecked);
   };
+
+
 
   return (
     <div className={styles.checkbox_container}>
@@ -19,7 +23,8 @@ const CheckboxWithText = ({ label, id }) => {
         className={styles.checkbox}
       />
       <label htmlFor="checkbox">{label}</label>
-    </div>
+      <p className={styles.error_message}>{errorMessage}</p>    
+      </div>
   );
 };
 

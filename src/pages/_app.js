@@ -2,14 +2,16 @@
 import '@/styles/globals.scss'
 import '../styles/variables.scss'
 import { HotelsContext } from '../providers/hotels-context.js'
-
 import MainLayout from '@/layouts/MainLayout'
 import localFont from 'next/font/local'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useContext } from 'react'
 import React from 'react'
-import { AuthProvider } from '@/atoms/AuthProvider'
+import {AuthProvider } from '@/providers/AuthProvider'
+import { SignUpDataProvider } from '@/providers/SignUpDataContext'
+
 //date picker imports
 import dayjs from 'dayjs'
+
 // Use the plugin
 // Font files can be colocated inside of `pages`
 const fontRegular = localFont({ src: '/fonts/Fellix-Bold-fe0f33a2.ttf' })
@@ -17,6 +19,7 @@ const fontRegular = localFont({ src: '/fonts/Fellix-Bold-fe0f33a2.ttf' })
 
 
 export default function App({ Component, pageProps }) {
+
 
   // init state variables
   const [overlayState, setOverlayState] = React.useState({
@@ -125,13 +128,16 @@ const handleCheckInOutChange = (id, value) => {
   };
 
 
+
   return (
 <AuthProvider>
+<SignUpDataProvider>
   <MainLayout className={fontRegular.className}>
     <HotelsContext.Provider value={hotelsContextValue}>
    <Component {...pageProps} />
    </HotelsContext.Provider>
   </MainLayout>
+  </SignUpDataProvider>
   </AuthProvider>
   )
 }

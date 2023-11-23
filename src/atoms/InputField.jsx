@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./InputField.module.scss";
 
-const InputField = ({ label, inputId, type, onInputChange, minLength, pattern, title }) => {
+const InputField = ({ label, inputId, type, onInputChange, minLength, pattern, title, errorMessage}) => {
   const [focusedInput, setFocusedInput] = useState(null);
   const [value, setValue] = useState("");
 
@@ -24,6 +24,7 @@ const InputField = ({ label, inputId, type, onInputChange, minLength, pattern, t
         {label}
       </label>
       <input onFocus={handleFocus} onBlur={handleBlur} className={focusedInput === inputId ? styles.focused : ""} type={type} id={inputId} name={inputId} onChange={handleFormChange} value={value} minLength={minLength} pattern={pattern} title={title} required />
+      <p className={styles.error_message}>{errorMessage}</p>
     </div>
   );
 };

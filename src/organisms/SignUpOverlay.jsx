@@ -1,5 +1,7 @@
 // SignUpOverlay.jsx
 import React, { useEffect, useRef, useState } from "react";
+//import bcrypt from 'bcrypt';
+//const bcrypt = require("bcrypt")
 import styles from "./SignUpOverlay.module.scss";
 import InputField from "@/atoms/InputField";
 import InputFieldDropdown from "@/atoms/InputFieldDropdown";
@@ -60,9 +62,12 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
 event.preventDefault();
 setSubmitted(true);
 
+//const hashedPassword = bcrypt.hashSync(passwordData.signupPassword, 10);
+
 if (acceptTerms) {
   console.log("goes through")
   //sending the request
+
 } else {
 
 }
@@ -85,12 +90,12 @@ if (acceptTerms) {
         </div>
        <form onSubmit={handleSubmit}>
          <div className="container">
-        <InputField label="Full name" inputId="full-name" type="text" onInputChange={handleInputChange} pattern="^[A-Za-z]+(\s[A-Za-z]+)+$" title="Please provide first and last name" />
-        <InputField label="Email" inputId="signup-email" type="email" onInputChange={handleInputChange} />
-        <InputField label="Zip code" inputId="zip-code" type="text" onInputChange={handleInputChange} pattern="^[0-9+]+$" minLength={2}/>
+        <InputField label="Full name" inputId="fullName" type="text" onInputChange={handleInputChange} pattern="^[A-Za-z]+(\s[A-Za-z]+)+$" title="Please provide first and last name" />
+        <InputField label="Email" inputId="signupEmail" type="email" onInputChange={handleInputChange} />
+        <InputField label="Zip code" inputId="zipCode" type="text" onInputChange={handleInputChange} pattern="^[0-9+]+$" minLength={2}/>
         <InputField label="Phone" inputId="phone" type="text" onInputChange={handleInputChange} pattern="^\+?[0-9]+$" minLength={5} title="You can only use digits and a plus for a country code"/>
-        <InputField label="Password" inputId="signup-password" type="password"onInputChange={handlePassword} minLength={8} />
-        <InputField label="Confirm password" inputId="confirm-password" type="password" onInputChange={handlePassword} />
+        <InputField label="Password" inputId="signupPassword" type="password"onInputChange={handlePassword} minLength={8} />
+        <InputField label="Confirm password" inputId="confirmPassword" type="password" onInputChange={handlePassword} errorMessage={submitted && (passwordData.signupPassword !== passwordData.confirmPassword) ? "Your password don't match" : null}  />
         <InputFieldDropdown label="Gender" selectId="gender" options={genderOptions}  />
         <InputFieldBirthdate label="Birthdate"/>
         </div>

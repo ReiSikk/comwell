@@ -2,7 +2,9 @@
     position: fixed;
     top: 0;
     right: -100%;
-    width: 66%;
+    min-width: 70dvw;
+    width: 100%;
+    max-width: 85dvw;
     height: 100dvh;
     background: #f1f1f1;
     z-index: 5;
@@ -11,8 +13,27 @@
   }
   @media only screen and (max-width: 768px) {
     .overlay {
-      width: 100%;
+      max-width: 100dvw;
       height: 100dvh;
+    }
+   
+  }
+
+  .overlay_top_info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4rem;
+    padding: 2rem 4rem 0rem 4rem;
+    span {
+      font-size: 0.9rem;
+    }
+    div:nth-child(2) {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 1rem;
+      justify-content: center;
+      align-self: center;
     }
   }
   
@@ -47,7 +68,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem 1rem 1rem;
+    padding: 1rem 2rem 1rem 2rem;
   }
 .drawer_bottom {
   display: flex;
@@ -80,6 +101,7 @@
     }
     .visible {
       opacity: 1 !important;
+      transition:all 0.2s ease;
     }
     .label_flex {
       display: flex;
@@ -116,5 +138,52 @@
     .rooms_flex {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.5rem;
+      padding: 0rem 2.5rem
+    }
+
+    .drawer_bottom_select_room {
+      position: sticky;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background: #f1f1f1;
+      bottom: 0;
+      z-index: 100;
+      width: 100%;
+      padding: 1rem 2.5rem;
+      text-align: right;
+      span {
+        font-size: 1.2rem;
+        font-weight: 600 ;
+        line-height: 1.625rem;
+        width: 100%;
+      }
+      button {
+        margin-left: 2rem;
+        width: 100%;
+        max-width: 200px;
+        padding: 1rem 2.5rem;
+        border-radius: 9999px;
+        cursor: pointer;
+        color: rgb(255, 255, 255);
+        background: rgb(39, 58, 72);
+        border: transparent;
+      }
+    }
+
+    .back_icon {
+      border: none;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.1);
+      padding: 0.5rem;
+      border-radius: 9999px;
+      display: flex;
+      svg {
+        height: max-content;
+        min-height: 16px;
+        width: 16px;
+        justify-self: center;
+        align-self: center;
+      }
     }

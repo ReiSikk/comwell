@@ -6,11 +6,13 @@ import { useState, useEffect, useContext } from 'react'
 import GuestsAndRoomsSelector from '../organisms/GuestsAndRoomsSelector.js'
 import CheckInOut from './CheckInOut'
 import RoomCard from '../molecules/RoomCard.js'
+import RoomDetails from '../organisms/RoomDetails.js'
+import dayjs from 'dayjs'
 
 
 function Overlay() {
 
-  const { overlayState, updateOverlayState, selectedHotel, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion, shouldFetchRooms, fetchRoomsForSelectedHotel, setShouldFetchRooms }= useContext(HotelsContext);
+  const { overlayState, updateOverlayState, selectedHotel, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion, shouldFetchRooms, fetchRoomsForSelectedHotel, setShouldFetchRooms, checkInOutDates, guestsAndRooms, selectedRoom, updateSelectedRoom }= useContext(HotelsContext);
 
   //init state variables
   const [roomsData, setRoomsData] = useState(null);
@@ -63,25 +65,36 @@ function Overlay() {
   }, [shouldFetchRooms]);
 
 
+//fetch rooms data from rooms collection
   useEffect(() => {
     const fetchHotelRoomsData = async () => {
+
+      if (!Array.isArray(roomsData)) {
+        return;
+      }
+
       try {
-        const roomDataPromises = roomsData.map(roomId =>
-          fetch(`http://127.0.0.1:3005/rooms/${roomId}`)
-        );
-        const roomDataResponses = await Promise.all(roomDataPromises);
-        const HotelRoomsData = await Promise.all(
-          roomDataResponses.map(async response => response.json())
-        );
+        const HotelRoomsData = [];
+        for (const roomId of roomsData) {
+          const response = await fetch(`http://127.0.0.1:3005/rooms/${roomId}`);
+          if (!response.ok) {
+            console.error(`Error fetching room ${response.url}: ${response.statusText}`);
+            continue;
+          }
+          if (response.headers.get('Content-Length') === '0') {
+            console.error(`No content in response for room ${response.url}`);
+            continue;
+          }
+          const roomData = await response.json();
+          HotelRoomsData.push(roomData);
+        }
         setHotelRoomsData(HotelRoomsData);
       } catch (error) {
         console.error(error);
       }
     };
   
-
-      fetchHotelRoomsData();
-    
+    fetchHotelRoomsData();
   }, [roomsData]);
 
 
@@ -92,11 +105,35 @@ function Overlay() {
     //add class .selected to the clicked button and remove it from the others
   }
 
-  console.log(hotelRoomsData);
+
   
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
         <div className={styles.overlay_content}>
+        {overlayState.overlayToShow === 'Choose room' && (
+            <div className={styles.overlay_top_info}>
+              <button aria-label="Gå tilbage" 
+              className={styles.back_icon}
+              onClick={() => {
+                updateSelectedRoom(""); // Remove the selected room
+              }}
+              ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" ><path fill="currentColor" fillRule="evenodd" d="m7.524 9.61 5.835-5.835-.884-.884L5.81 9.557l6.638 7.523.937-.827L7.524 9.61Z" clipRule="evenodd"></path></svg></button>
+                <div className={styles.guest_info}>
+                  <div>
+                       <span>{checkInOutDates.checkInDate && checkInOutDates.checkOutDate ? `${dayjs(checkInOutDates.checkInDate).format('DD MMM')} - ${dayjs(checkInOutDates.checkOutDate).format('DD MMM')}` : ""}</span>
+                  </div>
+                  <div>
+                      <span>
+                     {guestsAndRooms.rooms === 1 ? `${guestsAndRooms.rooms} room, ` : `${guestsAndRooms.rooms} rooms, `}
+                     {guestsAndRooms.adults + guestsAndRooms.kids + guestsAndRooms.infants === 1 ? "1 person" : `${guestsAndRooms.adults + guestsAndRooms.kids + guestsAndRooms.infants} persons`}
+                      </span>
+                  </div>
+                  <div>
+                      <span>{selectedHotel.name}</span>
+                  </div>
+                </div>
+              </div>
+        )}
             <div className={styles.overlay_top}>
                 <h2 className={styles.overlay_header}>{overlayHeaders[overlayState.overlayToShow] || ""}</h2>
                 <button className={styles.close_button}  onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}>
@@ -123,7 +160,7 @@ function Overlay() {
                 updateSelectedHotel={updateSelectedHotel} 
                 /> 
            ))}
-              {overlayState.overlayToShow === 'Choose room' && (
+              {overlayState.overlayToShow === 'Guests & Rooms' && (
                     <GuestsAndRoomsSelector />
                    )}
               {overlayState.overlayToShow === 'Check in / Check out' && (
@@ -132,27 +169,44 @@ function Overlay() {
                   </div>
                    )}
            
-           {overlayState.overlayToShow === 'Available Rooms' && hotelRoomsData && (
-               <div className={styles.rooms_flex}>
-                 {hotelRoomsData
-                   .filter(room => room.available)
-                   .map(room => (
-                    <RoomCard 
-                    key={room._id}
-                    roomType={room.roomType} 
-                    roomSize={room.roomSize} 
-                    bedTypes={Array.isArray(room.bedTypes) ? room.bedTypes.join(', ') : room.bedTypes}
-                    roomFacilities={room.facilities}
-                    />
-                   ))}
+           {overlayState.overlayToShow === 'Choose room' && hotelRoomsData && (
+           selectedRoom === "" ? (
+             <div className={styles.rooms_flex}>
+               {hotelRoomsData
+                 .filter(room => room.available)
+                 .map(room => (
+                   <RoomCard 
+                     updateSelectedRoom={updateSelectedRoom}
+                     room={room}
+                     key={room._id}
+                     roomType={room.roomType} 
+                     roomSize={room.roomSize} 
+                     roomPrice={room.price}
+                     bedTypes={Array.isArray(room.bedTypes) ? room.bedTypes.join(', ') : room.bedTypes}
+                     roomFacilities={room.facilities}
+                   />
+                 ))
+               }
+             </div>
+            ) : (
+               <RoomDetails room={selectedRoom} />
+           )
+         )}
+            </div>
+              {selectedRoom === "" ? (
+                 <div className={styles.drawer_bottom}>
+                 <button className={styles.drawer_lower_btn} onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}>Select</button>
                </div>
+              ) : (
+               null
               )}
-            
-            </div>
-            <div className={styles.drawer_bottom}>
-              <button className={styles.drawer_lower_btn} onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}>Select</button>
-            </div>
         </div>
+        {selectedRoom !== "" && (
+                 <div className={styles.drawer_bottom_select_room}>
+                  <span>{`${selectedRoom.price} kr.`}</span>
+                  <button className={styles.drawer_lower_btn}>Select Room</button>
+                 </div>
+              )}
     </div>
   )
 }

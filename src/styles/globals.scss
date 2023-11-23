@@ -17,6 +17,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
+p {
+  max-width: 62ch;
+}
 
 input {
   border: $form-input-border-color 1px solid;

@@ -10,7 +10,7 @@ function HeroBookingWidget() {
 
   const handleSearchClick = () => {
     fetchRoomsForSelectedHotel();
-    updateOverlayState({ ...overlayState,  overlayToShow: "Available Rooms", showOverlay: !overlayState.showOverlay })
+    updateOverlayState({ ...overlayState,  overlayToShow: "Choose room", showOverlay: !overlayState.showOverlay })
   };
 
   return (
@@ -24,16 +24,16 @@ function HeroBookingWidget() {
           </div>
           <div className={styles.inner_lower}>
             <div className={styles.inputs_container}>
-             <WidgetInput inputText={ selectedHotel && selectedHotel.name ? selectedHotel.name : "Choose hotel"} overlayID={"Choose hotel"}  />
-             <WidgetInput inputText={guestsAndRooms.adults + guestsAndRooms.kids + guestsAndRooms.infants + " " + "Persons"} overlayID={"Choose room"} />
+             <WidgetInput inputText={ selectedHotel && selectedHotel.name ? selectedHotel.name : "Choose hotel"} overlayid="Choose hotel"  />
+             <WidgetInput inputText={guestsAndRooms.adults + guestsAndRooms.kids + guestsAndRooms.infants + " " + "Persons"} overlayid="Guests & Rooms" />
              <WidgetInput 
              inputText={checkInOutDates.checkInDate && checkInOutDates.checkOutDate ? `${dayjs(checkInOutDates.checkInDate).format('DD MMM')} / ${dayjs(checkInOutDates.checkOutDate).format('DD MMM')}` : "Check in / Check out"}  
-             overlayID={"Check in / Check out"} />
+             overlayid="Check in / Check out" />
             </div>
             <div className={styles.button_wrapper}>
              <div className={styles.button_container}>
                <button className={styles.button_search} onClick={handleSearchClick}><span>
-                 <span className={styles.button_search_text}>Search Rooms</span>
+                 <span className={styles.button_search_text} overlayid="Choose room">Search</span>
                  <svg data-v-f36cb2b1="" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path fill="currentColor" stroke="currentColor" strokeWidth=".5" d="M10.724 10A5.428 5.428 0 0 0 12 6.5 5.5 5.5 0 1 0 6.5 12c1.28 0 2.52-.451 3.5-1.276l3.793 3.776.707-.707L10.724 10ZM6.5 11a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z"></path></svg>
                </span>
                </button>

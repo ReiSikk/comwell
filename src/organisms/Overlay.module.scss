@@ -6,7 +6,7 @@
     width: 100%;
     max-width: 85dvw;
     height: 100dvh;
-    background: #f1f1f1;
+    background: rgba(255, 255, 255, 1);
     z-index: 5;
     transition: right 0.75s ease-in-out;
     overflow-y: auto ;
@@ -28,13 +28,20 @@
     span {
       font-size: 0.9rem;
     }
+   
     div:nth-child(2) {
       display: flex;
       flex-wrap: nowrap;
       gap: 1rem;
       justify-content: center;
       align-self: center;
+
+      div:not(:last-child) {
+        padding-right: 0.75rem;
+          border-right: 1px solid rgba(0, 0, 0, 0.2);
+      }
     }
+
   }
   
   .overlay.show {

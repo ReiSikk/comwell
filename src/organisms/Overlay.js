@@ -8,9 +8,24 @@ import CheckInOut from './CheckInOut'
 import RoomCard from '../molecules/RoomCard.js'
 import RoomDetails from '../organisms/RoomDetails.js'
 import dayjs from 'dayjs'
+import { useAuth } from '@/providers/AuthProvider';
+import BookingOverview from './BookingOverview'
+
+
 
 
 function Overlay() {
+
+  //Check logged in status
+  const { isLoggedIn } = useAuth();
+
+  const [showBookingOverview, setShowBookingOverview] = useState(false);
+
+  const updateShowBookingOverview = (newData) => {
+    setShowBookingOverview(newData);
+  }
+
+
 
   const { overlayState, updateOverlayState, selectedHotel, updateSelectedHotel, overlayHeaders, isVisible, selecedRegion, shouldFetchRooms, fetchRoomsForSelectedHotel, setShouldFetchRooms, checkInOutDates, guestsAndRooms, selectedRoom, updateSelectedRoom }= useContext(HotelsContext);
 
@@ -115,7 +130,10 @@ function Overlay() {
               <button aria-label="Gå tilbage" 
               className={styles.back_icon}
               onClick={() => {
-                updateSelectedRoom(""); // Remove the selected room
+                if(!showBookingOverview) {
+                  updateSelectedRoom(""); //reset selected room
+                }
+                updateShowBookingOverview(false) //reset booking overview state
               }}
               ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" ><path fill="currentColor" fillRule="evenodd" d="m7.524 9.61 5.835-5.835-.884-.884L5.81 9.557l6.638 7.523.937-.827L7.524 9.61Z" clipRule="evenodd"></path></svg></button>
                 <div className={styles.guest_info}>
@@ -189,7 +207,7 @@ function Overlay() {
                }
              </div>
             ) : (
-               <RoomDetails room={selectedRoom} />
+              showBookingOverview ? <BookingOverview room={selectedRoom} /> : <RoomDetails room={selectedRoom} />
            )
          )}
             </div>
@@ -204,7 +222,10 @@ function Overlay() {
         {selectedRoom !== "" && (
                  <div className={styles.drawer_bottom_select_room}>
                   <span>{`${selectedRoom.price} kr.`}</span>
-                  <button className={styles.drawer_lower_btn}>Select Room</button>
+                  <button 
+                  className={styles.drawer_lower_btn}
+                  onClick={() => setShowBookingOverview(true)}
+                  >Select Room</button>
                  </div>
               )}
     </div>

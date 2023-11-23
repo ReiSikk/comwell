@@ -4,7 +4,6 @@ import styles from "./InputFieldBirthdate.module.scss"
 
 const InputFieldBirthdate = ({ label }) => {
   const [value, setValue] = useState(null);
-  console.log(value)
 
   function handleChange(value){
     setValue(value)

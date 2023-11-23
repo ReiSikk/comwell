@@ -7,9 +7,11 @@ import localFont from 'next/font/local'
 import { useEffect, useState, useRef, useContext } from 'react'
 import React from 'react'
 import {AuthProvider } from '@/providers/AuthProvider'
+import { SignUpDataProvider } from '@/providers/SignUpDataContext'
 
 //date picker imports
 import dayjs from 'dayjs'
+
 // Use the plugin
 // Font files can be colocated inside of `pages`
 const fontRegular = localFont({ src: '/fonts/Fellix-Bold-fe0f33a2.ttf' })
@@ -129,13 +131,13 @@ const handleCheckInOutChange = (id, value) => {
 
   return (
 <AuthProvider>
-
+<SignUpDataProvider>
   <MainLayout className={fontRegular.className}>
     <HotelsContext.Provider value={hotelsContextValue}>
    <Component {...pageProps} />
    </HotelsContext.Provider>
   </MainLayout>
-
+  </SignUpDataProvider>
   </AuthProvider>
   )
 }

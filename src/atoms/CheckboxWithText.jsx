@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from "./CheckboxWithText.module.scss"
 
 
-const CheckboxWithText = ({ label }) => {
+const CheckboxWithText = ({ label, id }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = () => {
@@ -13,7 +13,7 @@ const CheckboxWithText = ({ label }) => {
     <div className={styles.checkbox_container}>
       <input
         type="checkbox"
-        id="checkbox"
+        id={id}
         checked={isChecked}
         onChange={handleCheckboxChange}
         className={styles.checkbox}

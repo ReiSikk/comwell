@@ -4,6 +4,7 @@ import styles from "./Nav_Popup.module.scss";
 import { AuthProvider, useAuth } from "@/providers/AuthProvider";
 import SignUpOverlay from "./SignUpOverlay";
 import InputField from "@/atoms/InputField";
+import Link from "next/link";
 
 function Nav_Popup({ isVisible, onClose }) {
   const popupRef = useRef(null);
@@ -85,11 +86,11 @@ function Nav_Popup({ isVisible, onClose }) {
               <InputField label="Email" inputId="email" type="email" onInputChange={handleInputChange} />
               <InputField label="Password" inputId="password" type="text" onInputChange={handleInputChange} minLength={8} />
               <p>Forgot your password?</p>
-              <a href="/fourohfour">Reset password</a>
+              <Link href="/fourohfour">Reset password</Link>
               <p>Dont have an account?</p>
-              <a href="#" onClick={handleSignUpClick}>
+              <Link href="#" onClick={handleSignUpClick}>
                 Sign up for Comwell Club
-              </a>
+              </Link>
             </div>
             <div className="container_top_border">
               <button type="submit">

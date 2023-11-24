@@ -5,25 +5,91 @@
 
 .booking_overview {
     display: grid;
-    //12 columns equal size
     grid-template-columns: repeat(12, 1fr);
+
+    @media only screen and (max-width:768px) {
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+    }
 
     .guest_info {
         grid-column: span 7 / span 7;
         background: rgba(255,255,255,1);
         padding: 0rem 2rem 0rem 3rem ;
+        @media only screen and (max-width:768px) {
+            width: 100%;
+        }
 
         .overview_input_flex {
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            padding: 0rem 0rem 2rem 0rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .terms {
+            h2 {
+                margin-top: 2rem;
+                padding: 0rem 0rem 2rem 0rem;
+            }
+            div {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                p {
+                    color: rgba(0,0,0,0.8);
+                }
+            }
+        }
+        .payment_methods {
+            h2 {
+                margin-top: 3rem;
+                padding: 0rem 0rem 2rem 0rem;
+            }
+            .cell {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: 1px solid rgba(0,0,0,0.1);
+                border-radius: 6px;
+                padding: 1rem 0.8rem;
+
+                div:first-child {
+                    display: flex;
+                    gap: 1rem;
+                    align-items: center;
+                }
+
+                ul {
+                    list-style: none;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+                .checkbox {
+                    padding: 0.75rem;
+                    border-radius: 999px;
+                    border: 1px solid rgba(0,0,0,0.2);
+                    width: 16px;
+                    height: 16px;
+                }
+            }
+            .cell:not(:last-child) {
+                margin-bottom: 0.75rem;
+            }
         }
     }
     .overview {
         grid-column: span 5 / span 5;
         background: rgba(243,243,245,1);
+        min-height: 66dvh;
         height: 100%;
         padding: 2rem 1rem;
+        border-radius: 4px;
+        @media only screen and (max-width:768px) {
+            width: 100%;
+        }
         .price_image {
             position: relative;
             display: flex;
@@ -73,5 +139,46 @@
         line-height: 1.625rem;
         padding-bottom: 3rem;
     }
+
+    .info_cards_flex {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        list-style-type: none;
+        @media (max-width: 768px) {
+            flex-direction: row;
+            flex-wrap: wrap;
+          }
+
+          > :not(:last-child) {
+            flex-grow: 1;
+            flex-basis: 0;
+            min-width: 175px;
+          }
+        
+          > :last-child {
+            flex-basis: 100%;
+          }
+        
+        .info_card {
+            padding: 1rem 1.5rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            h3 {
+                padding: 0rem 0rem 0.5rem 0rem;
+            }
+        }
+    }
   
+}
+
+.checkbox_flex {
+    padding: 2.5rem 0rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    input {
+        width: 22px;
+        height: 22px;
+    }
 }

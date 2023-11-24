@@ -19,10 +19,13 @@ function Overlay() {
   //Check logged in status
   const { isLoggedIn } = useAuth();
 
-  const [showBookingOverview, setShowBookingOverview] = useState(false);
+  const [bookingOverviewState, setBookingOverviewState] = useState({
+    isVisible: false,
+    content: "overview"
+  });
 
-  const updateShowBookingOverview = (newData) => {
-    setShowBookingOverview(newData);
+  const updateBookingOverviewState = (newData) => {
+    setBookingOverviewState(newData);
   }
 
 
@@ -130,10 +133,10 @@ function Overlay() {
               <button aria-label="Gå tilbage" 
               className={styles.back_icon}
               onClick={() => {
-                if(!showBookingOverview) {
+                if(!bookingOverviewState.isVisible) {
                   updateSelectedRoom(""); //reset selected room
                 }
-                updateShowBookingOverview(false) //reset booking overview state
+                setBookingOverviewState(false) //reset booking overview state
               }}
               ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" ><path fill="currentColor" fillRule="evenodd" d="m7.524 9.61 5.835-5.835-.884-.884L5.81 9.557l6.638 7.523.937-.827L7.524 9.61Z" clipRule="evenodd"></path></svg></button>
                 <div className={styles.guest_info}>
@@ -152,12 +155,14 @@ function Overlay() {
                 </div>
               </div>
         )}
+        {!bookingOverviewState.isVisible && (
             <div className={styles.overlay_top}>
                 <h2 className={styles.overlay_header}>{overlayHeaders[overlayState.overlayToShow] || ""}</h2>
                 <button className={styles.close_button}  onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}>
                 <svg className={styles.close_icon} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path stroke="currentColor" strokeWidth="1.5" d="M2.62 13.38 12.99 3.01M13.38 13.38 3.01 3.01"></path></svg>
                 </button>
             </div>
+        )}
                <div className={styles.label_flex}>
                   {overlayState.overlayToShow === 'Choose hotel' && (
                     <>
@@ -207,7 +212,7 @@ function Overlay() {
                }
              </div>
             ) : (
-              showBookingOverview ? <BookingOverview room={selectedRoom} /> : <RoomDetails room={selectedRoom} />
+              bookingOverviewState.isVisible ? <BookingOverview room={selectedRoom} bookingOverviewState={bookingOverviewState} /> : <RoomDetails room={selectedRoom} />
            )
          )}
             </div>
@@ -224,10 +229,19 @@ function Overlay() {
                   <span>{`${selectedRoom.price} kr.`}</span>
                   <button 
                   className={styles.drawer_lower_btn}
-                  onClick={() => setShowBookingOverview(true)}
-                  >Select Room</button>
+                  onClick={() => {
+                    if(!bookingOverviewState.isVisible) {
+                      updateBookingOverviewState({isVisible: true, content: "overview"})
+                    } else {
+                      updateBookingOverviewState({ ...bookingOverviewState, content: "paymment"})
+                    }
+
+                  }}
+                  >
+                     {selectedRoom !== "" && bookingOverviewState.isVisible ? "Continue" : "Select"}
+                    </button>
                  </div>
-              )}
+          )}
     </div>
   )
 }

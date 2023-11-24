@@ -6,6 +6,7 @@
 .booking_overview {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    padding: 0rem 0.5rem;
 
     @media only screen and (max-width:768px) {
         display: flex;
@@ -153,7 +154,7 @@
           > :not(:last-child) {
             flex-grow: 1;
             flex-basis: 0;
-            min-width: 175px;
+            min-width: 225px;
           }
         
           > :last-child {
@@ -162,10 +163,35 @@
         
         .info_card {
             padding: 1rem 1.5rem;
-            border: 1px solid rgba(0,0,0,0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 12px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 2rem;
+            .info_card_icon {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0.65rem;
+                align-items: center;
+                background: rgba(0,0,0,0.1);
+                border-radius: 999px;
+                width: 36px;
+                height: 36px;
+                svg {
+                    width: 16px;
+                    height: auto;
+                
+                }
+            }
             h3 {
                 padding: 0rem 0rem 0.5rem 0rem;
+            }
+            span {
+                font-size: 0.85rem;
+                font-weight: 400;
+                color: rgba(0,0,0,0.7);
             }
         }
     }

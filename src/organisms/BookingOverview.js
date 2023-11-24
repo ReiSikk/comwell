@@ -43,16 +43,33 @@ function BookingOverview({room, bookingOverviewState}) {
         <div>
            <ul className={styles.info_cards_flex}>
              <li className={styles.info_card}>
+                <div>
+                <div className={styles.info_card_icon}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-[15px]"><path fill="currentColor" fill-rule="evenodd" d="M21 10.5V21h1.5v1.5h-21V21H3V3a1.5 1.5 0 0 1 1.5-1.5H15A1.5 1.5 0 0 1 16.5 3v6h3a1.5 1.5 0 0 1 1.5 1.5zm-12-3h1.5v3H9zM9 12h1.5v3H9zm4.5-4.5H12v3h1.5zM12 12h1.5v3H12zm-1.5 4.5H9v3h1.5zm1.5 0h1.5v3H12zM4.5 3H15v18H4.5zm12 7.5V21h3V10.5z" clip-rule="evenodd"></path></svg></div>
+                </div>
+                <div>
                 <h3>{selectedHotel.name}</h3>
                 <span>{selectedHotel.region}</span>
+                </div>
              </li>
              <li className={styles.info_card}>
+                <div>
+                <div className={styles.info_card_icon}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16" class="w-[15px]"><path fill="currentColor" fill-rule="evenodd" d="M8.334.75a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5ZM6.743 2.909a2.25 2.25 0 1 1 3.181 3.182 2.25 2.25 0 0 1-3.181-3.182Zm.09 5.841a3.75 3.75 0 0 0-3.75 3.75v2.75h10.501V12.5a3.75 3.75 0 0 0-3.75-3.75h-3Zm5.25 5V12.5a2.249 2.249 0 0 0-2.25-2.25h-3a2.25 2.25 0 0 0-2.25 2.25v1.25h7.5Z" clip-rule="evenodd"></path></svg></div>
+                </div>
+                <div>
                 <h3>Guest info</h3>
+                <span>"Guest information will go here"</span>
+                </div>
              </li>
              <li className={styles.info_card}>
+                <div>
+                <div className={styles.info_card_icon}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-[15px]"><path fill="#161616" d="M19.5 3h-3V1.5H15V3H9V1.5H7.5V3h-3C3.675 3 3 3.675 3 4.5v15c0 .825.675 1.5 1.5 1.5h15c.825 0 1.5-.675 1.5-1.5v-15c0-.825-.675-1.5-1.5-1.5Zm0 16.5h-15V9h15v10.5Zm0-12h-15v-3h3V6H9V4.5h6V6h1.5V4.5h3v3Z"></path></svg></div>
+                </div>
+                <div>
                 <h3>Date</h3>
-                <p>{`${dayjs(checkInOutDates.checkInDate).format('DD MMM')} - ${dayjs(checkInOutDates.checkOutDate).format('DD MMM')}`}</p>
-             </li>            
+                <span>{`${dayjs(checkInOutDates.checkInDate).format('DD MMM')} - ${dayjs(checkInOutDates.checkOutDate).format('DD MMM')}`}</span>
+                </div>
+             </li>
+
             </ul>
         </div>
         <div className={styles.terms}>

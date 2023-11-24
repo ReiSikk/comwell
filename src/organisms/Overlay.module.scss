@@ -28,15 +28,22 @@
     span {
       font-size: 0.9rem;
     }
+    svg {
+      height: max-content;
+      min-height: 16px;
+      width: 16px;
+      justify-self: center;
+      align-self: center;
+    }
    
-    div:nth-child(2) {
+    div {
       display: flex;
       flex-wrap: nowrap;
-      gap: 1rem;
+      gap: 0.5rem;
       justify-content: center;
       align-self: center;
 
-      @media only screen and (max-width: 615px) {
+      @media only screen and (max-width: 620px) {
         display: none;
       }
 
@@ -175,7 +182,8 @@
       button {
         margin-left: 2rem;
         width: 100%;
-        max-width: 200px;
+        min-width: 200px;
+        max-width: fit-content;
         padding: 1rem 2.5rem;
         border-radius: 9999px;
         cursor: pointer;

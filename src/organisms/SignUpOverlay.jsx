@@ -58,23 +58,51 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
 
 
 
-  function handleSubmit(event) {
-event.preventDefault();
-setSubmitted(true);
+  async function handleSubmit(event) {
+    event.preventDefault();
 
-//const hashedPassword = bcrypt.hashSync(passwordData.signupPassword, 10);
 
 if (acceptTerms) {
   console.log("goes through")
   //sending the request
-
+  callSignUpBackend();
 } else {
+  alert("Please accept the terms and conditions to finish signing up")
 
 }
 
 //CALLING FUNCTION THAT CALLS BACKEND
 
   }
+
+  async function callSignUpBackend() {
+    console.log("callSignUpBackend called");
+    const signUpEndpoint = "http://127.0.0.1:3005/auth/signup"
+
+    const response =  await fetch(signUpEndpoint, {
+     method: "POST",
+     body: JSON.stringify({
+            fullName: signUpData.fullName,
+            phone: signUpData.phone,
+            username: signUpData.username,
+            password: passwordData.signupPassword,
+     }),
+     headers: {
+       "Content-Type": "application/json",
+     },
+   });
+
+   if (response.ok) {
+     const data =  await response.json();
+     console.log(data); 
+      {message: "User created!"}
+   } else {
+     console.error("Error sending data to the server.");
+   }
+    setSubmitted(true);
+  }
+
+  console.log(signUpData)
 
   return (
     <div className={styles.overlay} ref={overlayRef}>
@@ -91,9 +119,9 @@ if (acceptTerms) {
        <form onSubmit={handleSubmit}>
          <div className="container">
         <InputField label="Full name" inputId="fullName" type="text" onInputChange={handleInputChange} pattern="^[A-Za-z]+(\s[A-Za-z]+)+$" title="Please provide first and last name" />
-        <InputField label="Email" inputId="signupEmail" type="email" onInputChange={handleInputChange} />
-        <InputField label="Zip code" inputId="zipCode" type="text" onInputChange={handleInputChange} pattern="^[0-9+]+$" minLength={2}/>
-        <InputField label="Phone" inputId="phone" type="text" onInputChange={handleInputChange} pattern="^\+?[0-9]+$" minLength={5} title="You can only use digits and a plus for a country code"/>
+        <InputField label="Email" inputId="username" type="email" onInputChange={handleInputChange} />
+        <InputField label="Zip code" inputId="zipCode" onInputChange={handleInputChange} type="text" pattern="^[0-9+]+$" minLength={2}/>
+        <InputField label="Phone" inputId="phone" type="number" onInputChange={handleInputChange} pattern="^\+?[0-9]+$" minLength={5} title="You can only use digits and a plus for a country code"/>
         <InputField label="Password" inputId="signupPassword" type="password"onInputChange={handlePassword} minLength={8} />
         <InputField label="Confirm password" inputId="confirmPassword" type="password" onInputChange={handlePassword} errorMessage={submitted && (passwordData.signupPassword !== passwordData.confirmPassword) ? "Your password don't match" : null}  />
         <InputFieldDropdown label="Gender" selectId="gender" options={genderOptions}  />

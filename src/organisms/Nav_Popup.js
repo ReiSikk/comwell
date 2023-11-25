@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { submitLoginData } from "@/services/login_data";
+import { submitLoginData } from "../services/login_data.js";
 import styles from "./Nav_Popup.module.scss";
 import { AuthProvider, useAuth } from "@/providers/AuthProvider";
 import SignUpOverlay from "./SignUpOverlay";
@@ -49,7 +49,6 @@ function Nav_Popup({ isVisible, onClose }) {
       ...prevInputValues,
       [inputId]: value,
     }));
-    console.log(formData);
     
   };
 
@@ -57,20 +56,27 @@ function Nav_Popup({ isVisible, onClose }) {
     event.preventDefault();
 
     const data = {
-      email: formData.email,
+      username: formData.email,
       password: formData.password,
     };
 
-    const response = await submitLoginData(data);
-
-    if (response.success) {
-      login();
-
-    } else {
-    // Handle login failure
-    }
+    console.log("handleSubmit called with:", data)
     
-  }
+      try {
+        const response = await submitLoginData(data);
+        console.log(response, "response from submitLoginData");
+    
+        if (response.success === true) {
+          login(response.user);
+        } else {
+          // Handle login failure
+          alert("Login failed");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    
+}
 
   const handleLogout = () => {
     logout();

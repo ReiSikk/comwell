@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./InputField.module.scss";
 
-const InputField = ({ label, inputId, type, onInputChange, minLength, pattern, title, errorMessage}) => {
+
+const InputField = ({ label, inputId, type, onInputChange, minLength, pattern, title, errorMessage, propValue}) => {
   const [focusedInput, setFocusedInput] = useState(null);
   const [value, setValue] = useState("");
+
 
   const handleFocus = () => {
     setFocusedInput(inputId);
@@ -11,11 +13,18 @@ const InputField = ({ label, inputId, type, onInputChange, minLength, pattern, t
   const handleBlur = () => {
     setFocusedInput(null);
   };
+
+   // Update the local state when the component mounts or when propValue changes
+   useEffect(() => {
+    setValue(propValue);
+  }, [propValue]);
+
   const handleFormChange = (event) => {
     const { value } = event.target;
     setValue(value);
     onInputChange(inputId, value);
   };
+
 
 
   return (

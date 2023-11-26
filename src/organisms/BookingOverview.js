@@ -6,11 +6,15 @@ import InputField from '../atoms/InputField';
 import dayjs from 'dayjs';
 import { HotelsContext } from '../providers/hotels-context.js'
 import { useSignUpData } from "../providers/SignUpDataContext";
+import { useAuth } from "../providers/AuthProvider";
 
 function BookingOverview({room, bookingOverviewState}) {
 
     const {  selectedHotel, checkInOutDates, guestsAndRooms, selectedRoom }= useContext(HotelsContext);
     const {signUpData, setSignUpData} = useSignUpData();
+  const { isLoggedIn, login, logout, user } = useAuth();
+
+    
 
      //generate a room image based on room type
      let imageSrc;
@@ -28,7 +32,7 @@ function BookingOverview({room, bookingOverviewState}) {
           [inputId]: value,
         }));
     };
-    console.log(signUpData);
+
 
   return (
     <div className={styles.booking_overview}>
@@ -36,9 +40,9 @@ function BookingOverview({room, bookingOverviewState}) {
           <h2>{bookingOverviewState.content === "overview" ? "Guest information" : "My booking"}</h2>
           {bookingOverviewState.content === "overview" ? (
             <div className={styles.overview_input_flex}>
-              <InputField label="Full name" inputId="fullName" type="text" onInputChange={handleInputChange} pattern="^[A-Za-z]+(\s[A-Za-z]+)+$" title="Please provide first and last name" />
-              <InputField label="Email" inputId="signupEmail" type="email" onInputChange={handleInputChange} />
-              <InputField label="Phone" inputId="phone" type="text" onInputChange={handleInputChange} pattern="^\+?[0-9]+$" minLength={5} title="You can only use digits and a plus for a country code"/>
+              <InputField label="Full name" inputId="fullName" type="text" onInputChange={handleInputChange} pattern="^[A-Za-z]+(\s[A-Za-z]+)+$" title="Please provide first and last name" propValue={isLoggedIn ? user.user : ''} />
+              <InputField label="Email" inputId="signupEmail" type="email" onInputChange={handleInputChange} propValue={isLoggedIn ? user.email : ''} />
+              <InputField label="Phone" inputId="phone" type="text" onInputChange={handleInputChange} pattern="^\+?[0-9]+$" minLength={5} title="You can only use digits and a plus for a country code" propValue={isLoggedIn ? user.phone : ''} />
             </div>
           ) : (
     <>
@@ -60,9 +64,9 @@ function BookingOverview({room, bookingOverviewState}) {
                 <div>
                 <h3>Guest info</h3>
                 <div className={styles.guest_info_flex}>
-                <span>{signUpData.fullName}</span>
-                <span>{signUpData.signupEmail}</span>
-                <span>{signUpData.phone}</span>
+                <span>{isLoggedIn ? user.user : ''}</span>
+                <span>{isLoggedIn ? user.email : ''}</span>
+                <span>{isLoggedIn ? user.phone : ''}</span>
                 </div>
                 </div>
              </li>

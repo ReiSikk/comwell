@@ -38,7 +38,7 @@
 .overlayContent {
   border-radius: 8px;
   width: 100%; /* Set the width of the overlay content to 100% */
-  min-height: 100%; /* Ensure the content takes at least 100% height */
+  min-height: 100vh; /* Ensure the content takes at least 100% height */
   padding: 20px; /* Add padding for better appearance */
   box-sizing: border-box; /* Include padding in the total width/height */
   transition: transform 0.3s ease; /* Add a transition for smooth sliding */

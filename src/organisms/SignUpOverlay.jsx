@@ -1,7 +1,4 @@
-// SignUpOverlay.jsx
 import React, { useEffect, useRef, useState } from "react";
-//import bcrypt from 'bcrypt';
-//const bcrypt = require("bcrypt")
 import styles from "./SignUpOverlay.module.scss";
 import InputField from "@/atoms/InputField";
 import InputFieldDropdown from "@/atoms/InputFieldDropdown";
@@ -29,7 +26,6 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
   };
 
   useEffect(() => {
-    // After the component has mounted, add the active class with a slight delay
     const timeoutId = setTimeout(() => {
       overlayRef.current.classList.add(styles.active);
     }, 150);
@@ -37,7 +33,7 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, []); // Empty dependency array ensures this effect runs only once after mount
+  }, []); 
 
   const genderOptions = ["Not defined", "Male", "Female"];
 
@@ -70,7 +66,6 @@ if (acceptTerms & (passwordData.signupPassword === passwordData.confirmPassword)
   setShowErrorMessages(true);
 }
 
-//CALLING FUNCTION THAT CALLS BACKEND
 
   }
 

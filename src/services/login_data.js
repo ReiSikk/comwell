@@ -1,5 +1,3 @@
-
-
 const logInEndpoint = "http://127.0.0.1:3005/auth/login";
 
 export function submitLoginData(data) {

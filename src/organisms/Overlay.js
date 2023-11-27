@@ -10,6 +10,7 @@ import RoomDetails from '../organisms/RoomDetails.js'
 import dayjs from 'dayjs'
 import { useAuth } from '@/providers/AuthProvider';
 import BookingOverview from './BookingOverview'
+import { useSignUpData } from '../providers/SignUpDataContext';
 
 
 
@@ -19,6 +20,8 @@ function Overlay() {
   //Check logged in status
   const { isLoggedIn } = useAuth();
   const { user } = useAuth();
+  const {signUpData, setSignUpData} = useSignUpData();
+
 
   const [bookingOverviewState, setBookingOverviewState] = useState({
     isVisible: false,
@@ -140,6 +143,35 @@ function Overlay() {
       }, [user]);
 
 
+      //call booking backend
+      const callBookingBackend = async () => {
+
+        console.log("callBookingBackend called");
+        fetch('http://localhost:3000/bookings', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    guest: user.fullName ? user.fullName : signUpData.fullName,
+    guestEmail: user.email ? user.email : signUpData.email,
+    guestPhone: user.phone ? user.phone : signUpData.phone,
+    selectedHotel: selectedHotel ? selectedHotel._id : 'hotelId',
+    selectedRoom: selectedRoom ? selectedRoom._id : 'roomId',
+    roomType: roomType ? roomType : 'Single',
+    roomPrice: roomPrice ? roomPrice : 100,
+    checkIn: checkIn ? checkIn : '2023-12-01',
+    checkOut: checkOut ? checkOut : '2023-12-10',
+    user: user.username ? user.username : '',
+  }),
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+      }
+
 
   
 
@@ -256,10 +288,11 @@ function Overlay() {
                   onClick={() => {
                     if(!bookingOverviewState.isVisible) {
                       updateBookingOverviewState({isVisible: true, content: "overview"})
-                    } else {
+                    } else if (bookingOverviewState.content === "overview" && isFormComplete) {
                       updateBookingOverviewState({ ...bookingOverviewState, content: "payment"})
+                    } else if (bookingOverviewState.content === "payment" && isFormComplete) {
+                      callBookingBackend(); // Call the function to make the booking
                     }
-
                   }}
                   disabled={bookingOverviewState.content === "overview" && !isFormComplete}
                   >

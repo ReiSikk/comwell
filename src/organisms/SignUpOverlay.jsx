@@ -94,15 +94,13 @@ if (acceptTerms) {
 
    if (response.ok) {
      const data =  await response.json();
-     console.log(data); 
-      {message: "User created!"}
+     console.log(data, "data from backend in signUpOverlay"); 
+     setSubmitted(true);
    } else {
      console.error("Error sending data to the server.");
    }
-    setSubmitted(true);
   }
 
-  console.log(signUpData)
 
   return (
     <div className={styles.overlay} ref={overlayRef}>

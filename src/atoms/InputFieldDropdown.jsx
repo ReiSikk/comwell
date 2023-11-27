@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from "./InputFieldDropdown.module.scss"
-const InputFieldDropdown = ({ label, options }) => {
+const InputFieldDropdown = ({ label, options, selectId }) => {
   const [selectedOption, setSelectedOption] = useState('Not defined');
 
   const handleOptionChange = (event) => {
@@ -10,9 +10,9 @@ const InputFieldDropdown = ({ label, options }) => {
   return (
     <div className={styles.dropdown_container}>
       <label htmlFor="dropdown">{label}</label>
-      <select name="dropdown" id="dropdown" value={selectedOption} onChange={handleOptionChange}>
+      <select name="dropdown" id={selectId} value={selectedOption} onChange={handleOptionChange}>
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option key={option} value={option.value}>
             {option}
           </option>
         ))}

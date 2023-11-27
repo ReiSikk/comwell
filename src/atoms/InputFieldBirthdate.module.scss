@@ -1,10 +1,12 @@
 @import "../styles/variables.scss";
 
+
+
 .input_container {
     position: relative;
 
-    .rmdp-container {
-        display: block;
+    .rmdp-container  {
+        display: block !important;
     }
   
 label {

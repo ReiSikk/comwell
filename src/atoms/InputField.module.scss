@@ -33,4 +33,8 @@ label {
   input.focused {
     border: 1px $font-dark solid;
   }
+
+  .error_message {
+    color:red;
+  }
 }

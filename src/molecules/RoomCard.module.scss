@@ -4,16 +4,37 @@
     position: relative;
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
     align-items: stretch;
     border-radius: 8px;
     height: -moz-fit-content;
     height: fit-content;
     border: 1px solid rgba(0, 0, 0, 0.1019607843);
     transition: opacity 0.2s ease-in-out;
+    @media only screen and (max-width: 1000px) {
+            flex-direction: column;
+            height: fit-content;
+    }
+.price {
+    span:nth-child(1) {
+        font-size: 1.8rem !important;
+        font-weight: 600 !important;
+        line-height: 1.625rem !important;
+        padding-right: 0.5rem !important;
+    }
+}
+.card_info {
+    padding: 0rem 1.25rem;
 
+    span:nth-child(1) {
+        font-size: 0.85rem;
+        font-weight: 400;
+    }
+    p {
+        padding: 0rem 0rem 1rem 0rem
+    }
+}
     h3 {
-        padding: 0rem 0rem 1rem 0rem;
+        padding: 0rem 0rem 0.25rem 0rem;
     }
     .size {
         position: absolute;
@@ -29,37 +50,54 @@
 
     //first div selector
     div:nth-child(1) {
+        position: relative;
         margin-right: 1rem;
-        width: fit-content;
+        max-width: 50%;
         height: auto;
         img {
             border-top-left-radius: 8px;
             border-bottom-left-radius: 8px;
             width: 100%;
-            max-width: 300px;
-            max-height: 200px;
-            height: 100%;
+            height: auto;
             object-fit: cover;
+            position:  relative !important;
+        }
+        @media only screen and (max-width: 1000px) {
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-top-left-radius: 8px;
+                    border-top-right-radius: 8px;
+                    border-bottom-left-radius: 0px;
+                }
         }
     }
     div:nth-child(2) {
-    padding: 1rem 0.5rem;
+    padding: 1rem 0rem;
     }
 
-    
-    .selected {
-        border: 1px solid rgba($color: #000000, $alpha: 0.7);
-    }
+
     
     .room_type {
         font-size: 1.2rem;
         font-weight: 600;
+        padding: 0rem 1.25rem
     }
     .facilities {
        display: flex;
        flex-wrap: wrap;
        gap: 0.75rem;
+       div {
+        padding: 0rem !important;
+       }
     }
+}
+.selected {
+    border: 1px solid rgba($color: #000000, $alpha: 0.7);
 }
 
 .room_card:not(.selected):hover {

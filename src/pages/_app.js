@@ -2,14 +2,16 @@
 import '@/styles/globals.scss'
 import '../styles/variables.scss'
 import { HotelsContext } from '../providers/hotels-context.js'
-
 import MainLayout from '@/layouts/MainLayout'
 import localFont from 'next/font/local'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useContext } from 'react'
 import React from 'react'
-import { AuthProvider } from '@/atoms/AuthProvider'
+import {AuthProvider } from '@/providers/AuthProvider'
+import { SignUpDataProvider } from '@/providers/SignUpDataContext'
+
 //date picker imports
 import dayjs from 'dayjs'
+
 // Use the plugin
 // Font files can be colocated inside of `pages`
 const fontRegular = localFont({ src: '/fonts/Fellix-Bold-fe0f33a2.ttf' })
@@ -18,6 +20,7 @@ const fontRegular = localFont({ src: '/fonts/Fellix-Bold-fe0f33a2.ttf' })
 
 export default function App({ Component, pageProps }) {
 
+
   // init state variables
   const [overlayState, setOverlayState] = React.useState({
     overlayToShow: "",
@@ -25,10 +28,18 @@ export default function App({ Component, pageProps }) {
     isVisible: false
 
   })
+  //selected hotel
   const [selectedHotel, setSelectedHotel] = React.useState({
     selectedHotel: "",
   })
 
+  const updateSelectedHotel = (newData) => {
+    setSelectedHotel(newData);
+    //reset selected room
+    setSelectedRoom("");
+  }
+
+  //handle if overlay opening is triggered by search button
   const [shouldFetchRooms, setShouldFetchRooms] = useState(false);
 
   const fetchRoomsForSelectedHotel = () => {
@@ -36,13 +47,12 @@ export default function App({ Component, pageProps }) {
 };
 
 
-
-
   //update handle overlay state and displayed headers in it 
   const overlayHeaders = {
     "Choose hotel": "Hotels",
-    "Choose room": "Guests & Rooms",
-    "Check in / Check out": "Dates"
+    "Guests & Rooms": "Guests & Rooms",
+    "Check in / Check out": "Dates",
+    "Choose room": "Choose room"
   };
 
 
@@ -61,6 +71,7 @@ useEffect(() => {
 }, [overlayState.overlayToShow]);
 
 
+//update overlay state
 const updateOverlayState = (newState) => {
 
   clearTimeout(timerRef.current); 
@@ -77,11 +88,6 @@ const updateOverlayState = (newState) => {
 };
 
 
-  const updateSelectedHotel = (newData) => {
-    setSelectedHotel(newData);
-  }
-
-
   //Guests and rooms 
   const [guestsAndRooms, setGuestsAndRooms] = useState({
     rooms: 1,
@@ -90,6 +96,7 @@ const updateOverlayState = (newState) => {
     infants: 0
  });
 
+ //update guests and rooms
  const handleInputChange = (id, value) => {
     setGuestsAndRooms(prevState => ({ ...prevState, [id]: value }));
   };
@@ -109,6 +116,12 @@ const handleCheckInOutChange = (id, value) => {
   setCheckInOutDates(prevState => ({ ...prevState, [id]: formattedValue }));
 }
 
+const [selectedRoom, setSelectedRoom] = useState("")
+
+const updateSelectedRoom = (newData) => {
+  setSelectedRoom(newData);
+}
+
   const hotelsContextValue = {
     overlayState,
     updateOverlayState,
@@ -121,17 +134,22 @@ const handleCheckInOutChange = (id, value) => {
     handleCheckInOutChange,
     shouldFetchRooms,
     setShouldFetchRooms,
-    fetchRoomsForSelectedHotel
+    fetchRoomsForSelectedHotel,
+    selectedRoom,
+    updateSelectedRoom
   };
+
 
 
   return (
 <AuthProvider>
+<SignUpDataProvider>
   <MainLayout className={fontRegular.className}>
     <HotelsContext.Provider value={hotelsContextValue}>
    <Component {...pageProps} />
    </HotelsContext.Provider>
   </MainLayout>
+  </SignUpDataProvider>
   </AuthProvider>
   )
 }

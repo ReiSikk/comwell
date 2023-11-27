@@ -1,12 +1,11 @@
-import React, {useState} from 'react'
+import React from 'react'
 
 function fourohfour() {
 
   return (
     <div>
-      <h1>404 baby</h1>
+      <h1>404</h1>
         <p>feature under construction</p>
-    
         </div>
         
   )

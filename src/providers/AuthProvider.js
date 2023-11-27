@@ -6,11 +6,17 @@ const AuthContext = createContext();
 // Create the provider component
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({
+    user: "",
+    email: "",
+    phone: 0,
+  });
 
   // Add your login logic here
-  const login = () => {
-    
+  const login = (user) => {
+    console.log('login called with:', user);
     setIsLoggedIn(true);
+    setUser({user: user.user, email: user.email, phone: user.phone});
   };
 
   // Add your logout logic here
@@ -20,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   // Provide the context values to the children components
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, user }}>
       {children}
     </AuthContext.Provider>
   );

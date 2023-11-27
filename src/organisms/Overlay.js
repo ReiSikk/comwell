@@ -18,10 +18,11 @@ function Overlay() {
 
   //Check logged in status
   const { isLoggedIn } = useAuth();
+  const { user } = useAuth();
 
   const [bookingOverviewState, setBookingOverviewState] = useState({
     isVisible: false,
-    content: "overview"
+    content: ""
   });
 
   const updateBookingOverviewState = (newData) => {
@@ -124,6 +125,26 @@ function Overlay() {
   }
 
 
+      //check if the guest info form is complete
+      const [isFormComplete, setIsFormComplete] = useState(false);
+      useEffect(() => {
+        if (isLoggedIn) {
+          console.log("user is logged in", isLoggedIn);
+          // If the user is logged in, set isFormComplete to true
+          setIsFormComplete(true);
+        } else {
+          console.log("user is not logged in", isLoggedIn);
+          // If the user is not logged in, set isFormComplete to false
+          setIsFormComplete(false);
+        }
+      }, [user]);
+
+
+
+  
+
+
+
   
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
@@ -215,7 +236,7 @@ function Overlay() {
                }
              </div>
             ) : (
-              bookingOverviewState.isVisible ? <BookingOverview room={selectedRoom} bookingOverviewState={bookingOverviewState} /> : <RoomDetails room={selectedRoom} />
+              bookingOverviewState.isVisible ? <BookingOverview room={selectedRoom} bookingOverviewState={bookingOverviewState} isFormComplete={isFormComplete} setIsFormComplete={setIsFormComplete}/> : <RoomDetails room={selectedRoom} />
            )
          )}
             </div>
@@ -236,13 +257,19 @@ function Overlay() {
                     if(!bookingOverviewState.isVisible) {
                       updateBookingOverviewState({isVisible: true, content: "overview"})
                     } else {
-                      updateBookingOverviewState({ ...bookingOverviewState, content: "paymment"})
+                      updateBookingOverviewState({ ...bookingOverviewState, content: "payment"})
                     }
 
                   }}
+                  disabled={bookingOverviewState.content === "overview" && !isFormComplete}
                   >
-                     {selectedRoom !== "" && bookingOverviewState.isVisible ? (bookingOverviewState.content === "overview" ? "Continue" : "Confirm payment")  : "Select"}
+                     {selectedRoom !== "" && bookingOverviewState.isVisible ? 
+             (bookingOverviewState.content === "overview" ? 
+               (!isFormComplete ? "Complete form to continue" : "Continue") 
+               : "Confirm payment")  
+               : "Select"}
                     </button>
+               
                  </div>
           )}
     </div>

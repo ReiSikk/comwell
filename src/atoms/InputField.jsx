@@ -1,29 +1,49 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./InputField.module.scss";
+import { useSignUpData } from "../providers/SignUpDataContext";
 
 
-const InputField = ({ label, inputId, type, onInputChange, minLength, pattern, title, errorMessage, propValue}) => {
+
+const InputField = ({ label, inputId, type, onInputChange, minLength, pattern, title, errorMessage, propValue, bookingOverviewState, setIsFormComplete, updateIsFormComplete}) => {
   const [focusedInput, setFocusedInput] = useState(null);
   const [value, setValue] = useState("");
+  const {signUpData, setSignUpData} = useSignUpData();
+  const inputRef = useRef();
 
-
+  
+  
+  
+  
   const handleFocus = () => {
     setFocusedInput(inputId);
   };
   const handleBlur = () => {
     setFocusedInput(null);
   };
-
-   // Update the local state when the component mounts or when propValue changes
-   useEffect(() => {
+  
+  // Update the local state when the component mounts or when propValue changes
+  useEffect(() => {
     setValue(propValue);
   }, [propValue]);
 
+
+
+
+
   const handleFormChange = (event) => {
-    const { value } = event.target;
+    const { value, validity, id } = event.target;
     setValue(value);
     onInputChange(inputId, value);
+    setSignUpData((prevInputValues) => ({
+      ...prevInputValues,
+      [inputId]: value,
+    }));
+
+    
   };
+  
+  
+
 
 
 
@@ -32,7 +52,7 @@ const InputField = ({ label, inputId, type, onInputChange, minLength, pattern, t
       <label onFocus={handleFocus} onBlur={handleBlur} className={focusedInput === inputId || value ? styles.focused : ""} htmlFor={inputId}>
         {label}
       </label>
-      <input onFocus={handleFocus} onBlur={handleBlur} className={focusedInput === inputId ? styles.focused : ""} type={type} id={inputId} name={inputId} onChange={handleFormChange} value={value} minLength={minLength} pattern={pattern} title={title} required />
+      <input onFocus={handleFocus} onBlur={handleBlur} className={focusedInput === inputId ? styles.focused : ""} type={type} id={inputId} name={inputId} onChange={handleFormChange} value={value} minLength={minLength} pattern={pattern} title={title} required   ref={inputRef} />
       <p className={styles.error_message}>{errorMessage}</p>
     </div>
   );

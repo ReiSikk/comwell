@@ -147,7 +147,7 @@ function Overlay() {
       const callBookingBackend = async () => {
 
         console.log("callBookingBackend called");
-        fetch('http://localhost:3000/bookings', {
+        fetch('http://127.0.0.1:3005/booking', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -156,12 +156,12 @@ function Overlay() {
     guest: user.fullName ? user.fullName : signUpData.fullName,
     guestEmail: user.email ? user.email : signUpData.email,
     guestPhone: user.phone ? user.phone : signUpData.phone,
-    selectedHotel: selectedHotel ? selectedHotel._id : 'hotelId',
-    selectedRoom: selectedRoom ? selectedRoom._id : 'roomId',
-    roomType: roomType ? roomType : 'Single',
-    roomPrice: roomPrice ? roomPrice : 100,
-    checkIn: checkIn ? checkIn : '2023-12-01',
-    checkOut: checkOut ? checkOut : '2023-12-10',
+    selectedHotel: selectedHotel ? selectedHotel._id : '',
+    selectedRoom: selectedRoom ? selectedRoom._id : '',
+    roomType: selectedRoom ? selectedRoom.roomType : '',
+    roomPrice: selectedRoom ? selectedRoom.price : 100,
+    checkIn: checkInOutDates ? checkInOutDates.checkInDate : '',
+    checkOut: checkInOutDates ? checkInOutDates.checkOutDate : '',
     user: user.username ? user.username : '',
   }),
 })

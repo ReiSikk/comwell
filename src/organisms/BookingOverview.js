@@ -1,16 +1,20 @@
 import React from 'react'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import styles from './BookingOverview.module.scss'
 import Image from 'next/image'
 import InputField from '../atoms/InputField';
 import dayjs from 'dayjs';
 import { HotelsContext } from '../providers/hotels-context.js'
 import { useSignUpData } from "../providers/SignUpDataContext";
+import { useAuth } from "../providers/AuthProvider";
 
-function BookingOverview({room, bookingOverviewState}) {
+function BookingOverview({room, bookingOverviewState, setIsFormComplete}) {
 
     const {  selectedHotel, checkInOutDates, guestsAndRooms, selectedRoom }= useContext(HotelsContext);
     const {signUpData, setSignUpData} = useSignUpData();
+  const { isLoggedIn, login, logout, user } = useAuth();
+
+    
 
      //generate a room image based on room type
      let imageSrc;
@@ -22,13 +26,40 @@ function BookingOverview({room, bookingOverviewState}) {
          imageSrc = 'https://cdn.dwarf.dk/comwell-cms-production/img/containers/main/hoteller/ccp/vaerelser/comwell-portside-spcp-01.jpg/2bad9358ed8aaae051e19245559e3b8e.jpg';
      }
 
-     const handleInputChange = (inputId, value) => {
-        setSignUpData((prevInputValues) => ({
-          ...prevInputValues,
-          [inputId]: value,
-        }));
+
+
+    const handleOverviewFormChange = (inputId, value) => {
+        setSignUpData((prevInputValues) => {
+          const updatedInputValues = {
+            ...prevInputValues,
+            [inputId]: value,
+          };
+          return updatedInputValues;
+        });
     };
-    console.log(signUpData);
+    
+    
+    useEffect(() => {
+        const isValidFullName = /^[a-zA-Z\s]*$/.test(signUpData.fullName); // checks if fullName only contains letters and spaces
+        const isValidEmail = /\S+@\S+\.\S+/.test(signUpData.signupEmail); // checks if signupEmail is in the correct email format
+        const isValidPhone = /^\d{5,}$/.test(signUpData.phone);
+        
+        if (isValidFullName && isValidEmail && isValidPhone) {
+            console.log('valid');
+            setIsFormComplete(true);
+        } else {
+            console.log('not valid');
+            setIsFormComplete(false);
+        }
+    }, [signUpData]); // Run this effect whenever signUpData changes
+    
+
+
+const handleOverviewChange = (inputId, value) => {
+    handleOverviewFormChange(inputId, value);
+  };
+
+console.log(signUpData, 'sign up data');
 
   return (
     <div className={styles.booking_overview}>
@@ -36,9 +67,9 @@ function BookingOverview({room, bookingOverviewState}) {
           <h2>{bookingOverviewState.content === "overview" ? "Guest information" : "My booking"}</h2>
           {bookingOverviewState.content === "overview" ? (
             <div className={styles.overview_input_flex}>
-              <InputField label="Full name" inputId="fullName" type="text" onInputChange={handleInputChange} pattern="^[A-Za-z]+(\s[A-Za-z]+)+$" title="Please provide first and last name" />
-              <InputField label="Email" inputId="signupEmail" type="email" onInputChange={handleInputChange} />
-              <InputField label="Phone" inputId="phone" type="text" onInputChange={handleInputChange} pattern="^\+?[0-9]+$" minLength={5} title="You can only use digits and a plus for a country code"/>
+              <InputField label="Full name" inputId="fullName" type="text" onInputChange={handleOverviewChange} pattern="^[A-Za-z]+(\s[A-Za-z]+)+$" title="Please provide first and last name" propValue={isLoggedIn ? user.user : ''} bookingOverviewState={bookingOverviewState} setIsFormComplete={setIsFormComplete} signUpData={signUpData}  />
+              <InputField label="Email" inputId="signupEmail" type="email" onInputChange={handleOverviewChange} propValue={isLoggedIn ? user.email : ''} bookingOverviewState={bookingOverviewState} setIsFormComplete={setIsFormComplete}  />
+              <InputField label="Phone" inputId="phone" type="text" onInputChange={handleOverviewChange} pattern="^\+?[0-9]+$" minLength={5} title="You can only use digits and a plus for a country code" propValue={isLoggedIn ? user.phone : ''} bookingOverviewState={bookingOverviewState} setIsFormComplete={setIsFormComplete} />
             </div>
           ) : (
     <>
@@ -60,9 +91,9 @@ function BookingOverview({room, bookingOverviewState}) {
                 <div>
                 <h3>Guest info</h3>
                 <div className={styles.guest_info_flex}>
-                <span>{signUpData.fullName}</span>
-                <span>{signUpData.signupEmail}</span>
-                <span>{signUpData.phone}</span>
+                <span>{isLoggedIn ? (user.user || '') : (signUpData.fullName || '')}</span>
+                <span>{isLoggedIn ? (user.email || '') : (signUpData.signupEmail || '')}</span>
+                <span>{isLoggedIn ? (user.phone || '') : (signUpData.phone || '')}</span>
                 </div>
                 </div>
              </li>

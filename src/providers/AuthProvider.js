@@ -6,13 +6,17 @@ const AuthContext = createContext();
 // Create the provider component
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({
+    user: "",
+    email: "",
+    phone: 0,
+  });
 
   // Add your login logic here
   const login = (user) => {
     console.log('login called with:', user);
     setIsLoggedIn(true);
-    setUser(user);
+    setUser({user: user.user, email: user.email, phone: user.phone});
   };
 
   // Add your logout logic here

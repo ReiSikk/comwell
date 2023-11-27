@@ -88,13 +88,16 @@ if (acceptTerms & (passwordData.signupPassword === passwordData.confirmPassword)
    if (response.ok) {
      const data =  await response.json();
      setSignedUp(true);
+
    } else {
      console.error("Error sending data to the server.");
      setServerErrorMessages(true);
    }
   }
 
+
   return !signedUp ? (
+
     <div className={styles.overlay} ref={overlayRef}>
       <div className={styles.overlayContent}>
         <div className={styles.button_container}>

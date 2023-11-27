@@ -22,7 +22,7 @@ function Nav() {
         </Link>
         <div className={styles.links_container}>
           <NavLink link_name="Locations" link_href="/fourohfour" image_src={locationsIcon} image_alt="Arrow" />
-          <NavLink link_name={isLoggedIn ? `${user}` : "Profile"} image_src={profileIcon} image_alt="Profile Icon" onClick={() => setPopupVisible(true)} />
+          <NavLink link_name={isLoggedIn ? `${user.user}` : "Profile"} image_src={profileIcon} image_alt="Profile Icon" onClick={() => setPopupVisible(true)} />
           <NavLink link_name="Menu" link_href="/fourohfour" image_src={hamburgerIcon} image_alt="Comwell Hotel Icon" />
         </div>
       </header>

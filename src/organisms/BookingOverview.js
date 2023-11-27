@@ -42,7 +42,7 @@ function BookingOverview({room, bookingOverviewState, setIsFormComplete}) {
     useEffect(() => {
         const isValidFullName = /^[a-zA-Z\s]*$/.test(signUpData.fullName); // checks if fullName only contains letters and spaces
         const isValidEmail = /\S+@\S+\.\S+/.test(signUpData.signupEmail); // checks if signupEmail is in the correct email format
-        const isValidPhone = /^\d+$/.test(signUpData.phone); // checks if phone only contains digits
+        const isValidPhone = /^\d{5,}$/.test(signUpData.phone);
         
         if (isValidFullName && isValidEmail && isValidPhone) {
             console.log('valid');

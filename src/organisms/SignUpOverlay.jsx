@@ -14,6 +14,7 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [receiveNewsletter, setReceiveNewsletter] = useState(false);
   const [showErrorMessages, setShowErrorMessages] = useState(false);
+  const [showServerErrorMessages, setServerErrorMessages] = useState(false);
   const [signedUp, setSignedUp] = useState(false);
 
 
@@ -42,7 +43,6 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
       ...prevInputValues,
       [inputId]: value,
     }));
-    console.log(signUpData);
   };
 
   const handlePassword = (inputId, value) => {
@@ -50,7 +50,6 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
       ...prevInputValues,
       [inputId]: value,
     }));
-    console.log(passwordData)
   };
 
 
@@ -88,16 +87,12 @@ if (acceptTerms & (passwordData.signupPassword === passwordData.confirmPassword)
 
    if (response.ok) {
      const data =  await response.json();
-     console.log(data); 
-      {message: "User created!"}
-
+     setSignedUp(true);
    } else {
      console.error("Error sending data to the server.");
+     setServerErrorMessages(true);
    }
-   setSignedUp(true);
- 
   }
-
 
   return !signedUp ? (
     <div className={styles.overlay} ref={overlayRef}>
@@ -114,10 +109,10 @@ if (acceptTerms & (passwordData.signupPassword === passwordData.confirmPassword)
        <form onSubmit={handleSubmit}>
          <div className="container">
         <InputField label="Full name" inputId="fullName" type="text" onInputChange={handleInputChange} pattern="^[A-Za-z]+(\s[A-Za-z]+)+$" title="Please provide first and last name" />
-        <InputField label="Email" inputId="username" type="email" onInputChange={handleInputChange} />
+        <InputField label="Email" inputId="username" type="email" onInputChange={handleInputChange} errorMessage={showServerErrorMessages && !signedUp ? "This email cannot be used" : null}/>
         <InputField label="Zip code" inputId="zipCode" onInputChange={handleInputChange} type="text" pattern="^[0-9+]+$" minLength={2}/>
-        <InputField label="Phone" inputId="phone" type="number" onInputChange={handleInputChange} pattern="^\+?[0-9]+$" minLength={5} title="You can only use digits and a plus for a country code"/>
-        <InputField label="Password" inputId="signupPassword" type="password"onInputChange={handlePassword} minLength={8} />
+        <InputField label="Phone" inputId="phone" type="text" onInputChange={handleInputChange} pattern="^[0-9]+$" minLength={5} title="You can only use digits"/>
+        <InputField label="Password" inputId="signupPassword" type="password" onInputChange={handlePassword} minLength={8} />
         <InputField label="Confirm password" inputId="confirmPassword" type="password" onInputChange={handlePassword} errorMessage={showErrorMessages && (passwordData.signupPassword !== passwordData.confirmPassword) ? "Your password don't match" : null}  />
         <InputFieldDropdown label="Gender" selectId="gender" options={genderOptions}  />
         <InputFieldBirthdate label="Birthdate"/>

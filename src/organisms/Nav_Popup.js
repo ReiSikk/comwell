@@ -90,7 +90,7 @@ function Nav_Popup({ isVisible, onClose }) {
           <form className={styles.form_login} ref={popupRef} onSubmit={handleSubmit}>
             <div className="container">
               <InputField label="Email" inputId="email" type="email" onInputChange={handleInputChange} />
-              <InputField label="Password" inputId="password" type="text" onInputChange={handleInputChange} minLength={8} />
+              <InputField label="Password" inputId="password" type="password" onInputChange={handleInputChange} minLength={8} />
               <p>Forgot your password?</p>
               <Link href="/fourohfour">Reset password</Link>
               <p>Dont have an account?</p>

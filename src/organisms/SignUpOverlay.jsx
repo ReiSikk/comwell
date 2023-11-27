@@ -1,7 +1,4 @@
-// SignUpOverlay.jsx
 import React, { useEffect, useRef, useState } from "react";
-//import bcrypt from 'bcrypt';
-//const bcrypt = require("bcrypt")
 import styles from "./SignUpOverlay.module.scss";
 import InputField from "@/atoms/InputField";
 import InputFieldDropdown from "@/atoms/InputFieldDropdown";
@@ -16,7 +13,9 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
   const [passwordData, setPasswordData] = useState();
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [receiveNewsletter, setReceiveNewsletter] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [showErrorMessages, setShowErrorMessages] = useState(false);
+  const [showServerErrorMessages, setServerErrorMessages] = useState(false);
+  const [signedUp, setSignedUp] = useState(false);
 
 
   const handleAcceptTermsChange = (newState) => {
@@ -28,7 +27,6 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
   };
 
   useEffect(() => {
-    // After the component has mounted, add the active class with a slight delay
     const timeoutId = setTimeout(() => {
       overlayRef.current.classList.add(styles.active);
     }, 150);
@@ -36,7 +34,7 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, []); // Empty dependency array ensures this effect runs only once after mount
+  }, []); 
 
   const genderOptions = ["Not defined", "Male", "Female"];
 
@@ -45,7 +43,6 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
       ...prevInputValues,
       [inputId]: value,
     }));
-    console.log(signUpData);
   };
 
   const handlePassword = (inputId, value) => {
@@ -53,7 +50,6 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
       ...prevInputValues,
       [inputId]: value,
     }));
-    console.log(passwordData)
   };
 
 
@@ -62,16 +58,13 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
     event.preventDefault();
 
 
-if (acceptTerms) {
-  console.log("goes through")
+if (acceptTerms & (passwordData.signupPassword === passwordData.confirmPassword)) {
   //sending the request
   callSignUpBackend();
 } else {
-  alert("Please accept the terms and conditions to finish signing up")
-
+  setShowErrorMessages(true);
 }
 
-//CALLING FUNCTION THAT CALLS BACKEND
 
   }
 
@@ -94,15 +87,17 @@ if (acceptTerms) {
 
    if (response.ok) {
      const data =  await response.json();
-     console.log(data, "data from backend in signUpOverlay"); 
-     setSubmitted(true);
+     setSignedUp(true);
+
    } else {
      console.error("Error sending data to the server.");
+     setServerErrorMessages(true);
    }
   }
 
 
-  return (
+  return !signedUp ? (
+
     <div className={styles.overlay} ref={overlayRef}>
       <div className={styles.overlayContent}>
         <div className={styles.button_container}>
@@ -117,17 +112,17 @@ if (acceptTerms) {
        <form onSubmit={handleSubmit}>
          <div className="container">
         <InputField label="Full name" inputId="fullName" type="text" onInputChange={handleInputChange} pattern="^[A-Za-z]+(\s[A-Za-z]+)+$" title="Please provide first and last name" />
-        <InputField label="Email" inputId="username" type="email" onInputChange={handleInputChange} />
+        <InputField label="Email" inputId="username" type="email" onInputChange={handleInputChange} errorMessage={showServerErrorMessages && !signedUp ? "This email cannot be used" : null}/>
         <InputField label="Zip code" inputId="zipCode" onInputChange={handleInputChange} type="text" pattern="^[0-9+]+$" minLength={2}/>
-        <InputField label="Phone" inputId="phone" type="number" onInputChange={handleInputChange} pattern="^\+?[0-9]+$" minLength={5} title="You can only use digits and a plus for a country code"/>
-        <InputField label="Password" inputId="signupPassword" type="password"onInputChange={handlePassword} minLength={8} />
-        <InputField label="Confirm password" inputId="confirmPassword" type="password" onInputChange={handlePassword} errorMessage={submitted && (passwordData.signupPassword !== passwordData.confirmPassword) ? "Your password don't match" : null}  />
+        <InputField label="Phone" inputId="phone" type="text" onInputChange={handleInputChange} pattern="^[0-9]+$" minLength={5} title="You can only use digits"/>
+        <InputField label="Password" inputId="signupPassword" type="password" onInputChange={handlePassword} minLength={8} />
+        <InputField label="Confirm password" inputId="confirmPassword" type="password" onInputChange={handlePassword} errorMessage={showErrorMessages && (passwordData.signupPassword !== passwordData.confirmPassword) ? "Your password don't match" : null}  />
         <InputFieldDropdown label="Gender" selectId="gender" options={genderOptions}  />
         <InputFieldBirthdate label="Birthdate"/>
         </div>
         <div className={styles.condtitions_container}>
         <div className="container">
-        <CheckboxWithText label="Accept terms and conditions for Comwell Club *" id="conditions-checkbox" onCheckboxChange={handleAcceptTermsChange} errorMessage={submitted && !acceptTerms ? "Please accept the terms and conditions." : null} />
+        <CheckboxWithText label="Accept terms and conditions for Comwell Club *" id="conditions-checkbox" onCheckboxChange={handleAcceptTermsChange} errorMessage={showErrorMessages && !acceptTerms ? "Please accept the terms and conditions." : null} />
         <CheckboxWithText label="I would like to be updated on current member offers, Comwell Club surprises and other recommendations personalized to me. I can unsubscribe again at any time. " id="newsletter-checkbox"   onCheckboxChange={handleReceiveNewsletterChange} />
         </div>
         </div>
@@ -139,7 +134,20 @@ if (acceptTerms) {
         </form>
       </div>
     </div>
-  );
+  ) :   <div className={styles.overlay} ref={overlayRef}>
+  <div className={styles.overlayContent}>
+    <div className={styles.button_container}>
+  <button className={styles.close_button}  onClick={closeSignUpOverlay}>
+            <svg className={styles.close_icon} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path stroke="currentColor" strokeWidth="1.5" d="M2.62 13.38 12.99 3.01M13.38 13.38 3.01 3.01"></path></svg>
+            </button>
+            </div>
+  <div className="container">
+    <h1>You've signed up succesfully</h1>
+    <p className={styles.subheader}>Please log-in now</p>
+    </div>
+  
+  </div>
+</div>
 };
 
 export default SignUpOverlay;

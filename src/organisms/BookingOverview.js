@@ -59,7 +59,7 @@ const handleOverviewChange = (inputId, value) => {
     handleOverviewFormChange(inputId, value);
   };
 
-
+console.log(signUpData, 'sign up data');
 
   return (
     <div className={styles.booking_overview}>
@@ -91,9 +91,9 @@ const handleOverviewChange = (inputId, value) => {
                 <div>
                 <h3>Guest info</h3>
                 <div className={styles.guest_info_flex}>
-                <span>{isLoggedIn ? user.user : ''}</span>
-                <span>{isLoggedIn ? user.email : ''}</span>
-                <span>{isLoggedIn ? user.phone : ''}</span>
+                <span>{isLoggedIn ? (user.user || '') : (signUpData.fullName || '')}</span>
+                <span>{isLoggedIn ? (user.email || '') : (signUpData.signupEmail || '')}</span>
+                <span>{isLoggedIn ? (user.phone || '') : (signUpData.phone || '')}</span>
                 </div>
                 </div>
              </li>

@@ -132,11 +132,11 @@ function Overlay() {
       const [isFormComplete, setIsFormComplete] = useState(false);
       useEffect(() => {
         if (isLoggedIn) {
-          console.log("user is logged in", isLoggedIn);
+          console.log("user is logged in =", isLoggedIn);
           // If the user is logged in, set isFormComplete to true
           setIsFormComplete(true);
         } else {
-          console.log("user is not logged in", isLoggedIn);
+          console.log("user is logged in =", isLoggedIn);
           // If the user is not logged in, set isFormComplete to false
           setIsFormComplete(false);
         }
@@ -145,8 +145,8 @@ function Overlay() {
 
       //call booking backend
       const callBookingBackend = async () => {
-
         console.log("callBookingBackend called");
+
         fetch('http://127.0.0.1:3005/booking', {
   method: 'POST',
   headers: {
@@ -159,7 +159,7 @@ function Overlay() {
     selectedHotel: selectedHotel ? selectedHotel._id : '',
     selectedRoom: selectedRoom ? selectedRoom._id : '',
     roomType: selectedRoom ? selectedRoom.roomType : '',
-    roomPrice: selectedRoom ? selectedRoom.price : 100,
+    roomPrice: selectedRoom ? selectedRoom.price : '',
     checkIn: checkInOutDates ? checkInOutDates.checkInDate : '',
     checkOut: checkInOutDates ? checkInOutDates.checkOutDate : '',
     user: user.username ? user.username : '',

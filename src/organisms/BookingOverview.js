@@ -38,6 +38,17 @@ function BookingOverview({room, bookingOverviewState, setIsFormComplete}) {
         });
     };
     
+    //if user logged in update sign up data with user data
+    useEffect(() => {
+      if (isLoggedIn) {
+        setSignUpData((prevSignUpData) => ({
+          fullName: prevSignUpData.fullName || user.user,
+          signupEmail: prevSignUpData.signupEmail || user.email,
+          phone: prevSignUpData.phone || user.phone,
+        }));
+      }
+    }, [isLoggedIn, user]);
+    
     
     useEffect(() => {
         const isValidFullName = /^[a-zA-Z\s]*$/.test(signUpData.fullName); // checks if fullName only contains letters and spaces
@@ -91,9 +102,9 @@ console.log(signUpData, 'sign up data');
                 <div>
                 <h3>Guest info</h3>
                 <div className={styles.guest_info_flex}>
-                <span>{isLoggedIn ? (user.user || '') : (signUpData.fullName || '')}</span>
-                <span>{isLoggedIn ? (user.email || '') : (signUpData.signupEmail || '')}</span>
-                <span>{isLoggedIn ? (user.phone || '') : (signUpData.phone || '')}</span>
+                <span>{signUpData.fullName}</span>
+                <span>{signUpData.signupEmail}</span>
+                <span>{signUpData.phone}</span>
                 </div>
                 </div>
              </li>

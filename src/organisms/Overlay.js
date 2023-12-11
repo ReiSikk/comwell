@@ -144,8 +144,19 @@ function Overlay() {
 
 
       //call booking backend
+      const [bookingMessage, setBookingMessage] = useState("");
+      useEffect(() => {
+        if (bookingMessage) {
+          const timer = setTimeout(() => {
+            setBookingMessage("");
+          }, 3000);
+      
+          return () => clearTimeout(timer); // This will clear the timeout if the component unmounts before the timeout finishes
+        }
+      }, [bookingMessage]);
+      
       const callBookingBackend = async () => {
-        console.log("callBookingBackend called");
+      
 
         fetch('http://127.0.0.1:3005/booking', {
   method: 'POST',
@@ -154,7 +165,7 @@ function Overlay() {
   },
   body: JSON.stringify({
     guest: user.fullName ? user.fullName : signUpData.fullName,
-    guestEmail: user.email ? user.email : signUpData.email,
+    guestEmail: user.email ? user.email : signUpData.signupEmail,
     guestPhone: user.phone ? user.phone : signUpData.phone,
     selectedHotel: selectedHotel ? selectedHotel._id : '',
     selectedRoom: selectedRoom ? selectedRoom._id : '',
@@ -162,11 +173,16 @@ function Overlay() {
     roomPrice: selectedRoom ? selectedRoom.price : '',
     checkIn: checkInOutDates ? checkInOutDates.checkInDate : '',
     checkOut: checkInOutDates ? checkInOutDates.checkOutDate : '',
-    user: user.username ? user.username : '',
+    user: user.username ? user.username : signUpData.signUpEmail,
   }),
 })
   .then(response => response.json())
-  .then(data => console.log(data))
+  .then(data => {
+    console.log(data, "Data from booking backend");
+    if(data) {
+      setBookingMessage(data.message)
+    }
+  })
   .catch((error) => {
     console.error('Error:', error);
   });
@@ -181,6 +197,11 @@ function Overlay() {
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
         <div className={styles.overlay_content}>
+          {bookingMessage && (
+            <div className={styles.booking_message}>
+              <p>{bookingMessage}</p>
+            </div>
+            )}
         {overlayState.overlayToShow === 'Choose room' && (
             <div className={styles.overlay_top_info}>
               <button aria-label="Gå tilbage" 

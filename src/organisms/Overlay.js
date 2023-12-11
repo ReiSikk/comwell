@@ -188,8 +188,11 @@ function Overlay() {
               onClick={() => {
                 if(!bookingOverviewState.isVisible) {
                   updateSelectedRoom(""); //reset selected room
+                } else if(bookingOverviewState.isVisible && bookingOverviewState.content === "overview") {
+                  setBookingOverviewState(false); //reset booking overview state
+                } else if(bookingOverviewState.isVisible && bookingOverviewState.content === "payment") {
+                  setBookingOverviewState({ ...bookingOverviewState, content: "overview" }); // Go back to overview
                 }
-                setBookingOverviewState(false) //reset booking overview state
               }}
               ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" ><path fill="currentColor" fillRule="evenodd" d="m7.524 9.61 5.835-5.835-.884-.884L5.81 9.557l6.638 7.523.937-.827L7.524 9.61Z" clipRule="evenodd"></path></svg></button>
                 <div className={styles.guest_info}>

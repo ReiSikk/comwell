@@ -47,7 +47,7 @@ function BookingOverview({room, bookingOverviewState, setIsFormComplete}) {
           phone: prevSignUpData.phone || user.phone,
         }));
       }
-    }, [isLoggedIn, user]);
+    }, [isLoggedIn, user, setSignUpData]);
     
     
     useEffect(() => {
@@ -147,7 +147,7 @@ console.log(signUpData, 'sign up data');
 
          <div className={styles.checkbox_flex}>
            <input type="checkbox" className={styles.checkbox} />
-           <label htmlFor="checkbox">I accept Comwell's terms and conditions</label>  
+           <label htmlFor="checkbox">I accept Comwell&apos;s terms and conditions</label>  
          </div>
      </>
   )}

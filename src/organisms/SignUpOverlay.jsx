@@ -107,7 +107,7 @@ if (acceptTerms & (passwordData.signupPassword === passwordData.confirmPassword)
                 </div>
       <div className="container">
         <h1>Sign Up for Comwell Club</h1>
-        <p className={styles.subheader}>Become a member of Comwell Club for free and earn points everytime you stay with us. You'll also receive 25 points when you sign up</p>
+        <p className={styles.subheader}>Become a member of Comwell Club for free and earn points everytime you stay with us. You&apos;ll also receive 25 points when you sign up</p>
         </div>
        <form onSubmit={handleSubmit}>
          <div className="container">
@@ -142,7 +142,7 @@ if (acceptTerms & (passwordData.signupPassword === passwordData.confirmPassword)
             </button>
             </div>
   <div className="container">
-    <h1>You've signed up succesfully</h1>
+    <h1>You&apos;ve signed up succesfully</h1>
     <p className={styles.subheader}>Please log-in now</p>
     </div>
   

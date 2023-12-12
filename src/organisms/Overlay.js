@@ -84,7 +84,7 @@ function Overlay() {
       // After fetching, set shouldFetchRooms back to false
       setShouldFetchRooms(false);
     }
-  }, [shouldFetchRooms]);
+  }, [shouldFetchRooms, hotelID, setShouldFetchRooms]);
 
 
 //fetch rooms data from rooms collection
@@ -140,7 +140,7 @@ function Overlay() {
           // If the user is not logged in, set isFormComplete to false
           setIsFormComplete(false);
         }
-      }, [user]);
+      }, [user, isLoggedIn]);
 
 
       //call booking backend

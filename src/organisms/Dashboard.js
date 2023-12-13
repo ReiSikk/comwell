@@ -1,4 +1,4 @@
-import {React, useContext} from 'react'
+import {React, useState} from 'react'
 import styles from './Dashboard.module.scss'
 import DashboardLeft from '../molecules/DashboardLeft'
 import DashboardRight from '../molecules/DashboardRight'
@@ -10,13 +10,18 @@ function Dashboard({ hotelsData}) {
 //Check logged in status
   const { isLoggedIn } = useAuth();
   const { user } = useAuth();
-  const { selectedHotel } = useContext(HotelsContext);
-    console.log(selectedHotel, 'selectedhotel from dashboard');
+
+// State for selected hotel in dashboard
+const [hotelToManage, setHotelToManage] = useState(null);
+const updateSelectedHotel = (hotel) => {
+    setHotelToManage(hotel);
+  };
+
 
 
   return (
     <div className={styles.wrapper}>
-        <DashboardLeft hotelsData={hotelsData} selectedHotel={selectedHotel} />
+        <DashboardLeft hotelsData={hotelsData} hotelToManage={hotelToManage} updateSelectedHotel={updateSelectedHotel}  />
         <DashboardRight hotelsData={hotelsData}/>
     </div>
   )

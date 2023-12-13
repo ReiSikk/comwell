@@ -15,7 +15,7 @@ import { useSignUpData } from '../providers/SignUpDataContext';
 
 
 
-function Overlay() {
+function Overlay({hotelsData}) {
 
   //Check logged in status
   const { isLoggedIn } = useAuth();
@@ -38,29 +38,12 @@ function Overlay() {
 
   //init state variables
   const [roomsData, setRoomsData] = useState(null);
-  const [hotelsData, setHotelsData] = useState(null);
   const [hotelRoomsData, setHotelRoomsData] = useState(null);
 
 
 
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await fetch('http://127.0.0.1:3005/hotels');
-        if (!res.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await res.json();
-        setHotelsData(data);
-        console.log("fetching data");
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    getData();
-  }, []); 
+
 
   //fetch rooms
   let hotelID = selectedHotel._id
@@ -151,7 +134,7 @@ function Overlay() {
             setBookingMessage("");
           }, 3000);
       
-          return () => clearTimeout(timer); // This will clear the timeout if the component unmounts before the timeout finishes
+          return () => clearTimeout(timer);
         }
       }, [bookingMessage]);
       

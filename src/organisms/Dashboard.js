@@ -16,17 +16,9 @@ const updateSelectedHotel = (hotel) => {
     setHotelToManage(hotel);
 };
 
-//fetch rooms
-
-// State for all rooms
-const [allRooms, setAllRooms] = useState([]);
-let hotelID = hotelToManage?._id
-console.log(hotelToManage, "hotelTomanage")
-
 
 // State for rooms of the selected hotel
 const [hotelRooms, setHotelRooms] = useState(null);
-console.log(hotelRooms, "hotelRooms")
 
 // Update hotelRooms when hotelToManage changes
 useEffect(() => {
@@ -37,7 +29,6 @@ useEffect(() => {
 
 //fetch rooms data from rooms collection
 const [selectedHotelRoomsData, setSelectedHotelRoomsData] = useState(null);
-console.log(selectedHotelRoomsData, "selectedHotelRoomsData")
 useEffect(() => {
     const fetchHotelRoomsData = async () => {
 
@@ -72,7 +63,7 @@ useEffect(() => {
   return (
     <div className={styles.wrapper}>
         <DashboardLeft hotelsData={hotelsData} hotelToManage={hotelToManage} updateSelectedHotel={updateSelectedHotel}  />
-        <DashboardRight hotelsData={hotelsData}/>
+        <DashboardRight hotelsData={hotelsData} selectedHotelRoomsData={selectedHotelRoomsData}/>
     </div>
   )
 }

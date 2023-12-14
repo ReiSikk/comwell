@@ -1,15 +1,15 @@
 import React from 'react'
 import styles from '../organisms/Dashboard.module.scss'
 
-function DashboardRoomCard() {
+function DashboardRoomCard({room, handleRoomToEdit}) {
   return (
     <div className={styles.room_card}>
         <div>
-            <h3>Room Name</h3>
-            <p>Room ID</p>
+            <h3>{room.roomType}</h3>
+            <p>{room.available ? 'Available' : 'Not available'}</p>
         </div>
         <div>
-            <button>Update</button>
+            <button onClick={() => handleRoomToEdit(room)}>Update</button>
             <button>Delete</button>
         </div>
     </div>

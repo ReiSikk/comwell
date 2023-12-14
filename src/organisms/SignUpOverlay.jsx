@@ -10,19 +10,11 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
   const overlayRef = useRef(null);
   const { signUpData, setSignUpData } = useSignUpData();
   const [receiveNewsletter, setReceiveNewsletter] = useState(false);
-
   const [passwordData, setPasswordData] = useState("");
-  const [showPasswordError, setShowPasswordError] = useState(false);
-  const [passwordError, setPasswordError] = useState('')
-
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [showTermsError, setShowTermsError] = useState(false);
-
   const [showServerErrorMessages, setServerErrorMessages] = useState(false);
   const [signedUp, setSignedUp] = useState(false);
-
-  const [blurredFields, setBlurredFields] = useState({});
-  
 
   const handleAcceptTermsChange = (newState) => {
     setTermsAccepted(newState);
@@ -58,7 +50,6 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
     }));
   };
 
-
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -67,10 +58,7 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
       callSignUpBackend();
     } else {
       if (!termsAccepted) {
-        setShowTermsError(true)
-      }
-      if (passwordData.signupPassword != passwordData.confirmPassword) {
-        setShowPasswordError(true);
+        setShowTermsError(true);
       }
     }
   }
@@ -117,18 +105,24 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="container">
-            <InputField label="Full name" inputId="fullName" type="text" onInputChange={handleInputChange} pattern="^[A-Za-z]+(\s[A-Za-z]+)+$" title="Please provide first and last name" />
-            <InputField label="Email" inputId="username" type="email" onInputChange={handleInputChange} errorMessage={showServerErrorMessages && !signedUp ? "This email cannot be used" : null} />
-            <InputField label="Zip code" inputId="zipCode" onInputChange={handleInputChange} type="text" pattern="^[0-9+]+$" minLength={2} />
-            <InputField label="Phone" inputId="phone" type="text" onInputChange={handleInputChange} pattern="^[0-9]+$" minLength={5} title="You can only use digits" />
-            <InputField label="Password" inputId="signupPassword" type="password" onInputChange={handlePassword} minLength={8}/>
+            <InputField label="Full name" inputId="fullName" type="text" onInputChange={handleInputChange} pattern="^[A-Za-z]+(\s[A-Za-z]+)+$" title="Please provide first and last name" errorMessage="You need to fill in your last name" />
+            <InputField
+              label="Email"
+              inputId="username"
+              type="email"
+              onInputChange={handleInputChange}
+              errorMessage={showServerErrorMessages && !signedUp ? "This email cannot be used" : !showServerErrorMessages ? "Invalid email. Please verify your details" : null}
+            />
+            <InputField label="Zip code" inputId="zipCode" onInputChange={handleInputChange} type="text" pattern="^[0-9+]+$" minLength={2} errorMessage="Invalid postalcode" />
+            <InputField label="Phone" inputId="phone" type="text" onInputChange={handleInputChange} pattern="^[0-9]+$" minLength={5} title="You can only use digits" errorMessage="Please provide the right format" />
+            <InputField label="Password" inputId="signupPassword" type="password" onInputChange={handlePassword} minLength={8} errorMessage="Your password needs to be at least 8 characters" />
             <InputField
               label="Confirm password"
               inputId="confirmPassword"
               type="password"
+              pattern={signUpData.signupPassword}
               onInputChange={handlePassword}
-              errorMessage={showPasswordError && passwordData.signupPassword !== passwordData.confirmPassword ? "Your passwords don't mach" : null}
-              setShowPasswordError={setShowPasswordError}
+              errorMessage="Your passwords don't match. Please confirm"
             />
             <InputFieldDropdown label="Gender" selectId="gender" options={genderOptions} />
             <InputFieldBirthdate label="Birthdate" />

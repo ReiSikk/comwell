@@ -96,8 +96,8 @@ function Nav_Popup({ isVisible, onClose }) {
         <>
           <form className={styles.form_login} ref={popupRef} onSubmit={handleSubmit}>
             <div className="container">
-              <InputField label="Email" inputId="email" type="email" onInputChange={handleInputChange} />
-              <InputField label="Password" inputId="password" type="password" onInputChange={handleInputChange} minLength={8} />
+              <InputField label="Email" inputId="email" type="email" errorMessage="Please use a valid email address" onInputChange={handleInputChange} />
+              <InputField label="Password" inputId="password" type="password" errorMessage="Your password needs to be at least 8 characters" onInputChange={handleInputChange} minLength={8} />
               <p>Forgot your password?</p>
               <Link href="/fourohfour">Reset password</Link>
               <p>Dont have an account?</p>

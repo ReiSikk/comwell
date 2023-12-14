@@ -15,10 +15,10 @@ function DashboardLeft({ hotelsData, hotelToManage ,updateSelectedHotel }) {
         <div className={styles.top}>
             <h3>Hotels</h3>
             <div className={styles.label_flex}>
-                   <button id='All' className={region === 'All' ? styles.selected : ''} onClick={updateSelectedHotel}>All</button>
-                   <button id='Zealand' className={region === 'Zealand' ? styles.selected : ''} onClick={updateSelectedHotel}>Zealand</button>
-                   <button id='Funen' className={region === 'Funen' ? styles.selected : ''} onClick={updateSelectedHotel}>Funen</button>
-                  <button id='Jutland' className={region === 'Jutland' ? styles.selected : ''} onClick={updateSelectedHotel}>Jutland</button>
+                   <button id='All' className={region === 'All' ? styles.selected : ''} onClick={handleLabelClick}>All</button>
+                   <button id='Zealand' className={region === 'Zealand' ? styles.selected : ''} onClick={handleLabelClick}>Zealand</button>
+                   <button id='Funen' className={region === 'Funen' ? styles.selected : ''} onClick={handleLabelClick}>Funen</button>
+                  <button id='Jutland' className={region === 'Jutland' ? styles.selected : ''} onClick={handleLabelClick}>Jutland</button>
                 </div>
         </div>
         <div className={styles.dash_left__hotels}>

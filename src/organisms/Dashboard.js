@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import {React, useState, useEffect } from 'react'
 import styles from './Dashboard.module.scss'
 import DashboardLeft from '../molecules/DashboardLeft'
 import DashboardRight from '../molecules/DashboardRight'
@@ -6,7 +6,6 @@ import { useAuth } from '../providers/AuthProvider'
 import { HotelsContext } from '../providers/hotels-context'
 
 function Dashboard({ hotelsData}) {
-    console.log(hotelsData, 'from dashboard');
 //Check logged in status
   const { isLoggedIn } = useAuth();
   const { user } = useAuth();
@@ -15,7 +14,58 @@ function Dashboard({ hotelsData}) {
 const [hotelToManage, setHotelToManage] = useState(null);
 const updateSelectedHotel = (hotel) => {
     setHotelToManage(hotel);
-  };
+};
+
+//fetch rooms
+
+// State for all rooms
+const [allRooms, setAllRooms] = useState([]);
+let hotelID = hotelToManage?._id
+console.log(hotelToManage, "hotelTomanage")
+
+
+// State for rooms of the selected hotel
+const [hotelRooms, setHotelRooms] = useState(null);
+console.log(hotelRooms, "hotelRooms")
+
+// Update hotelRooms when hotelToManage changes
+useEffect(() => {
+    if (hotelToManage) {
+      setHotelRooms(hotelToManage.rooms);
+    }
+  }, [hotelToManage]);
+
+//fetch rooms data from rooms collection
+const [selectedHotelRoomsData, setSelectedHotelRoomsData] = useState(null);
+console.log(selectedHotelRoomsData, "selectedHotelRoomsData")
+useEffect(() => {
+    const fetchHotelRoomsData = async () => {
+
+      try {
+        const HotelRoomsData = [];
+        for (const roomId of hotelRooms) {
+          const response = await fetch(`http://127.0.0.1:3005/rooms/${roomId}`);
+          if (!response.ok) {
+            console.error(`Error fetching room ${response.url}: ${response.statusText}`);
+            continue;
+          }
+          if (response.headers.get('Content-Length') === '0') {
+            console.error(`No content in response for room ${response.url}`);
+            continue;
+          }
+          const roomData = await response.json();
+          HotelRoomsData.push(roomData);
+        }
+        setSelectedHotelRoomsData(HotelRoomsData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchHotelRoomsData();
+  }, [hotelRooms]);
+
+
 
 
 

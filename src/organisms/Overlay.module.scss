@@ -1,0 +1,243 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    min-width: 70dvw;
+    width: 100%;
+    max-width: 85dvw;
+    height: 100dvh;
+    background: rgba(255, 255, 255, 1);
+    z-index: 5;
+    transition: right 0.75s ease-in-out;
+    overflow-y: auto ;
+  }
+  @media only screen and (max-width: 768px) {
+    .overlay {
+      max-width: 100dvw;
+      height: 100dvh;
+    }
+   
+  }
+
+  .overlay_top_info {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4rem;
+    padding: 2rem 4rem 0rem 4rem;
+    span {
+      font-size: 0.9rem;
+    }
+    svg {
+      height: max-content;
+      min-height: 16px;
+      width: 16px;
+      justify-self: center;
+      align-self: center;
+    }
+   
+    div {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      justify-content: center;
+      align-self: center;
+
+      @media only screen and (max-width: 620px) {
+        display: none;
+      }
+
+      div:not(:last-child) {
+        padding-right: 0.75rem;
+          border-right: 1px solid rgba(0, 0, 0, 0.2);
+      }
+    }
+
+  }
+  
+  .overlay.show {
+    right: 0;
+    z-index: 100;
+  }
+  .overlay_header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 2rem 1.5rem;
+    font-size: 2rem;
+  }
+  .close_icon {
+    height: max-content;
+    min-height: 16px;
+    width: 16px;
+    justify-self: center;
+    align-self: center;
+  }
+  .close_button {
+    border: none;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0.5rem;
+    border-radius: 9999px;
+    display: flex;
+
+  }
+  .overlay_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem 1rem 2rem;
+  }
+.drawer_bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  padding: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1) ;
+}
+  .drawer_lower_btn {
+    align-self: flex-end;
+      width: 100%;
+      padding: 1rem 2.5rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 1);
+      background: rgba(39, 58, 72, 1);
+      border: transparent;
+    }
+    .drawer_lower_btn:disabled {
+      background: rgba(39, 58, 72, 0.5);
+      cursor: not-allowed;
+    }
+
+    .overlay_content {
+      position: relative;
+    }
+    .overlay_data {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem 1rem 5rem 1rem;
+      max-width: 100%;
+      overflow-x: hidden;
+      opacity: 0;
+      transition: opacity 0.55s ease-out;
+    }
+    .visible {
+      opacity: 1 !important;
+      transition:all 0.2s ease;
+    }
+    .label_flex {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      
+      button {
+        border: none;
+        cursor: pointer;
+        padding: 0.375rem 0.625rem;
+        border-radius: 9999px;
+        font-size: 0.8em;
+        line-height: 12px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+      }
+      .selected {
+        background-color: rgba(39, 58, 72, 1);
+        color: #f1f1f1;
+      }
+      button:not(.selected) {
+        cursor: pointer;
+    }
+    }
+
+    .check_in_out_wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .rooms_flex {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 0rem 2.5rem
+    }
+
+    .drawer_bottom_select_room {
+      position: sticky;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background: #f1f1f1;
+      bottom: 0;
+      z-index: 100;
+      width: 100%;
+      padding: 1rem 2.5rem;
+      text-align: right;
+      span {
+        font-size: 1.2rem;
+        font-weight: 600 ;
+        line-height: 1.625rem;
+        width: 100%;
+      }
+      button {
+        margin-left: 2rem;
+        width: 100%;
+        min-width: 200px;
+        max-width: fit-content;
+        padding: 1rem 2.5rem;
+        border-radius: 9999px;
+        cursor: pointer;
+        color: rgb(255, 255, 255);
+        background: rgb(39, 58, 72);
+        border: transparent;
+      }
+    }
+
+    .back_icon {
+      border: none;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.1);
+      padding: 0.5rem;
+      border-radius: 9999px;
+      display: flex;
+      svg {
+        height: max-content;
+        min-height: 16px;
+        width: 16px;
+        justify-self: center;
+        align-self: center;
+      }
+    }
+
+    //UI messages
+    .booking_message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      background: rgb(39, 58, 72);
+      padding: 3rem 2rem ;
+      border-radius: 16px;
+      border: transparent;
+      z-index: 1000;
+      color: rgb(255, 255, 255);
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      animation: grow 0.3s forwards;
+    
+      @keyframes grow {
+        0% {
+          transform: translate(-50%, -50%) scale(0);
+          opacity: 0;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 1;
+        }
+      }
+    }

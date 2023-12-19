@@ -1,17 +1,26 @@
 @import "../styles/variables.scss";
 
-.input_container {
-    position: relative;
-  
-label {
-  margin: 0 5px;
-  color: $font-dark;
-  position: absolute;
-  pointer-events: none;
-  transition: top 0.2s ease-in-out, font-size 0.2s ease-in-out;
-  top: 50%;
-  transform: translateY(-50%);
+.error_message_container {
+  p.error_message {
+    display: none;
+    font-size: 12px;
+    color: red;
+    padding: 3px;
+  }
 }
+
+.input_container {
+  position: relative;
+
+  label {
+    margin: 0 5px;
+    color: $font-dark;
+    position: absolute;
+    pointer-events: none;
+    transition: top 0.2s ease-in-out, font-size 0.2s ease-in-out;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 
   label.focused {
     margin: 5px 5px;
@@ -23,8 +32,8 @@ label {
 
   input {
     border-width: 1px;
-   padding: 20px 5px 10px;
- width: 100%;
+    padding: 20px 5px 10px;
+    width: 100%;
     border-radius: 4px;
     transition: border 0.3s;
     outline: none;
@@ -34,7 +43,14 @@ label {
     border: 1px $font-dark solid;
   }
 
-  .error_message {
-    color:red;
+  input:invalid[blurred="true"] {
+    border: 1px solid red;
   }
+
+  input:invalid[blurred="true"] ~ div p.error_message {
+    display: block;
+  }
+
 }
+
+

@@ -1,0 +1,12 @@
+.checkbox {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: flex-start;
+    padding-bottom: 0.75rem;
+    input {
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+}

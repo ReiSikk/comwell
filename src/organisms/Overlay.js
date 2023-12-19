@@ -15,7 +15,7 @@ import { useSignUpData } from '../providers/SignUpDataContext';
 
 
 
-function Overlay() {
+function Overlay({hotelsData}) {
 
   //Check logged in status
   const { isLoggedIn } = useAuth();
@@ -38,29 +38,12 @@ function Overlay() {
 
   //init state variables
   const [roomsData, setRoomsData] = useState(null);
-  const [hotelsData, setHotelsData] = useState(null);
   const [hotelRoomsData, setHotelRoomsData] = useState(null);
 
 
 
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await fetch('http://127.0.0.1:3005/hotels');
-        if (!res.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await res.json();
-        setHotelsData(data);
-        console.log("fetching data");
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
-    getData();
-  }, []); 
+
 
   //fetch rooms
   let hotelID = selectedHotel._id
@@ -84,7 +67,7 @@ function Overlay() {
       // After fetching, set shouldFetchRooms back to false
       setShouldFetchRooms(false);
     }
-  }, [shouldFetchRooms]);
+  }, [shouldFetchRooms, hotelID, setShouldFetchRooms]);
 
 
 //fetch rooms data from rooms collection
@@ -132,21 +115,32 @@ function Overlay() {
       const [isFormComplete, setIsFormComplete] = useState(false);
       useEffect(() => {
         if (isLoggedIn) {
-          console.log("user is logged in", isLoggedIn);
+          console.log("user is logged in =", isLoggedIn);
           // If the user is logged in, set isFormComplete to true
           setIsFormComplete(true);
         } else {
-          console.log("user is not logged in", isLoggedIn);
+          console.log("user is logged in =", isLoggedIn);
           // If the user is not logged in, set isFormComplete to false
           setIsFormComplete(false);
         }
-      }, [user]);
+      }, [user, isLoggedIn]);
 
 
       //call booking backend
+      const [bookingMessage, setBookingMessage] = useState("");
+      useEffect(() => {
+        if (bookingMessage) {
+          const timer = setTimeout(() => {
+            setBookingMessage("");
+          }, 3000);
+      
+          return () => clearTimeout(timer);
+        }
+      }, [bookingMessage]);
+      
       const callBookingBackend = async () => {
+      
 
-        console.log("callBookingBackend called");
         fetch('http://127.0.0.1:3005/booking', {
   method: 'POST',
   headers: {
@@ -154,19 +148,24 @@ function Overlay() {
   },
   body: JSON.stringify({
     guest: user.fullName ? user.fullName : signUpData.fullName,
-    guestEmail: user.email ? user.email : signUpData.email,
+    guestEmail: user.email ? user.email : signUpData.signupEmail,
     guestPhone: user.phone ? user.phone : signUpData.phone,
     selectedHotel: selectedHotel ? selectedHotel._id : '',
     selectedRoom: selectedRoom ? selectedRoom._id : '',
     roomType: selectedRoom ? selectedRoom.roomType : '',
-    roomPrice: selectedRoom ? selectedRoom.price : 100,
+    roomPrice: selectedRoom ? selectedRoom.price : '',
     checkIn: checkInOutDates ? checkInOutDates.checkInDate : '',
     checkOut: checkInOutDates ? checkInOutDates.checkOutDate : '',
-    user: user.username ? user.username : '',
+    user: user.username ? user.username : signUpData.signUpEmail,
   }),
 })
   .then(response => response.json())
-  .then(data => console.log(data))
+  .then(data => {
+    console.log(data, "Data from booking backend");
+    if(data) {
+      setBookingMessage(data.message)
+    }
+  })
   .catch((error) => {
     console.error('Error:', error);
   });
@@ -181,6 +180,11 @@ function Overlay() {
   return (
     <div className={`${styles.overlay} ${overlayState.showOverlay ? styles.show : ''}`}>
         <div className={styles.overlay_content}>
+          {bookingMessage && (
+            <div className={styles.booking_message}>
+              <p>{bookingMessage}</p>
+            </div>
+            )}
         {overlayState.overlayToShow === 'Choose room' && (
             <div className={styles.overlay_top_info}>
               <button aria-label="Gå tilbage" 
@@ -188,8 +192,11 @@ function Overlay() {
               onClick={() => {
                 if(!bookingOverviewState.isVisible) {
                   updateSelectedRoom(""); //reset selected room
+                } else if(bookingOverviewState.isVisible && bookingOverviewState.content === "overview") {
+                  setBookingOverviewState(false); //reset booking overview state
+                } else if(bookingOverviewState.isVisible && bookingOverviewState.content === "payment") {
+                  setBookingOverviewState({ ...bookingOverviewState, content: "overview" }); // Go back to overview
                 }
-                setBookingOverviewState(false) //reset booking overview state
               }}
               ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" ><path fill="currentColor" fillRule="evenodd" d="m7.524 9.61 5.835-5.835-.884-.884L5.81 9.557l6.638 7.523.937-.827L7.524 9.61Z" clipRule="evenodd"></path></svg></button>
                 <div className={styles.guest_info}>

@@ -2,7 +2,7 @@ import React from 'react'
 import styles from '../organisms/Dashboard.module.scss'
 import DashboardRoomCard from './DashboardRoomCard'
 import CheckboxWithText from '../atoms/CheckboxWithText'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import InputField from '@/atoms/InputField'
 import CheckboxGroup from '../atoms/CheckBoxGroup'
 
@@ -38,9 +38,9 @@ function DashboardRight({selectedHotelRoomsData, hotelToManage}) {
         }));
 };
 
-      
-      //handle input changes on room edit
-      const [errors, setErrors] = useState({
+
+      // Universal check for empty values
+      const [errorMessages, setErrorMessages] = useState({
         available: "",
         roomType: "",
         bedTypes: "",
@@ -48,39 +48,40 @@ function DashboardRight({selectedHotelRoomsData, hotelToManage}) {
         roomSize: "",
         price: ""
       });
+      
       const handleInputChange = (id, value) => {
         let errorMessage = '';
 
-         // Universal check for empty value
-  if (value.length === 0) {
-    if (id === 'available') {
-      errorMessage = "Please select availability";
-    }
-    if (id === 'roomType') {
-        errorMessage = "Please enter room type";
-        }
-    if (id === 'bedTypes') {
-        errorMessage = "Please enter bed types";
-        }
-    if (id === 'facilities') {
-        errorMessage = "Please select facilities";
-        }
-    if (id === 'roomSize') {
-        errorMessage = "Please enter room size";
-        }
-    if (id === 'price') {
-        errorMessage = "Please enter room price";
-        }
-    }
+        // Universal check for empty value
+        if (value.length === 0) {
+          if (id === 'available') {
+            errorMessage = "Please select availability";
+          }
+          if (id === 'roomType') {
+              errorMessage = "Please enter a room type";
+              }
+          if (id === 'bedTypes') {
+              errorMessage = "Please enter bed types";
+              }
+          if (id === 'facilities') {
+              errorMessage = "Please select at least one of the facilities";
+              }
+          if (id === 'roomSize') {
+              errorMessage = "Please enter a room size";
+              }
+          if (id === 'price') {
+              errorMessage = "Please enter  a room price";
+              }
+          }
+
+        setErrorMessages(prevErrors => ({
+            ...prevErrors,
+            [id]: errorMessage
+          }));
+
         if(id === 'bedTypes') {
             value = value.split(',').filter(item => item.trim().length > 0);
         }
-
-        //set error message if input is empty
-        setErrors(prevErrors => ({
-          ...prevErrors,
-          [id]: errorMessage
-        }));
 
         setRoomData(prevRoomData => ({
           ...prevRoomData,
@@ -88,13 +89,26 @@ function DashboardRight({selectedHotelRoomsData, hotelToManage}) {
         }));
       };
 
+
+      const validateForm = () => {
+        for (const error in errorMessages) {
+          if (errorMessages[error]) {
+            return false;
+          }
+        }
+        return true;
+      };
+
       //call backend to update room
-      const handleRoomUpdate = async () => {
+      const handleRoomUpdate = async (e) => {
+        e.preventDefault();
         console.log(roomData, ' roomData in handleRoomUpdate');
-        if (!roomToEdit) {
+        const formIsValid = validateForm();
+        if (!formIsValid) {
+            displayErrorMessages();
           return;
         }
-       
+       if(formIsValid) {
         try {
           const response = await fetch(`http://127.0.0.1:3005/rooms/${roomToEdit._id}`, {
             method: 'PUT',
@@ -108,12 +122,44 @@ function DashboardRight({selectedHotelRoomsData, hotelToManage}) {
           }
           // Handle successful update...
           if (response.status === 200) {
-            alert('Room updated successfully');
+           showMessage("Room updated successfully!");
           }
-        } catch (error) {
+        } 
+        catch (error) {
           console.error(error);
         }
+    } else {
+        alert('form is not valid');
+    }
       };
+
+
+      const [uiMessage, setUiMessage] = useState('');
+
+const showMessage = (message) => {
+  setUiMessage(message);
+  setTimeout(() => {
+    setUiMessage('');
+  }, 2000);
+};
+
+      function displayErrorMessages() {
+        const errorMessagesArray = [];
+
+          for (const error in errorMessages) {
+            if (errorMessages[error]) {
+              errorMessagesArray.push(errorMessages[error]);
+            }
+          }
+
+  if (errorMessagesArray.length > 0) {
+    showMessage(errorMessagesArray.join(' and ' + "\n"));
+  }
+      }
+
+
+
+
 
   return (
 <div className={styles.dash_right}>
@@ -132,17 +178,17 @@ function DashboardRight({selectedHotelRoomsData, hotelToManage}) {
     { roomToEdit ?
        <div className={styles.inputs}>
         <CheckboxWithText id="Available" label="Room is available" onCheckboxChange={handleAvailability} />
-        {errors.bedTypes && <p>{errors.available}</p>}
+        {errorMessages.bedTypes && <p className={styles.error}>{errorMessages.available}</p>}
         <InputField inputId={"roomType"} id="roomType" label="Room type" propValue={roomToEdit?.roomType} onInputChange={handleInputChange} />
-        {errors.roomType && <p>{errors.roomType}</p>}
+        {errorMessages.roomType && <p className={styles.error}>{errorMessages.roomType}</p>}
         <InputField inputId={"bedTypes"} id="bedTypes" label="Bed types" propValue={roomToEdit?.bedTypes} onInputChange={handleInputChange} />
-        {errors.bedTypes && <p>{errors.bedTypes}</p>}
+        {errorMessages.bedTypes && <p className={styles.error}>{errorMessages.bedTypes}</p>}
         <CheckboxGroup options={allRoomFacilities} value={roomData.facilities || []} onChange={(value) => handleInputChange('facilities', value)} />
-        {errors.facilities && <p>{errors.facilities}</p>}
+        {errorMessages.facilities && <p className={styles.error}>{errorMessages.facilities}</p>}
         <InputField inputId={"roomSize"} id="roomSize" label="Room size" propValue={roomToEdit?.roomSize} onInputChange={handleInputChange} />
-        {errors.roomSize && <p>{errors.roomSize}</p>}
+        {errorMessages.roomSize && <p className={styles.error}>{errorMessages.roomSize}</p>}
         <InputField inputId={"price"} id="price" type={"number"} label="Room price" propValue={roomToEdit?.price} onInputChange={handleInputChange} />
-        {errors.price && <p>{errors.price}</p>}
+        {errorMessages.price && <p className={styles.error}>{errorMessages.price}</p>}
         <button onClick={handleRoomUpdate}>Save updates</button>
        </div> 
        : 
@@ -151,6 +197,7 @@ function DashboardRight({selectedHotelRoomsData, hotelToManage}) {
         </div>
 
 }
+{uiMessage && <div className={styles.validation_message}>{uiMessage}</div>}
     </div>
  </div>
   )

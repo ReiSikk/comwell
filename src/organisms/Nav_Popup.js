@@ -5,10 +5,11 @@ import { AuthProvider, useAuth } from "@/providers/AuthProvider";
 import SignUpOverlay from "./SignUpOverlay";
 import InputField from "@/atoms/InputField";
 import Link from "next/link";
-
+import { useSignUpData } from '../providers/SignUpDataContext';
 function Nav_Popup({ isVisible, onClose }) {
   const popupRef = useRef(null);
   const { isLoggedIn, login, logout } = useAuth();
+  const { signUpData, setSignUpData } = useSignUpData();
   const [showSignUpOverlay, setShowSignUpOverlay] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -60,7 +61,7 @@ function Nav_Popup({ isVisible, onClose }) {
       password: formData.password,
     };
 
-    console.log("handleSubmit called with:", data)
+
     
       try {
         const response = await submitLoginData(data);
@@ -75,9 +76,11 @@ function Nav_Popup({ isVisible, onClose }) {
             phone: response.phone,
            };
           login(user);
+          setSignUpData({});
+
         } else {
           // Handle login failure
-          alert("Login failed");
+          alert("Login failed, please check your credentials and try again.");
         }
       } catch (error) {
         console.error(error);
@@ -87,7 +90,7 @@ function Nav_Popup({ isVisible, onClose }) {
 
   const handleLogout = () => {
     logout();
-    // Handle logout logic
+    setSignUpData({});
   };
 
   return isVisible ? (
@@ -96,8 +99,8 @@ function Nav_Popup({ isVisible, onClose }) {
         <>
           <form className={styles.form_login} ref={popupRef} onSubmit={handleSubmit}>
             <div className="container">
-              <InputField label="Email" inputId="email" type="email" onInputChange={handleInputChange} />
-              <InputField label="Password" inputId="password" type="password" onInputChange={handleInputChange} minLength={8} />
+              <InputField label="Email" inputId="email" type="email" errorMessage="Please use a valid email address" onInputChange={handleInputChange} />
+              <InputField label="Password" inputId="password" type="password" errorMessage="Your password needs to be at least 8 characters" onInputChange={handleInputChange} minLength={8} />
               <p>Forgot your password?</p>
               <Link href="/fourohfour">Reset password</Link>
               <p>Dont have an account?</p>

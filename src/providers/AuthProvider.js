@@ -12,6 +12,8 @@ export const AuthProvider = ({ children }) => {
     phone: 0,
   });
 
+
+
   // Add your login logic here
   const login = (user) => {
     console.log('login called with:', user);
@@ -22,6 +24,8 @@ export const AuthProvider = ({ children }) => {
   // Add your logout logic here
   const logout = () => {
     setIsLoggedIn(false);
+    // Reset user info
+    setUser({user: "", email: "", phone: 0});
   };
 
   // Provide the context values to the children components

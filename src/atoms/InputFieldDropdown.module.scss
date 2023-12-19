@@ -28,10 +28,11 @@
         border-radius: 4px;
         transition: border 0.3s;
         outline: none;
+        border-color: $form-input-border-color;
       
   }
 
-  select.focused {
-    border: 1px $font-dark solid;
+  select:focus {
+    border-color: $font-dark;
   }
 }

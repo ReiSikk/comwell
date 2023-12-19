@@ -10,7 +10,10 @@ export const AuthProvider = ({ children }) => {
     user: "",
     email: "",
     phone: 0,
+    role: "",
   });
+  const [isDashBoardVisible, setDashBoardVisible] = useState(false)
+
 
 
 
@@ -18,19 +21,19 @@ export const AuthProvider = ({ children }) => {
   const login = (user) => {
     console.log('login called with:', user);
     setIsLoggedIn(true);
-    setUser({user: user.user, email: user.email, phone: user.phone});
+    setUser({user: user.user, email: user.email, phone: user.phone, role: user.role});
   };
 
   // Add your logout logic here
   const logout = () => {
     setIsLoggedIn(false);
     // Reset user info
-    setUser({user: "", email: "", phone: 0});
+    setUser({user: "", email: "", phone: 0, role: ""});
   };
 
   // Provide the context values to the children components
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, user }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, user, isDashBoardVisible, setDashBoardVisible }}>
       {children}
     </AuthContext.Provider>
   );

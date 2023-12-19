@@ -115,7 +115,7 @@ function Overlay({hotelsData}) {
       const [isFormComplete, setIsFormComplete] = useState(false);
       useEffect(() => {
         if (isLoggedIn) {
-          console.log("user is logged in =", isLoggedIn);
+          console.log("user is logged in =", isLoggedIn, "user role =", user.role);
           // If the user is logged in, set isFormComplete to true
           setIsFormComplete(true);
         } else {

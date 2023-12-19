@@ -12,7 +12,7 @@ import Link from "next/link";
 
 function Nav() {
   const [isPopupVisible, setPopupVisible] = useState(false);
-  const { isLoggedIn, login, logout, user } = useAuth();
+  const { isLoggedIn, login, logout, user, setDashBoardVisible, isDashboardVisible } = useAuth();
 
   return (
     <>
@@ -23,6 +23,7 @@ function Nav() {
         <div className={styles.links_container}>
           <NavLink link_name="Locations" link_href="/fourohfour" image_src={locationsIcon} image_alt="Arrow" />
           <NavLink link_name={isLoggedIn ? `${user.user}` : "Profile"} image_src={profileIcon} image_alt="Profile Icon" onClick={() => setPopupVisible(true)} />
+          {user.role === 'admin' && <NavLink link_name="Dashboard" onClick={() => setDashBoardVisible(true)} />}
           <NavLink link_name="Menu" link_href="/fourohfour" image_src={hamburgerIcon} image_alt="Comwell Hotel Icon" />
         </div>
       </header>

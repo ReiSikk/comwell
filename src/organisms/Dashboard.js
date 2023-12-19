@@ -5,7 +5,7 @@ import DashboardRight from '../molecules/DashboardRight'
 import { useAuth } from '../providers/AuthProvider'
 import { HotelsContext } from '../providers/hotels-context'
 
-function Dashboard({ hotelsData}) {
+function Dashboard({ hotelsData, isVisible, onClose}) {
 //Check logged in status
   const { isLoggedIn } = useAuth();
   const { user } = useAuth();
@@ -58,14 +58,19 @@ useEffect(() => {
 
 
 
-
+  if (!isVisible) {
+    return null;
+  } else if(isVisible && user.role === 'admin') {
 
   return (
     <div className={styles.wrapper}>
+              <button onClick={onClose}>Close Dashboard</button>
         <DashboardLeft hotelsData={hotelsData} hotelToManage={hotelToManage} updateSelectedHotel={updateSelectedHotel}  />
         <DashboardRight hotelsData={hotelsData} hotelToManage={hotelToManage} selectedHotelRoomsData={selectedHotelRoomsData}/>
     </div>
   )
 }
+}
+
 
 export default Dashboard

@@ -74,6 +74,7 @@ function Nav_Popup({ isVisible, onClose }) {
             user: response.user,
             email: response.email,
             phone: response.phone,
+            role: response.role,
            };
           login(user);
           setSignUpData({});

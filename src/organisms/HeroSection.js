@@ -6,8 +6,11 @@ import styles from './HeroSection.module.scss'
 import Image from 'next/image'
 import Overlay from './Overlay'
 import Dashboard from './Dashboard.js'
+import { useAuth } from '../providers/AuthProvider'
 
 function HeroSection() {
+
+  const { user, isDashBoardVisible, setDashBoardVisible } = useAuth();
 
 
   const { overlayState, updateOverlayState, selectedHotel, isVisible, updateSelectedHote, overlayHeaders, selectedRegion, updateSelectedHotel }= useContext(HotelsContext);
@@ -43,7 +46,7 @@ function HeroSection() {
         <div>
             <Image src="https://cdn.dwarf.dk/comwell-cms-production/img/containers/main/kampagner/b2b_efter%C3%A5r2023/b2b_topheader.jpg/a1dbaeb00be6d3ed79294c38ccb1d729.webp" className={styles.image} alt="Hero image" width={1920} height={1080} />
         </div>
-        <Dashboard hotelsData={hotelsData}/>
+        {user.role === 'admin' &&<Dashboard isVisible={isDashBoardVisible} onClose={() => setDashBoardVisible(false)} hotelsData={hotelsData} />}
        <Overlay hotelsData={hotelsData}/>
        <div 
          className={`${overlayState.showOverlay && overlayState.isVisible ? styles.overlay_background : ''}`} 

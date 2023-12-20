@@ -1,13 +1,19 @@
-import React from 'react'
+import {useState, useContext} from 'react'
 import styles from '../organisms/Dashboard.module.scss'
+import {  useAuth } from '../providers/AuthProvider';
 
-function DashboardRoomCard({room, handleRoomToEdit}) {
+function DashboardRoomCard({room, handleRoomToEdit, showMessage}) {
+    const { token } = useAuth();
+    
 
   async function deleteRoom(roomId) {
     try {
       const response = await fetch(`http://127.0.0.1:3005/rooms/${roomId}`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+     },
       });
   
       if (!response.ok) {

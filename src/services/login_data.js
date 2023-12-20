@@ -4,6 +4,7 @@ export function submitLoginData(data) {
 
   console.log("submitLoginData called with:", data);
 
+
   let processedInput;
   if (data.username.length && data.password.length) {
     processedInput = {
@@ -29,7 +30,7 @@ export function submitLoginData(data) {
         console.log("invalid credentials");
       } else {
         //call function to show success message on the UI
-        console.log(res, "login successful");
+        console.log("success");
       }
       return res;
     })

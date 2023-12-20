@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import InputField from '@/atoms/InputField'
 import CheckboxGroup from '../atoms/CheckBoxGroup'
 
-function DashboardRight({selectedHotelRoomsData, hotelToManage}) {
+function DashboardRight({selectedHotelRoomsData, hotelToManage, setSelectedHotelRoomsData}) {
 
     //store updated room data
     const [roomData, setRoomData] = useState({});
@@ -158,9 +158,6 @@ const showMessage = (message) => {
       }
 
 
-
-
-
   return (
 <div className={styles.dash_right}>
     <div className={styles.dash_right_top}>
@@ -171,7 +168,7 @@ const showMessage = (message) => {
          <div className={styles.dash_right_left}>
           <div className={styles.rooms}>
           {selectedHotelRoomsData && selectedHotelRoomsData.map(room => (
-              <DashboardRoomCard key={room._id} room={room} handleRoomToEdit={handleRoomToEdit} onInputChange={handleInputChange} showMessage={showMessage} />
+              <DashboardRoomCard key={room._id} room={room} handleRoomToEdit={handleRoomToEdit} onInputChange={handleInputChange} showMessage={showMessage} setSelectedHotelRoomsData={setSelectedHotelRoomsData} />
             ))}
           </div>
          </div>

@@ -223,7 +223,7 @@
     }
 
         //UI messages
-        .validation_message {
+        .validation_message, .confirm_dialog {
             position: fixed;
             top: 50%;
             left: 50%;
@@ -247,6 +247,49 @@
                 transform: translate(-50%, -50%) scale(1);
                 opacity: 1;
               }
+            }
+          }
+
+          .confirm_dialog {
+            div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                padding: 0.5rem 0rem;
+            }
+            button {
+                width: 100%;
+                max-width: 350px;
+                border-radius: 4px;
+                transition: all 0.33s ease;
+            }
+            button:active {
+                transform: scale(0.95);
+            }
+            .yes_btn {
+                background: #f1f1f1;
+                color: #000;
+                border: 2px solid transparent;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+            }
+            .no_btn {
+                //delete button red styling, make  it red
+                background: #F7483B;
+                color: #f1f1f1;
+                border: 2px solid transparent;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+            }
+            .yes_btn:hover {
+                background: #f1f1f1;
+                color: #000;
+                border: 2px solid cornflowerblue;
+            }
+            .no_btn:hover {
+                background: #F7483B;
+                color: #f1f1f1;
+                border: 2px solid cornflowerblue;
+
             }
           }
 

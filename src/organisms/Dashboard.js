@@ -66,7 +66,7 @@ useEffect(() => {
     <div className={styles.wrapper}>
               <button onClick={onClose}>Close Dashboard</button>
         <DashboardLeft hotelsData={hotelsData} hotelToManage={hotelToManage} updateSelectedHotel={updateSelectedHotel}  />
-        <DashboardRight hotelsData={hotelsData} hotelToManage={hotelToManage} selectedHotelRoomsData={selectedHotelRoomsData}/>
+        <DashboardRight hotelsData={hotelsData} hotelToManage={hotelToManage} selectedHotelRoomsData={selectedHotelRoomsData} setSelectedHotelRoomsData={setSelectedHotelRoomsData}/>
     </div>
   )
 }

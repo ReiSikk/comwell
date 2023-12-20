@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import InputField from '@/atoms/InputField'
 import CheckboxGroup from '../atoms/CheckBoxGroup'
 
-function DashboardRight({selectedHotelRoomsData, hotelToManage, setSelectedHotelRoomsData}) {
+function DashboardRight({selectedHotelRoomsData, hotelToManage, setSelectedHotelRoomsData, onClose, handleClose}) {
 
     //store updated room data
     const [roomData, setRoomData] = useState({});
@@ -163,7 +163,9 @@ const showMessage = (message) => {
 <div className={styles.dash_right}>
     <div className={styles.dash_right_top}>
             {hotelToManage && <h3>{hotelToManage.name}</h3>}
-            <p>Manage rooms</p>
+            <button className={styles.close_button}  onClick={handleClose}>
+                <svg className={styles.close_icon} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path stroke="currentColor" strokeWidth="1.5" d="M2.62 13.38 12.99 3.01M13.38 13.38 3.01 3.01"></path></svg>
+                </button>
     </div>
     <div className={styles.flex}>
          <div className={styles.dash_right_left}>

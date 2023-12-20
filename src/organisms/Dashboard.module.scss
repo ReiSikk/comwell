@@ -3,7 +3,6 @@
     overflow: hidden;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     width: 95dvw;
     height: 85dvh;
     margin: 2rem auto;
@@ -15,6 +14,9 @@
     border-radius: 32px;
     display: flex;
     gap: 1rem;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    animation: grow 0.5s forwards;
+    transform: translate(-50%, -50%) scale(0);
     @media (max-width: 768px) {
         flex-direction: column;
         width: 100%;
@@ -100,7 +102,8 @@
     overflow-y: hidden;
     height: 100%;
     .ui_message {
-        justify-self: center;
+        align-self: center;
+        margin: auto;
     }
     .flex {
         display: flex;
@@ -165,7 +168,13 @@
     .dash_right_top {
         display: flex;
         justify-content: space-between;
-        padding: 1.5rem 1rem;
+        align-items: center;
+        padding: 1.25rem 1rem;
+        button {
+            width: fit-content;
+            border-radius: 999px;
+            transition: all 0.2s ease;
+        }
         h2 {
             font-size: 1.25rem;
             font-weight: 600;
@@ -268,6 +277,16 @@
               }
             }
           }
+          @keyframes shrink {
+            0% {
+              opacity: 1;
+              transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+              opacity: 0;
+              transform: translate(-50%, -50%) scale(0);
+            }
+          }
 
           .confirm_dialog {
             div {
@@ -310,6 +329,27 @@
                 border: 2px solid cornflowerblue;
 
             }
+          }
+
+          .close_icon {
+            height: max-content;
+            min-height: 16px;
+            width: 16px;
+            justify-self: center;
+            align-self: center;
+          }
+          .close_button {
+            border: none;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 0.5rem;
+            border-radius: 9999px;
+            display: flex;
+        
+          }
+
+          .dashboard-closing {
+            animation: shrink 0.3s forwards !important;
           }
 
 }

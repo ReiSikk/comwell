@@ -171,7 +171,7 @@ const showMessage = (message) => {
          <div className={styles.dash_right_left}>
           <div className={styles.rooms}>
           {selectedHotelRoomsData && selectedHotelRoomsData.map(room => (
-              <DashboardRoomCard key={room._id} room={room} handleRoomToEdit={handleRoomToEdit} onInputChange={handleInputChange} />
+              <DashboardRoomCard key={room._id} room={room} handleRoomToEdit={handleRoomToEdit} onInputChange={handleInputChange} showMessage={showMessage} />
             ))}
           </div>
          </div>

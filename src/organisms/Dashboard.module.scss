@@ -185,6 +185,25 @@
         background: #f1f1f1;
         width: 100%;
         min-width: fit-content;
+        div:first-child {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            width: 100%;
+            span.available {
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                width: fit-content;
+                background-color: rgb(157, 237, 170);
+
+            }
+            span.not_available {
+                padding: 0.25rem 0.5rem;
+                border-radius: 4px;
+                width: fit-content;
+                background-color: rgb(247, 170, 159);
+            }
+        }
         div:last-child {
             display: flex;
             flex-direction: column;

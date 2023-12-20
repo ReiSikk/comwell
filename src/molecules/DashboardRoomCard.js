@@ -49,7 +49,7 @@ function DashboardRoomCard({room, handleRoomToEdit, showMessage, setSelectedHote
     <div className={styles.room_card}>
         <div>
             <h3>{room.roomType}</h3>
-            <p>{room.available ? 'Available' : 'Not available'}</p>
+            {room.available ? <span className={styles.available}>Available</span> : <span className={styles.not_available}>Not available</span>}
         </div>
         <div>
             <button onClick={() => handleRoomToEdit(room)}>Update</button>

@@ -102,10 +102,9 @@ function DashboardRight({selectedHotelRoomsData, hotelToManage, setSelectedHotel
       //call backend to update room
       const handleRoomUpdate = async (e) => {
         e.preventDefault();
-        console.log(roomData, ' roomData in handleRoomUpdate');
         const formIsValid = validateForm();
         if (!formIsValid) {
-            displayErrorMessages();
+          displayErrorMessages();
           return;
         }
        if(formIsValid) {
@@ -118,11 +117,13 @@ function DashboardRight({selectedHotelRoomsData, hotelToManage, setSelectedHotel
           if (!response.ok) {
             console.log(response, ' response in handleRoomUpdate');
             const message = response.statusText || `An error has occured with the status code: ${response.status}`;
-            alert(message);
+            showMessage(message);
           }
           // Handle successful update...
           if (response.status === 200) {
+            const updatedRoom = await response.json();
            showMessage("Room updated successfully!");
+           setSelectedHotelRoomsData(prevRooms => prevRooms.map(room => room._id === updatedRoom._id ? updatedRoom : room));
           }
         } 
         catch (error) {
@@ -174,7 +175,7 @@ const showMessage = (message) => {
          </div>
     { roomToEdit ?
        <div className={styles.inputs}>
-        <CheckboxWithText id="Available" label="Room is available" onCheckboxChange={handleAvailability} />
+        <CheckboxWithText id="Available" label="Room is available" onCheckboxChange={handleAvailability} checked={roomData.available} />
         {errorMessages.bedTypes && <p className={styles.error}>{errorMessages.available}</p>}
         <InputField inputId={"roomType"} id="roomType" label="Room type" propValue={roomToEdit?.roomType} onInputChange={handleInputChange} />
         {errorMessages.roomType && <p className={styles.error}>{errorMessages.roomType}</p>}

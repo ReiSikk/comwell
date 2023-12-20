@@ -9,6 +9,7 @@ import { useSignUpData } from '../providers/SignUpDataContext';
 function Nav_Popup({ isVisible, onClose }) {
   const popupRef = useRef(null);
   const { isLoggedIn, login, logout } = useAuth();
+  const { setToken } = useAuth();
   const { signUpData, setSignUpData } = useSignUpData();
   const [showSignUpOverlay, setShowSignUpOverlay] = useState(false);
   const [formData, setFormData] = useState({
@@ -55,20 +56,21 @@ function Nav_Popup({ isVisible, onClose }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-
     const data = {
       username: formData.email,
       password: formData.password,
     };
-
-
     
-      try {
-        const response = await submitLoginData(data);
-        console.log(response, "response from submitLoginData");
-
     
-        if (response.success === true) {
+    
+    try {
+      const response = await submitLoginData(data);
+      console.log(response, "response from submitLoginData");
+      
+      
+      if (response.success === true) {
+        let inMemoryToken;
+        inMemoryToken = response.access_token;
           // Handle login success
           const user = { 
             user: response.user,
@@ -78,6 +80,8 @@ function Nav_Popup({ isVisible, onClose }) {
            };
           login(user);
           setSignUpData({});
+          setToken(inMemoryToken);
+          console.log(inMemoryToken, "inMemoryToken");
 
         } else {
           // Handle login failure

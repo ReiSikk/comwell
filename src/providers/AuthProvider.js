@@ -6,17 +6,21 @@ const AuthContext = createContext();
 // Create the provider component
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [token, setToken] = useState(null);
   const [user, setUser] = useState({
     user: "",
     email: "",
     phone: 0,
     role: "",
   });
+
   const [isDashBoardVisible, setDashBoardVisible] = useState(false)
-
-
-
-
+  const [isClosing, setIsClosing] = useState(false);
+  const handleOpen = () => {
+    setIsClosing(false);
+    setDashBoardVisible(true);
+  };
+  
   // Add your login logic here
   const login = (user) => {
     console.log('login called with:', user);
@@ -33,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
   // Provide the context values to the children components
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, user, isDashBoardVisible, setDashBoardVisible }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, user, isDashBoardVisible, setDashBoardVisible, handleOpen, setToken, token, setIsClosing, isClosing }}>
       {children}
     </AuthContext.Provider>
   );

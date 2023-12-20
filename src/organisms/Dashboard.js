@@ -5,10 +5,17 @@ import DashboardRight from '../molecules/DashboardRight'
 import { useAuth } from '../providers/AuthProvider'
 import { HotelsContext } from '../providers/hotels-context'
 
-function Dashboard({ hotelsData, isVisible, onClose}) {
+function Dashboard({ hotelsData, onClose}) {
 //Check logged in status
-  const { isLoggedIn } = useAuth();
-  const { user } = useAuth();
+  const { isLoggedIn, user, isDashBoardVisible, setDashBoardVisible, isClosing, setIsClosing  } = useAuth();
+
+  //dashboard visibility
+  const handleClose = () => {
+      setIsClosing(true);
+      setTimeout(() => {
+          setDashBoardVisible(false);
+      }, 300);
+  };
 
 // State for selected hotel in dashboard
 const [hotelToManage, setHotelToManage] = useState(null);
@@ -58,19 +65,20 @@ useEffect(() => {
 
 
 
-  if (!isVisible) {
+  if (!isDashBoardVisible) {
     return null;
-  } else if(isVisible && user.role === 'admin') {
+  }  
 
+  if(user.role === "admin" && isDashBoardVisible) {
   return (
-    <div className={styles.wrapper}>
-              <button onClick={onClose}>Close Dashboard</button>
-        <DashboardLeft hotelsData={hotelsData} hotelToManage={hotelToManage} updateSelectedHotel={updateSelectedHotel}  />
-        <DashboardRight hotelsData={hotelsData} hotelToManage={hotelToManage} selectedHotelRoomsData={selectedHotelRoomsData}/>
+    <div className={`${styles.wrapper} ${isClosing ? 'dashboard-closing' : ''}`}>
+        <DashboardLeft hotelsData={hotelsData} hotelToManage={hotelToManage} updateSelectedHotel={updateSelectedHotel} />
+        <DashboardRight hotelsData={hotelsData} hotelToManage={hotelToManage} selectedHotelRoomsData={selectedHotelRoomsData} setSelectedHotelRoomsData={setSelectedHotelRoomsData} onClose={onClose} handleClose={handleClose}/>
     </div>
   )
+ }
 }
-}
+
 
 
 export default Dashboard

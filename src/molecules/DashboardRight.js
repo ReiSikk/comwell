@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import InputField from '@/atoms/InputField'
 import CheckboxGroup from '../atoms/CheckBoxGroup'
 
-function DashboardRight({selectedHotelRoomsData, hotelToManage}) {
+function DashboardRight({selectedHotelRoomsData, hotelToManage, setSelectedHotelRoomsData, onClose, handleClose}) {
 
     //store updated room data
     const [roomData, setRoomData] = useState({});
@@ -102,10 +102,9 @@ function DashboardRight({selectedHotelRoomsData, hotelToManage}) {
       //call backend to update room
       const handleRoomUpdate = async (e) => {
         e.preventDefault();
-        console.log(roomData, ' roomData in handleRoomUpdate');
         const formIsValid = validateForm();
         if (!formIsValid) {
-            displayErrorMessages();
+          displayErrorMessages();
           return;
         }
        if(formIsValid) {
@@ -118,11 +117,13 @@ function DashboardRight({selectedHotelRoomsData, hotelToManage}) {
           if (!response.ok) {
             console.log(response, ' response in handleRoomUpdate');
             const message = response.statusText || `An error has occured with the status code: ${response.status}`;
-            alert(message);
+            showMessage(message);
           }
           // Handle successful update...
           if (response.status === 200) {
+            const updatedRoom = await response.json();
            showMessage("Room updated successfully!");
+           setSelectedHotelRoomsData(prevRooms => prevRooms.map(room => room._id === updatedRoom._id ? updatedRoom : room));
           }
         } 
         catch (error) {
@@ -158,26 +159,25 @@ const showMessage = (message) => {
       }
 
 
-
-
-
   return (
 <div className={styles.dash_right}>
     <div className={styles.dash_right_top}>
             {hotelToManage && <h3>{hotelToManage.name}</h3>}
-            <p>Manage rooms</p>
+            <button className={styles.close_button}  onClick={handleClose}>
+                <svg className={styles.close_icon} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path stroke="currentColor" strokeWidth="1.5" d="M2.62 13.38 12.99 3.01M13.38 13.38 3.01 3.01"></path></svg>
+                </button>
     </div>
     <div className={styles.flex}>
          <div className={styles.dash_right_left}>
           <div className={styles.rooms}>
           {selectedHotelRoomsData && selectedHotelRoomsData.map(room => (
-              <DashboardRoomCard key={room._id} room={room} handleRoomToEdit={handleRoomToEdit} onInputChange={handleInputChange} />
+              <DashboardRoomCard key={room._id} room={room} handleRoomToEdit={handleRoomToEdit} onInputChange={handleInputChange} showMessage={showMessage} setSelectedHotelRoomsData={setSelectedHotelRoomsData} />
             ))}
           </div>
          </div>
     { roomToEdit ?
        <div className={styles.inputs}>
-        <CheckboxWithText id="Available" label="Room is available" onCheckboxChange={handleAvailability} />
+        <CheckboxWithText id="Available" label="Room is available" onCheckboxChange={handleAvailability} checked={roomData.available} />
         {errorMessages.bedTypes && <p className={styles.error}>{errorMessages.available}</p>}
         <InputField inputId={"roomType"} id="roomType" label="Room type" propValue={roomToEdit?.roomType} onInputChange={handleInputChange} />
         {errorMessages.roomType && <p className={styles.error}>{errorMessages.roomType}</p>}

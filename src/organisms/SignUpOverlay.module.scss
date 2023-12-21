@@ -95,5 +95,16 @@
 
 }
 
+.container_top_border {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1rem;
+  border-top: 1px solid rgb(224, 224, 224);
+  position: sticky;
+  bottom: 0;
+  background-color: white;
+} 
+
 
 

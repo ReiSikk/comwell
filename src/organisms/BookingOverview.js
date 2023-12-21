@@ -70,7 +70,6 @@ const handleOverviewChange = (inputId, value) => {
     handleOverviewFormChange(inputId, value);
   };
 
-console.log(signUpData, 'sign up data');
 
   return (
     <div className={styles.booking_overview}>

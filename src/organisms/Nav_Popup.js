@@ -80,7 +80,6 @@ function Nav_Popup({ isVisible, onClose }) {
           login(user);
           setSignUpData({});
           setToken(inMemoryToken);
-          console.log(inMemoryToken, "inMemoryToken");
 
         } else {
           // Handle login failure

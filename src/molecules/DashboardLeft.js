@@ -4,11 +4,9 @@ import HotelCard from './HotelCard'
 
 
 function DashboardLeft({ hotelsData, hotelToManage ,updateSelectedHotel }) {
-    console.log(hotelToManage, 'hotelToManage');
     const [region, setRegion] = useState('All');
     const handleLabelClick = (e) => {
         setRegion(e.target.id);
-        //add class .selected to the clicked button and remove it from the others
       }
 
   return (

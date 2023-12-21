@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './WindgetInput.module.css'
+import styles from './WindgetInput.module.scss'
 import { HotelsContext } from '../providers/hotels-context.js'
 import { useContext } from 'react'
 

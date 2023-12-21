@@ -4,6 +4,7 @@ import profileIcon from "../assets/icons/profile_icon.svg";
 import hotelIcon from "../assets/icons/nav_hotel_icon.svg";
 import hamburgerIcon from "../assets/icons/hamburger.svg";
 import locationsIcon from "../assets/icons/locations_icon.svg";
+import dashboardIcon from "../assets/icons/dashboard_icon.svg"
 import NavLink from "@/molecules/NavLink";
 import styles from "./Nav.module.scss";
 import Nav_Popup from "./Nav_Popup";
@@ -24,7 +25,7 @@ function Nav() {
           <NavLink link_name="Locations" link_href="/fourohfour" image_src={locationsIcon} image_alt="Arrow" />
           <NavLink link_name={isLoggedIn ? `${user.user}` : "Profile"} image_src={profileIcon} image_alt="Profile Icon" onClick={() => setPopupVisible(true)} />
           {isPopupVisible && <div className={styles.overlayShadow}></div>}
-          {user.role === 'admin' && <NavLink link_name="Dashboard" onClick={() => handleOpen(true)} />}
+          {user.role === 'admin' && <NavLink link_name="Dashboard" onClick={() => handleOpen(true)} image_src={dashboardIcon} image_alt="Settings icon"  />}
           <NavLink link_name="Menu" link_href="/fourohfour" image_src={hamburgerIcon} image_alt="Comwell Hotel Icon" />
         </div>
       </header>

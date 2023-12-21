@@ -64,7 +64,6 @@ function Nav_Popup({ isVisible, onClose }) {
     
     try {
       const response = await submitLoginData(data);
-      console.log(response, "response from submitLoginData");
       
       
       if (response.success === true) {

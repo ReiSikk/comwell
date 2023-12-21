@@ -23,7 +23,6 @@ function Nav_Popup({ isVisible, onClose }) {
   };
 
   const closeSignUpOverlay = () => {
-    console.log("closing overlay");
     setShowSignUpOverlay(false);
   };
 
@@ -121,7 +120,7 @@ function Nav_Popup({ isVisible, onClose }) {
          
           </form>
           {showSignUpOverlay && <SignUpOverlay onClose={onClose} closeSignUpOverlay={closeSignUpOverlay} />}
-          {showSignUpOverlay && <div className={styles.overlayShadow} onClick={() => console.log("shadow clicked")}></div>}
+          {showSignUpOverlay && <div className={styles.overlayShadow} onClick={() => setShowSignUpOverlay(false)}></div>}
         </>
       ) : (
         <>

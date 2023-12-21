@@ -118,8 +118,10 @@ function Nav_Popup({ isVisible, onClose }) {
                 Log in
               </button>
             </div>
+         
           </form>
           {showSignUpOverlay && <SignUpOverlay onClose={onClose} closeSignUpOverlay={closeSignUpOverlay} />}
+          {showSignUpOverlay && <div className={styles.overlayShadow} onClick={() => console.log("shadow clicked")}></div>}
         </>
       ) : (
         <>

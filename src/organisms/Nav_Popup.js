@@ -124,15 +124,16 @@ function Nav_Popup({ isVisible, onClose }) {
       ) : (
         <>
           <form className={styles.form_loggedin} ref={popupRef}>
-            <div className={styles.container}>
+            <div className="container">
               <a href="#">Comwell Club</a>
               <a href="#">Frequently Asked Questions</a>
               <a href="#">Club offers</a>
-            </div>
-            <div className={styles.container}>
               <a href="#">Notifications</a>
               <a href="#">Profile Settings</a>
             </div>
+         
+         
+            
             <div className="container">
               <button onClick={handleLogout}>Sign out</button>
             </div>

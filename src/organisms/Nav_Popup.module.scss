@@ -6,44 +6,44 @@
   top: 15%;
   right: 8%;
   min-width: 300px;
-  height: 325px;
+  height: min-content;
   border-radius: 15px;
   z-index: 99;
 
   .input_container {
     position: relative;
-  
-label {
-  margin: 0 5px;
-  color: $font-dark;
-  position: absolute;
-  pointer-events: none;
-  transition: top 0.2s ease-in-out, font-size 0.2s ease-in-out;
-  top: 50%;
-  transform: translateY(-50%);
-}
 
-  label.focused {
-    margin: 5px 5px;
-    position: absolute;
-    top: 10%;
-    font-size: 0.8em;
-    color: $font-dark-secondary;
-  }
+    label {
+      margin: 0 5px;
+      color: $font-dark;
+      position: absolute;
+      pointer-events: none;
+      transition: top 0.2s ease-in-out, font-size 0.2s ease-in-out;
+      top: 50%;
+      transform: translateY(-50%);
+    }
 
-  input {
-    border-width: 1px;
-   padding: 20px 5px 10px;
- width: 100%;
-    border-radius: 4px;
-    transition: border 0.3s;
-    outline: none;
-  }
+    label.focused {
+      margin: 5px 5px;
+      position: absolute;
+      top: 10%;
+      font-size: 0.8em;
+      color: $font-dark-secondary;
+    }
 
-  input.focused {
-    border: 1px $font-dark solid;
+    input {
+      border-width: 1px;
+      padding: 20px 5px 10px;
+      width: 100%;
+      border-radius: 4px;
+      transition: border 0.3s;
+      outline: none;
+    }
+
+    input.focused {
+      border: 1px $font-dark solid;
+    }
   }
-}
 
   a {
     text-decoration: underline;
@@ -67,11 +67,13 @@ label {
     font-weight: 500;
     line-height: 16.25px;
   }
-
-
 }
 
 .form_loggedin {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
   background-color: white;
   position: absolute;
   top: 15%;
@@ -79,7 +81,7 @@ label {
   min-width: 300px;
   border-radius: 15px;
   z-index: 99;
-  height: 325px;
+  height: 300px;
 
   button {
     border: 1px $form-input-border-color solid;

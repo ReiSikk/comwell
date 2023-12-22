@@ -107,7 +107,6 @@ function Overlay({hotelsData}) {
   const [selectedRegion, setSelectedRegion] = React.useState("All")
   const handleLabelClick = (e) => {
     setSelectedRegion(e.target.id);
-    //add class .selected to the clicked button and remove it from the others
   }
 
 
@@ -115,12 +114,8 @@ function Overlay({hotelsData}) {
       const [isFormComplete, setIsFormComplete] = useState(false);
       useEffect(() => {
         if (isLoggedIn) {
-          console.log("user is logged in =", isLoggedIn, "user role =", user.role);
-          // If the user is logged in, set isFormComplete to true
           setIsFormComplete(true);
         } else {
-          console.log("user is logged in =", isLoggedIn);
-          // If the user is not logged in, set isFormComplete to false
           setIsFormComplete(false);
         }
       }, [user, isLoggedIn]);

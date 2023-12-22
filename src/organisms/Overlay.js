@@ -107,7 +107,6 @@ function Overlay({hotelsData}) {
   const [selectedRegion, setSelectedRegion] = React.useState("All")
   const handleLabelClick = (e) => {
     setSelectedRegion(e.target.id);
-    //add class .selected to the clicked button and remove it from the others
   }
 
 
@@ -115,14 +114,28 @@ function Overlay({hotelsData}) {
       const [isFormComplete, setIsFormComplete] = useState(false);
       useEffect(() => {
         if (isLoggedIn) {
-          // If the user is logged in, set isFormComplete to true
           setIsFormComplete(true);
         } else {
-          // If the user is not logged in, set isFormComplete to false
           setIsFormComplete(false);
         }
       }, [user, isLoggedIn]);
 
+
+      function resetBookingState(status) {
+
+        if (status === 201) 
+        {
+        console.log('resetBookingState called');
+        updateOverlayState({
+           overlayToShow: "", isVisible: false, showOverlay: false });
+        setIsFormComplete(false);
+        updateBookingOverviewState({isVisible: false, content: ""});
+        }
+        if(status !== 201) {
+          console.log('unsuccesful booking');
+        }
+
+      };
 
       //call booking backend
       const [bookingMessage, setBookingMessage] = useState("");
@@ -159,20 +172,26 @@ function Overlay({hotelsData}) {
 })
   .then(response => response.json())
   .then(data => {
-    console.log(data, "Data from booking backend");
     if(data) {
-      setBookingMessage(data.message)
+      if (data.statusCode === 201) {
+        setTimeout(() => { 
+        resetBookingState(data.statusCode);
+          }, 2000)
+      }
+      if (data.statusCode === 201) {
+        setBookingMessage(data.message + " " + "A confirmation email has been sent to you");
+      } else {
+        setBookingMessage(data.message);
+        setTimeout(() => { 
+          resetBookingState(data.statusCode);
+            }, 2000)
+      }
     }
   })
   .catch((error) => {
     console.error('Error:', error);
   });
       }
-
-
-  
-
-
 
   
   return (
@@ -201,7 +220,7 @@ function Overlay({hotelsData}) {
                   <div>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#161616" d="M19.5 3h-3V1.5H15V3H9V1.5H7.5V3h-3C3.675 3 3 3.675 3 4.5v15c0 .825.675 1.5 1.5 1.5h15c.825 0 1.5-.675 1.5-1.5v-15c0-.825-.675-1.5-1.5-1.5Zm0 16.5h-15V9h15v10.5Zm0-12h-15v-3h3V6H9V4.5h6V6h1.5V4.5h3v3Z"></path></svg>
                        <span>{checkInOutDates.checkInDate && checkInOutDates.checkOutDate ? `${dayjs(checkInOutDates.checkInDate).format('DD MMM')} - ${dayjs(checkInOutDates.checkOutDate).format('DD MMM')}` : ""}</span>
-                  </div>
+             </div>
                   <div>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><path fill="#161616" d="M12.5 3a3.75 3.75 0 1 1 0 7.5 3.75 3.75 0 0 1 0-7.5Zm0-1.5a5.25 5.25 0 1 0 0 10.5 5.25 5.25 0 0 0 0-10.5ZM20 22.5h-1.5v-3.75A3.75 3.75 0 0 0 14.75 15h-4.5a3.75 3.75 0 0 0-3.75 3.75v3.75H5v-3.75a5.25 5.25 0 0 1 5.25-5.25h4.5A5.25 5.25 0 0 1 20 18.75v3.75Z"></path><path fill="#000" d="M19 21v1.5H6V21z"></path></svg>
                       <span>
@@ -214,27 +233,33 @@ function Overlay({hotelsData}) {
                       <span>{selectedHotel.name}</span>
                   </div>
                 </div>
+                <button className={styles.close_button}  onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}>
+                <svg className={styles.close_icon} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path stroke="currentColor" strokeWidth="1.5" d="M2.62 13.38 12.99 3.01M13.38 13.38 3.01 3.01"></path></svg>
+                </button>
+             </div>
+        )}
+        {overlayState.overlayToShow === 'Choose hotel' && (
+            <div className={styles.overlay_top_info_flex_right}>
+                <button className={styles.close_button}  onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}>
+                <svg className={styles.close_icon} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path stroke="currentColor" strokeWidth="1.5" d="M2.62 13.38 12.99 3.01M13.38 13.38 3.01 3.01"></path></svg>
+                </button>
               </div>
         )}
         {!bookingOverviewState.isVisible && (
             <div className={styles.overlay_top}>
                 <h2 className={styles.overlay_header}>{overlayHeaders[overlayState.overlayToShow] || ""}</h2>
-                <button className={styles.close_button}  onClick={() => updateOverlayState({ showOverlay: false, isVisible: false })}>
-                <svg className={styles.close_icon} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path stroke="currentColor" strokeWidth="1.5" d="M2.62 13.38 12.99 3.01M13.38 13.38 3.01 3.01"></path></svg>
-                </button>
             </div>
+            
         )}
+         {overlayState.overlayToShow === 'Choose hotel' && (
                <div className={styles.label_flex}>
-                  {overlayState.overlayToShow === 'Choose hotel' && (
-                    <>
                    <button id='All' className={selectedRegion === 'All' ? styles.selected : ''} onClick={handleLabelClick}>All</button>
                    <button id='Zealand' className={selectedRegion === 'Zealand' ? styles.selected : ''} onClick={handleLabelClick}>Zealand</button>
                    <button id='Funen' className={selectedRegion === 'Funen' ? styles.selected : ''} onClick={handleLabelClick}>Funen</button>
                   <button id='Jutland' className={selectedRegion === 'Jutland' ? styles.selected : ''} onClick={handleLabelClick}>Jutland</button>
-                    </>
+                </div>
                   )
                    }
-                </div>
             <div className={`${styles.overlay_data} ${overlayState.isVisible ? styles.visible : ''}`}>
             {overlayState.overlayToShow === 'Choose hotel' && hotelsData && hotelsData
               .filter(hotel => selectedRegion === 'All' || hotel.region === selectedRegion)

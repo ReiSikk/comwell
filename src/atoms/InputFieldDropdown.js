@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import styles from "./InputFieldDropdown.module.scss"
+import React, { useState } from "react";
+import styles from "./InputFieldDropdown.module.scss";
 const InputFieldDropdown = ({ label, options, selectId }) => {
-  const [selectedOption, setSelectedOption] = useState('Not defined');
+  const [selectedOption, setSelectedOption] = useState("Not defined");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -22,4 +22,3 @@ const InputFieldDropdown = ({ label, options, selectId }) => {
 };
 
 export default InputFieldDropdown;
-

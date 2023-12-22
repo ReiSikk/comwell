@@ -2,13 +2,11 @@ import { React, useState, useEffect } from "react";
 import styles from "./CheckboxWithText.module.scss";
 
 const CheckboxWithText = ({ label, id, onCheckboxChange, errorMessage, checked }) => {
-
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     setIsChecked(checked);
   }, [checked]);
-  console.log("CheckboxWithText", checked);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);

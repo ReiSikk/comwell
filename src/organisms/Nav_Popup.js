@@ -23,7 +23,6 @@ function Nav_Popup({ isVisible, onClose }) {
   };
 
   const closeSignUpOverlay = () => {
-    console.log("closing overlay");
     setShowSignUpOverlay(false);
   };
 
@@ -65,7 +64,6 @@ function Nav_Popup({ isVisible, onClose }) {
     
     try {
       const response = await submitLoginData(data);
-      console.log(response, "response from submitLoginData");
       
       
       if (response.success === true) {
@@ -81,7 +79,6 @@ function Nav_Popup({ isVisible, onClose }) {
           login(user);
           setSignUpData({});
           setToken(inMemoryToken);
-          console.log(inMemoryToken, "inMemoryToken");
 
         } else {
           // Handle login failure
@@ -118,21 +115,24 @@ function Nav_Popup({ isVisible, onClose }) {
                 Log in
               </button>
             </div>
+         
           </form>
           {showSignUpOverlay && <SignUpOverlay onClose={onClose} closeSignUpOverlay={closeSignUpOverlay} />}
+          {showSignUpOverlay && <div className={styles.overlayShadow} onClick={() => setShowSignUpOverlay(false)}></div>}
         </>
       ) : (
         <>
           <form className={styles.form_loggedin} ref={popupRef}>
-            <div className={styles.container}>
+            <div className="container">
               <a href="#">Comwell Club</a>
               <a href="#">Frequently Asked Questions</a>
               <a href="#">Club offers</a>
-            </div>
-            <div className={styles.container}>
               <a href="#">Notifications</a>
               <a href="#">Profile Settings</a>
             </div>
+         
+         
+            
             <div className="container">
               <button onClick={handleLogout}>Sign out</button>
             </div>

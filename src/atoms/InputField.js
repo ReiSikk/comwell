@@ -19,7 +19,7 @@ const InputField = ({ label, inputId, type, onInputChange, minLength, pattern, t
     setBlurredInput(true);
   };
 
-  // Update the local state when the component mounts or when propValue changes
+  // Update the local state when propValue changes
   useEffect(() => {
     setValue(propValue);
   }, [propValue]);
@@ -58,10 +58,8 @@ const InputField = ({ label, inputId, type, onInputChange, minLength, pattern, t
             ref={inputRef}
           />
 
-        <div className={styles.error_message_container}>
-          {blurredInput && <p className={styles.error_message}>{errorMessage}</p>}
-          </div>
-          </div>
+          <div className={styles.error_message_container}>{blurredInput && <p className={styles.error_message}>{errorMessage}</p>}</div>
+        </div>
       </div>
     </div>
   );

@@ -142,10 +142,8 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
               />
             </div>
           </div>
-          <div className="container_top_border">
-            <div className={styles.button_styling}>
+          <div className={styles.container_top_border}>
               <button type="submit">Sign up</button>
-            </div>
           </div>
         </form>
       </div>
@@ -158,7 +156,7 @@ const SignUpOverlay = ({ closeSignUpOverlay }) => {
             <svg className={styles.close_icon} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16"><path stroke="currentColor" strokeWidth="1.5" d="M2.62 13.38 12.99 3.01M13.38 13.38 3.01 3.01"></path></svg>
             </button>
             </div>
-  <div className="container">
+  <div className={styles.container}>
     <h1>You&apos;ve signed up succesfully</h1>
     <p className={styles.subheader}>Please log-in now</p>
         </div>

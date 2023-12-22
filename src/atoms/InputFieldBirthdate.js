@@ -9,10 +9,13 @@ const InputFieldBirthdate = ({ label }) => {
     setValue(value);
   }
 
+  const maxDate = new Date();
+maxDate.setFullYear(maxDate.getFullYear() - 18);
+
   return (
     <div className={styles.input_container}>
       <label htmlFor="date-picker">{label}</label>
-      <DatePicker value={value} onChange={handleChange} />
+      <DatePicker value={value} onChange={handleChange} maxDate={maxDate} />
     </div>
   );
 };

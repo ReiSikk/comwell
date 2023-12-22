@@ -56,13 +56,11 @@ function BookingOverview({room, bookingOverviewState, setIsFormComplete}) {
         const isValidPhone = /^\d{5,}$/.test(signUpData.phone);
         
         if (isValidFullName && isValidEmail && isValidPhone) {
-            console.log('valid');
             setIsFormComplete(true);
         } else {
-            console.log('not valid');
             setIsFormComplete(false);
         }
-    }, [signUpData]); // Run this effect whenever signUpData changes
+    }, [signUpData, setIsFormComplete]); // Run this effect whenever signUpData changes
     
 
 
@@ -70,7 +68,6 @@ const handleOverviewChange = (inputId, value) => {
     handleOverviewFormChange(inputId, value);
   };
 
-console.log(signUpData, 'sign up data');
 
   return (
     <div className={styles.booking_overview}>

@@ -23,7 +23,6 @@ export const AuthProvider = ({ children }) => {
   
   // Add your login logic here
   const login = (user) => {
-    console.log('login called with:', user);
     setIsLoggedIn(true);
     setUser({user: user.user, email: user.email, phone: user.phone, role: user.role});
   };

@@ -3,7 +3,6 @@
 .dropdown_container {
   position: relative;
 
-
   label {
     margin: 0 5px;
     color: $font-dark;
@@ -19,17 +18,14 @@
     color: $font-dark-secondary;
   }
 
-
-
   select {
-        border-width: 1px;
-       padding: 20px 5px 10px;
-     width: 100%;
-        border-radius: 4px;
-        transition: border 0.3s;
-        outline: none;
-        border-color: $form-input-border-color;
-      
+    border-width: 1px;
+    padding: 20px 5px 10px;
+    width: 100%;
+    border-radius: 4px;
+    transition: border 0.3s;
+    outline: none;
+    border-color: $form-input-border-color;
   }
 
   select:focus {

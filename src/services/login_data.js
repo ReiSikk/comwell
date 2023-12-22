@@ -2,8 +2,6 @@ const logInEndpoint = "http://127.0.0.1:3005/auth/login";
 
 export function submitLoginData(data) {
 
-  console.log("submitLoginData called with:", data);
-
 
   let processedInput;
   if (data.username.length && data.password.length) {
